@@ -1,0 +1,14 @@
+.header {
+  min-height: 50px;
+  width: 100%;
+  p {
+    font-weight: bold;
+    font-size: xx-large;
+    padding-top: 5px;
+    text-align: center;
+    margin-bottom: 0;
+  }
+  #sidebarToggle {
+    position: fixed;
+  }
+}

@@ -1,0 +1,45 @@
+.summary-tile-content {
+  color: white;
+  background: #f2f2f2;
+  cursor: pointer;
+  max-height: 14rem;
+  box-shadow: 0 0 5px 2px #000000;
+  position: relative;
+  max-width: 16rem;
+  text-align: center;
+  margin-left: 0.5rem;
+  .card-title {
+    font-size: large;
+    font-weight: 600;
+    margin-top: 1rem;
+  }
+  .card-body {
+    display: flex;
+    justify-content: space-evenly;
+    p {
+      font-size: xx-large;
+      font-weight: 600;
+    }
+    svg {
+      margin-top: 0.5rem;
+      text-align: justify;
+    }
+  }
+  .card-title {
+    font-size: x-large;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 1rem;
+    margin-bottom: 0;
+  }
+  .card-trend {
+    margin-top: -0.5rem;
+  }
+  .card-subtitle {
+    font-size: large;
+    font-weight: 600;
+  }
+  svg {
+    color: white;
+  }
+}
