@@ -1,15 +1,17 @@
 import React from "react";
 import "./Sidebar.scss";
-import Dropdown from "./../../Dropdown/Dropdown";
-import MultiselectDropdown from "./../../MultiselectDropdown/MultiselectDropdown";
+import Dropdown from "../Dropdown/Dropdown";
+import MultiselectDropdown from "../MultiselectDropdown/MultiselectDropdown";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 
 const filters = gql(`
   query{
-    cicfilters{
-      yearsList
-      cicList      
+    filters{
+      yearMonthList
+      tokenNameList
+      spendTypeList
+      genderList      
     }
   }
 `);
@@ -36,12 +38,16 @@ export default class Sidebar extends React.Component {
               return (
                 <div>
                   <Dropdown
-                    options={data.cicfilters[0].yearsList}
+                    options={data.filters[0].yearMonthList}
                     callback={this.getDropdown}
                   />
                   <MultiselectDropdown
-                    options={data.cicfilters[0].cicList}
+                    options={data.filters[0].tokenNameList}
                     callback={this.getMultiDropdown}
+                  />
+                  <Dropdown
+                    options={data.filters[0].genderList}
+                    callback={this.getDropdown}
                   />
                 </div>
               );

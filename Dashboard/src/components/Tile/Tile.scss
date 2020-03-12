@@ -1,45 +1,46 @@
-.summary-tile-content {
-  color: white;
-  background: #f2f2f2;
+.tile-content {
+  color: #000000;
+  background: #ffffff;
   cursor: pointer;
-  max-height: 14rem;
+  max-height: 10rem;
   box-shadow: 0 0 5px 2px #000000;
   position: relative;
   max-width: 16rem;
   text-align: center;
   margin-left: 0.5rem;
   .card-title {
-    font-size: large;
+    font-size: x-large;
     font-weight: 600;
-    margin-top: 1rem;
+    margin-top: 0.5rem;
+    text-align: center;
   }
   .card-body {
     display: flex;
     justify-content: space-evenly;
+    padding-top: 0;
+    min-height: 3rem;
     p {
       font-size: xx-large;
       font-weight: 600;
     }
     svg {
-      margin-top: 0.5rem;
       text-align: justify;
     }
   }
-  .card-title {
-    font-size: x-large;
-    font-weight: 600;
-    text-align: center;
-    margin-top: 1rem;
-    margin-bottom: 0;
-  }
   .card-trend {
-    margin-top: -0.5rem;
+    display: flex;
+    justify-content: center;
+    p {
+      font-size: x-large;
+      font-weight: 400;
+      padding-left: 10px;
+    }
   }
   .card-subtitle {
     font-size: large;
     font-weight: 600;
   }
   svg {
-    color: white;
+    color: #000000;
   }
 }

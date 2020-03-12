@@ -1,106 +1,93 @@
 import React from "react";
-import { Row, Col } from "react-bootstrap";
-import SummaryTile from "../SummaryTile/SummaryTile";
+
 import StackedBarChart from "../StackedBarChart/StackedBarChart";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
-import {
-  faAngleDoubleDown,
-  faAngleDoubleUp,
-  faMoneyBillAlt
-} from "@fortawesome/free-solid-svg-icons";
+
 import "./Transactions.scss";
-import { format } from "d3";
-import Pie from "./../../resources/TradeVolumes_pie.JPG";
 
 const summary = gql(`
-query Summary($year:String!, $currencies:[String]!){
-  summary (year:$year, month:["January","February"], tokenName:$currencies){      
-    transactions      
-  }
-  monthlysummary (year:$year, tokenName:$currencies){ 
-    transactions
+query Summary($from:String!, $to:String!, $tokens:[String]!, $buisinessTypes:[String]!){ 
+  monthlysummary (fromDate:$from, toDate:$to,  tokenName:$tokens, spendType:$buisinessTypes, gender:[]){ 
+    noTransactionsSpendType
   }
 }
 `);
 
 export default class Transactions extends React.Component {
-  trend = (current, previous) => {
-    const symbol =
-      Math.sign(current - previous) === -1
-        ? faAngleDoubleDown
-        : faAngleDoubleUp;
-
-    return symbol;
-  };
-
+  // colors = [
+  //   "#01090a",
+  //   "#03181c",
+  //   "#06292e",
+  //   "#05272e",
+  //   "#07363f",
+  //   "#094651",
+  //   "#0b5563",
+  //   "#0c6475",
+  //   "#0e7386",
+  //   "#108298",
+  //   "#1291aa",
+  //   "#14a1bb",
+  //   "#16b0cd",
+  //   "#18bfdf",
+  //   "#35cce9",
+  //   "#46d1eb",
+  //   "#58d5ed",
+  //   "#6adaef",
+  //   "#7cdef1",
+  //   "#8de3f3"
+  // ];
+  colors = [
+    "#00000a",
+    "#00001e",
+    "#000032",
+    "#000045",
+    "#000059",
+    "#00006c",
+    "#000080",
+    "#000094",
+    "#0000a7",
+    "#0000bb",
+    "#0000ce",
+    "#0000e2",
+    "#0000f6",
+    "#1e1eff",
+    "#3232ff",
+    "#4545ff",
+    "#5959ff",
+    "#6c6cff",
+    "#8080ff",
+    "#9494ff"
+  ];
   render() {
     return (
-      <div id="Transactions">
+      <section id="transactions">
         <Query
           query={summary}
           variables={{
-            year: this.props.year,
-            currencies: this.props.currencies
+            from: this.props.from,
+            to: this.props.to,
+            tokens: this.props.tokens,
+            buisinessTypes: this.props.buisinessTypes
           }}
         >
           {({ loading, error, data }) => {
             if (loading) return <p>Loading data...</p>;
             return (
-              <div>
-                {/* <h4 className="text-center title">Trade Volumes</h4> */}
-                <Row className="mt-2">
-                  <Col xs={2}>
-                    <div className="mt-1">
-                      <SummaryTile
-                        title={"Total Trade Volume"}
-                        // subTitle={"Current Month"}
-                        value={format(".2s")(
-                          data.summary[0].transactions[1].value
-                        )}
-                        month={data.summary[0].transactions[1].month}
-                        icon={faMoneyBillAlt}
-                        trend={this.trend(
-                          data.summary[0].transactions[1].value,
-                          data.summary[0].transactions[0].value
-                        )}
-                        toolTip={"Volumes of CICs traded"}
-                      />
-                    </div>
-                  </Col>
-                  <Col xs={4}>
-                    <img
-                      src={Pie}
-                      alt="Pie"
-                      height="250"
-                      width="400"
-                      className="ml-5"
-                    />
-                  </Col>
-                  <Col xs={6}>
-                    <div className="mt-1">
-                      <StackedBarChart
-                        title={"Trade Volumes"}
-                        data={data.monthlysummary[0].transactions}
-                        keys={this.props.currencies}
-                        colors={[
-                          "#8bd1dc",
-                          "#51b9ca",
-                          "#17a2b8",
-                          "#117a8a",
-                          "#0c515c",
-                          "#06292e",
-                          "#03181c"
-                        ]}
-                      />
-                    </div>
-                  </Col>
-                </Row>
+              <div className="mt-3">
+                <StackedBarChart
+                  title={"Transactions"}
+                  data={data.monthlysummary[0].noTransactionsSpendType}
+                  keys={Object.keys(
+                    data.monthlysummary[0].noTransactionsSpendType[0]
+                  ).slice(1)}
+                  colors={this.colors}
+                />
               </div>
             );
           }}
         </Query>
-      </div>
+      </section>
     );
   }
 }

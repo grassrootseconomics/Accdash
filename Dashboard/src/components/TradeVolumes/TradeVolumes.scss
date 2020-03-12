@@ -1,12 +1,11 @@
 #tradeVolumes {
-  background: #ffffff;
-
-  box-shadow: 0 0 5px 2px #000000;
-  .title {
-    background: #51b9ca;
-    color: white;
+  .bar,
+  .pie {
+    background: #ffffff;
+    box-shadow: 0 0 5px 2px #000000;
   }
-  .summary-tile-content {
-    background: #51b9ca;
+  .pie {
+    display: flex;
+    justify-content: center;
   }
 }

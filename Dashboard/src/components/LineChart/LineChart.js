@@ -12,9 +12,9 @@ export default class lineBarChart extends React.Component {
   createLineChart() {
     // set the dimensions and margins of the graph
     // var margin = { top: 10, right: 30, bottom: 30, left: 60 },
-    const margin = { top: 20, right: 10, bottom: 30, left: 80 };
-    const width = 900 - margin.left - margin.right;
-    const height = 250 - margin.top - margin.bottom;
+    const margin = { top: 20, right: 20, bottom: 40, left: 60 };
+    const width = 770 - margin.left - margin.right;
+    const height = 400 - margin.top - margin.bottom;
     const color = this.props.colors;
     const data = this.props.data;
 
@@ -51,7 +51,7 @@ export default class lineBarChart extends React.Component {
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
       .append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+      .attr("transform", "translate(" + 40 + "," + margin.top + ")");
 
     // Scale the range of the data
     xScale.domain(
