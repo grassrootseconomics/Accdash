@@ -1,11 +1,15 @@
 #tradeVolumes {
-  .bar,
-  .pie {
-    background: #ffffff;
-    box-shadow: 0 0 5px 2px #000000;
-  }
-  .pie {
+  background: #ffffff;
+  box-shadow: 0 0 5px 2px #000000;
+  margin-top: 2rem;
+  .title {
     display: flex;
     justify-content: center;
+    font-size: x-large;
+    font-weight: 600;
+    margin-bottom: 0;
+  }
+  #pie {
+    margin-top: 4rem;
   }
 }

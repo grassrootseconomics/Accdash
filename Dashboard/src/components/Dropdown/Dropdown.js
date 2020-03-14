@@ -12,13 +12,11 @@ export default class Dropdown extends React.Component {
   options = this.props.options.map(o => ({ value: o.Item, label: o.Item }));
   render() {
     return (
-      <div>
-        <Select
-          options={this.options}
-          className="mt-4 ml-1 mr-1 mb-2"
-          onChange={this.handleChange}
-        />
-      </div>
+      <Select
+        options={this.options}
+        className="mt-1 ml-1 mr-1 mb-1"
+        onChange={this.handleChange}
+      />
     );
   }
 }

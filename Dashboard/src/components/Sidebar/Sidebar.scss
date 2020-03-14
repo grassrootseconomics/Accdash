@@ -10,6 +10,12 @@
   /* top layer */
   z-index: 9999;
   transition: transform 0.3s ease-out;
+  .filters {
+    .title {
+      margin-left: 0.5rem;
+      margin-top: 1rem;
+    }
+  }
 }
 
 .open {

@@ -11,29 +11,19 @@ export default class PieChart extends React.Component {
 
   createPieChart = () => {
     const graphClass = this.props.title.replace(/\s+/g, "-").toLowerCase();
-
-    const data = [
-      { label: "Education", value: 7956.0 },
-      { label: "Energy", value: 2253.0 },
-      { label: "Environment", value: 56.0 },
-      { label: "Food", value: 37303.0 },
-      { label: "General shop", value: 11093.0 },
-      { label: "Health", value: 232.0 },
-      { label: "Labour", value: 23301.0 },
-      { label: "Other", value: 77137.0 },
-      { label: "Transport", value: 1153.0 },
-      { label: "Water", value: 10037.0 }
-    ];
+    const width = 750;
+    const height = 350;
+    const data = this.props.data;
     const svg = d3
       .select(`svg#${graphClass}`)
-
+      .attr("viewBox", `0 0 ${width} ${height}`)
       .append("g");
 
     svg.append("g").attr("class", "slices");
     svg.append("g").attr("class", "labels");
     svg.append("g").attr("class", "lines");
 
-    const diameter = 400,
+    const diameter = 300,
       radius = diameter / 2;
 
     const color = [...d3.schemePaired, ...d3.schemeTableau10];
@@ -55,10 +45,7 @@ export default class PieChart extends React.Component {
       .innerRadius(radius * 0.2)
       .outerRadius(radius);
 
-    svg.attr(
-      "transform",
-      "translate(" + diameter / 2 + "," + diameter / 2 + ")"
-    );
+    svg.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
     const slice = svg
       .select(".slices")
@@ -164,8 +151,6 @@ export default class PieChart extends React.Component {
   render() {
     return (
       <svg
-        height="400"
-        width="400"
         id={this.props.title.replace(/\s+/g, "-").toLowerCase()}
         className=""
       ></svg>

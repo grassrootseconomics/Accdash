@@ -16,9 +16,9 @@ export default class stackedBarChart extends React.Component {
     const graphTitle = this.props.title;
     const graphClass = graphTitle.replace(/\s+/g, "-").toLowerCase();
     const margin = { top: 20, right: 20, bottom: 40, left: 60 };
-    const parseMonth = d3.timeFormat("%M %Y")(d3.timeParse("%Y-%m"));
-    const width = 770 - margin.left - margin.right;
-    const height = 400 - margin.top - margin.bottom;
+    const parseMonth = d3.timeParse("%Y-%m");
+    const width = 750 - margin.left - margin.right;
+    const height = 350 - margin.top - margin.bottom;
     const xScale = d3
       .scaleBand()
       .range([0, width - 20])
@@ -29,12 +29,15 @@ export default class stackedBarChart extends React.Component {
     const yAxis = d3.axisLeft(yScale).tickFormat(d3.format(".2s"));
     const svg = d3
       .select(`svg.${graphClass}`)
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom);
-
+      .attr(
+        "viewBox",
+        `0 0 ${width + margin.left + margin.right} ${height +
+          margin.top +
+          margin.bottom}`
+      );
     const graph = svg
       .append("g")
-      .attr("transform", "translate(" + 40 + "," + margin.top + ")");
+      .attr("transform", "translate(" + 50 + "," + margin.top + ")");
 
     var stack = d3
       .stack()
@@ -187,13 +190,13 @@ export default class stackedBarChart extends React.Component {
       .attr("font-size", 12)
       .attr("y", 0 - margin.left)
       .attr("x", 0 - height / 2)
-      .attr("dy", "2rem")
+      .attr("dy", "1.75rem")
       .style("text-anchor", "middle")
       .text(graphTitle === "Trade Volumes" ? "Volume" : "No of Transactions");
 
     const legend = svg
       .append("g")
-      .attr("transform", `translate(15, 5)`)
+      .attr("transform", `translate(15, 0)`)
       .attr("font-size", 9)
       .attr("text-anchor", "end")
       .selectAll("g")

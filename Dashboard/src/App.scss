@@ -1,6 +1,7 @@
 .app {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f2f2f2;
+  height: 100vh;
   @media (prefers-reduced-motion: no-preference) {
     .App-logo {
       animation: App-logo-spin infinite 20s linear;
@@ -15,24 +16,4 @@
       transform: rotate(360deg);
     }
   }
-
-  svg {
-    color: #444;
-    // background: #f2f2f2;
-    cursor: pointer;
-    // border: 1px solid #000;
-    // box-shadow: 0 0 5px 2px #d9d9d9;
-    position: relative;
-
-    p {
-      font-size: xx-large;
-      font-weight: 600;
-    }
-  }
-
-  // .trade {
-  //   background: #ffffff;
-
-  //   box-shadow: 0 0 5px 2px #000000;
-  // }
 }

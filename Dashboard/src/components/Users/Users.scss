@@ -1,8 +1,13 @@
 #users {
   background: #ffffff;
   box-shadow: 0 0 5px 2px #000000;
+
+  margin-top: 2rem;
   .title {
-    background: #58d7b1;
-    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    font-size: x-large;
+    font-weight: 600;
+    margin-bottom: 0;
   }
 }

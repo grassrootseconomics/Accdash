@@ -12,7 +12,7 @@ export default class Layout extends React.Component {
   state = {
     showSidebar: false,
     from: "2018-11",
-    to: "2020-02",
+    to: "2020-03",
     selectedTokenNames: [],
     selectedSpendTypes: []
   };
@@ -48,7 +48,7 @@ export default class Layout extends React.Component {
   };
   render() {
     return (
-      <div>
+      <div className="container-fluid">
         <Backdrop
           show={this.state.showSidebar}
           clicked={this.sidebarCloseHandler}

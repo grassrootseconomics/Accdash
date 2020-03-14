@@ -1,46 +1,41 @@
-.tile-content {
+.card {
   color: #000000;
   background: #ffffff;
   cursor: pointer;
-  max-height: 10rem;
   box-shadow: 0 0 5px 2px #000000;
-  position: relative;
-  max-width: 16rem;
-  text-align: center;
-  margin-left: 0.5rem;
-  .card-title {
+  .title {
     font-size: x-large;
     font-weight: 600;
-    margin-top: 0.5rem;
+    margin: 0.25rem 0;
     text-align: center;
   }
-  .card-body {
+  .body {
     display: flex;
     justify-content: space-evenly;
-    padding-top: 0;
-    min-height: 3rem;
-    p {
-      font-size: xx-large;
-      font-weight: 600;
-    }
+    padding: 0.25em;
+    align-items: center;
     svg {
-      text-align: justify;
+      font-size: 4em;
     }
-  }
-  .card-trend {
-    display: flex;
-    justify-content: center;
-    p {
-      font-size: x-large;
-      font-weight: 400;
-      padding-left: 10px;
+    .details {
+      p {
+        font-size: 2em;
+        font-weight: 800;
+        margin: 0;
+        padding: 0;
+      }
     }
-  }
-  .card-subtitle {
-    font-size: large;
-    font-weight: 600;
-  }
-  svg {
-    color: #000000;
+    .trend {
+      display: flex;
+      justify-content: center;
+      p {
+        font-size: 1.5em;
+        font-weight: 600;
+        padding-left: 0.5em;
+      }
+      svg {
+        font-size: 2em;
+      }
+    }
   }
 }

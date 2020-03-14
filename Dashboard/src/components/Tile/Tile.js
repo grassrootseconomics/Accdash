@@ -11,18 +11,18 @@ export default class Tiles extends React.Component {
         placement={"right"}
         overlay={<Tooltip id={`tooltip-right`}>{this.props.toolTip}</Tooltip>}
       >
-        <div className="card tile-content mt-2">
-          <h5 className="card-title ">{this.props.title}</h5>
-          <div className="card-body text-center">
-            <FontAwesomeIcon icon={this.props.icon} size="3x" />
-            <p className="card-body ">{this.props.value}</p>
+        <div className="card">
+          <p className="title ">{this.props.title}</p>
+          <div className="body">
+            <FontAwesomeIcon icon={this.props.icon} />
+            <div className="details">
+              <p>{this.props.value}</p>
+              <div className="trend">
+                <FontAwesomeIcon icon={this.props.trend.symbol} />
+                <p>{this.props.trend.percent}%</p>
+              </div>
+            </div>
           </div>
-          <div className="card-trend">
-            <FontAwesomeIcon icon={this.props.trend.symbol} size="3x" />
-            <p>{this.props.trend.percent}%</p>
-          </div>
-
-          {/* <h6 className="card-subtitle mt-2 mb-1">{this.props.month}</h6> */}
         </div>
       </OverlayTrigger>
     );

@@ -1,32 +1,36 @@
 #summary {
+  padding-left: 1em;
   .tile {
-    .tile-content {
-      background: #ffffff;
-    }
+    margin-top: 2rem;
   }
   .tile-1 {
-    .tile-content {
-      background: #108298;
+    .card,
+    svg {
+      color: #108298;
     }
   }
   .tile-2 {
-    .tile-content {
-      background: #80bdff;
+    .card,
+    svg {
+      color: #80bdff;
     }
   }
   .tile-3 {
-    .tile-content {
-      background: #58d7b1;
+    .card,
+    svg {
+      color: #58d7b1;
     }
   }
   .tile-4 {
-    .tile-content {
-      background: #008080;
+    .card,
+    svg {
+      color: #008080;
     }
   }
   .tile-5 {
-    .tile-content {
-      background: #0000bb;
+    .card,
+    svg {
+      color: #0000bb;
     }
   }
 }

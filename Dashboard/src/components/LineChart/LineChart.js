@@ -11,14 +11,14 @@ export default class lineBarChart extends React.Component {
 
   createLineChart() {
     // set the dimensions and margins of the graph
-    // var margin = { top: 10, right: 30, bottom: 30, left: 60 },
+
     const margin = { top: 20, right: 20, bottom: 40, left: 60 };
-    const width = 770 - margin.left - margin.right;
-    const height = 400 - margin.top - margin.bottom;
+    const width = 750 - margin.left - margin.right;
+    const height = 350 - margin.top - margin.bottom;
     const color = this.props.colors;
     const data = this.props.data;
 
-    const parseMonth = d3.timeParse("%B");
+    const parseMonth = d3.timeParse("%Y-%m");
 
     const xScale = d3
       .scaleBand()
@@ -27,7 +27,7 @@ export default class lineBarChart extends React.Component {
     const yScale = d3.scaleLinear().range([height, 0]);
 
     const xAxis = d3.axisBottom(xScale).tickFormat(d3.timeFormat("%b"));
-    const yAxis = d3.axisLeft(yScale);
+    const yAxis = d3.axisLeft(yScale).tickFormat(d3.format(".2s"));
 
     // // define the 1st line
     // var valueline = d3
@@ -48,21 +48,27 @@ export default class lineBarChart extends React.Component {
     // moves the 'group' element to the top left margin
     var svg = d3
       .select("svg#lineChart")
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
+      .attr(
+        "viewBox",
+        `0 0 ${width + margin.left + margin.right} ${height +
+          margin.top +
+          margin.bottom}`
+      );
+
+    const graph = svg
       .append("g")
-      .attr("transform", "translate(" + 40 + "," + margin.top + ")");
+      .attr("transform", "translate(" + 50 + "," + margin.top + ")");
 
     // Scale the range of the data
     xScale.domain(
       data.map(function(d) {
-        return parseMonth(d.month);
+        return parseMonth(d.yearMonth);
       })
     );
     yScale.domain([
       0,
       d3.max(data, function(d) {
-        return Math.max(d.Active, d.Registered);
+        return Math.max(d["Frequent Traders"], d.Traders);
       })
     ]);
 
@@ -85,7 +91,7 @@ export default class lineBarChart extends React.Component {
     //   .attr("d", valueline2);
 
     this.props.keys.forEach((key, i) => {
-      svg
+      graph
         .append("path")
         .data([data])
         .attr("class", "line")
@@ -95,7 +101,7 @@ export default class lineBarChart extends React.Component {
           "d",
           d3
             .line()
-            .x(d => xScale(parseMonth(d.month)))
+            .x(d => xScale(parseMonth(d.yearMonth)))
             .y(d => yScale(d[key]))
         );
       const $keydiv = d3
@@ -104,7 +110,7 @@ export default class lineBarChart extends React.Component {
         .attr("class", "tooltip")
         .style("opacity", 0);
 
-      const $keydot = svg
+      const $keydot = graph
         .selectAll("dot")
         .data(data)
         .enter()
@@ -114,7 +120,7 @@ export default class lineBarChart extends React.Component {
 
       $keydot
         .attr("cx", function(d) {
-          return xScale(parseMonth(d.month));
+          return xScale(parseMonth(d.yearMonth));
         })
         .attr("cy", function(d) {
           return yScale(d[key]);
@@ -125,22 +131,29 @@ export default class lineBarChart extends React.Component {
             .duration(200)
             .style("opacity", 0.9);
           $keydiv
-            .html("<p>" + d[key] + "</p>")
+            .html(`<p class="tooltip"> ${d3.format(".2s")(d[key])}</p>`)
             .style("left", d3.event.pageX + "px")
             .style("top", d3.event.pageY - 28 + "px");
+        })
+        .on("mouseout", d => {
+          $keydiv
+            .transition()
+            .duration(200)
+            .style("opacity", 0)
+            .style("display", "none");
         });
     });
 
     // Add the X Axis
-    svg
+    graph
       .append("g")
       .attr("transform", "translate(0," + height + ")")
       .call(xAxis);
 
     // Add the Y Axis
-    svg.append("g").call(yAxis);
+    graph.append("g").call(yAxis);
 
-    svg
+    graph
       .append("text")
       .attr(
         "transform",
@@ -151,39 +164,38 @@ export default class lineBarChart extends React.Component {
       .text("Months");
 
     // text label for the y axis
-    svg
+    graph
       .append("text")
       .attr("transform", "rotate(-90)")
       .attr("font-size", 12)
       .attr("y", 0 - margin.left)
       .attr("x", 0 - height / 2)
-      .attr("dy", "2.5rem")
+      .attr("dy", "1.5rem")
       .style("text-anchor", "middle")
       .text("Users");
 
     const legend = svg
       .append("g")
-      .attr("font-size", 10)
+      .attr("transform", `translate(15, 0)`)
+      .attr("font-size", 9)
       .attr("text-anchor", "end")
       .selectAll("g")
       .data(this.props.keys.slice())
       .enter()
       .append("g")
-      .attr("transform", function(d, i) {
-        return "translate(0," + i * 20 + ")";
-      });
+      .attr("transform", (d, i) => `translate(0, ${i * 15})`);
 
     legend
       .append("rect")
-      .attr("x", width - 19)
-      .attr("width", 19)
-      .attr("height", 19)
+      .attr("x", width + 50)
+      .attr("width", 10)
+      .attr("height", 10)
       .attr("fill", (d, i) => color[i]);
 
     legend
       .append("text")
-      .attr("x", width - 24)
-      .attr("y", 9.5)
+      .attr("x", width + 45)
+      .attr("y", 5)
       .attr("dy", "0.32em")
       .text(function(d) {
         return d;

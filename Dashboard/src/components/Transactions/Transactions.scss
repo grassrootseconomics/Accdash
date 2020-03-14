@@ -1,9 +1,14 @@
 #transactions {
   background: #ffffff;
 
+  margin-top: 2rem;
+
   box-shadow: 0 0 5px 2px #000000;
   .title {
-    background: #3caea3;
-    color: white;
+    display: flex;
+    justify-content: center;
+    font-size: x-large;
+    font-weight: 600;
+    margin-bottom: 0;
   }
 }

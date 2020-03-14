@@ -17,6 +17,7 @@ export default class users extends React.Component {
   render() {
     return (
       <section id="users">
+        <p className="title">Frequent Traders vs Total Traders</p>
         <Query
           query={summaryQuery}
           variables={{
@@ -28,18 +29,13 @@ export default class users extends React.Component {
         >
           {({ loading, error, data }) => {
             if (loading) return <p>Loading data...</p>;
-
             return (
-              <div className="mt-3">
-                <div className="mt-2">
-                  <LineChart
-                    title={"Total vs Frequent Traders"}
-                    data={data.monthlysummary[0].TradersVsFqtrader}
-                    keys={["Frequent Traders", "Traders"]}
-                    colors={["#20c997", "#80bdff  "]}
-                  />
-                </div>
-              </div>
+              <LineChart
+                title={"Traders vs Frequent Traders"}
+                data={data.monthlysummary[0].TradersVsFqtrader}
+                keys={["Frequent Traders", "Traders"]}
+                colors={["#20c997", "#80bdff  "]}
+              />
             );
           }}
         </Query>

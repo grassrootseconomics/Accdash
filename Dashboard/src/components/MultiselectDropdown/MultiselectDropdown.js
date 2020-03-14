@@ -18,7 +18,7 @@ export default class MultiselectDropdown extends React.Component {
   render() {
     return (
       <Select
-        className="mt-4 ml-1 mr-1 mb-2"
+        className="mt-1 ml-1 mr-1 mb-1"
         closeMenuOnSelect={false}
         components={animatedComponents}
         defaultValue={[]}

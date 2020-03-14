@@ -6,31 +6,8 @@ import Layout from "./Layout/Layout";
 class App extends React.Component {
   render() {
     return (
-      <div className="app container-fluid">
+      <div className="app">
         <Layout />
-        {/* <Users
-          year={this.state.year}
-          from={this.state.from}
-          to={this.state.to}
-          tokens={this.state.selectedTokenNames}
-          buisinessTypes={this.state.selectedSpendTypes}
-        />
-        <div className="trade">
-          <TradeVolumes
-            year={this.state.year}
-            from={this.state.from}
-            to={this.state.to}
-            tokens={this.state.selectedTokenNames}
-            buisinessTypes={this.state.selectedSpendTypes}
-          />
-          <Transactions
-            year={this.state.year}
-            from={this.state.from}
-            to={this.state.to}
-            tokens={this.state.selectedTokenNames}
-            buisinessTypes={this.state.selectedSpendTypes}
-          /> 
-        </div>*/}
       </div>
     );
   }
