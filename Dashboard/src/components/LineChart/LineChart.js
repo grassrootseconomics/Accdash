@@ -29,23 +29,6 @@ export default class lineBarChart extends React.Component {
     const xAxis = d3.axisBottom(xScale).tickFormat(d3.timeFormat("%b"));
     const yAxis = d3.axisLeft(yScale).tickFormat(d3.format(".2s"));
 
-    // // define the 1st line
-    // var valueline = d3
-    //   .line()
-    //   .curve(d3.curveCardinal)
-    //   .x(d => xScale(parseMonth(d.month)))
-    //   .y(d => yScale(d.active));
-
-    // // define the 2nd line
-    // var valueline2 = d3
-    //   .line()
-    //   .curve(d3.curveCardinal)
-    //   .x(d => xScale(parseMonth(d.month)))
-    //   .y(d => yScale(d.registered));
-
-    // append the svg obgect to the body of the page
-    // appends a 'group' element to 'svg'
-    // moves the 'group' element to the top left margin
     var svg = d3
       .select("svg#lineChart")
       .attr(
@@ -72,24 +55,6 @@ export default class lineBarChart extends React.Component {
       })
     ]);
 
-    // Add the valueline path.
-    // svg
-    //   .append("path")
-    //   .data([data])
-    //   .attr("class", "line")
-    //   .style("stroke", (d, i) => color(i))
-    //   .style("fill", "none")
-    //   .attr("d", valueline);
-
-    // // Add the valueline2 path.
-    // svg
-    //   .append("path")
-    //   .data([data])
-    //   .attr("class", "line")
-    //   .style("stroke", (d, i) => color(i))
-    //   .style("fill", "none")
-    //   .attr("d", valueline2);
-
     this.props.keys.forEach((key, i) => {
       graph
         .append("path")
@@ -104,11 +69,14 @@ export default class lineBarChart extends React.Component {
             .x(d => xScale(parseMonth(d.yearMonth)))
             .y(d => yScale(d[key]))
         );
-      const $keydiv = d3
-        .select("body")
+
+      const tooltip = d3
+        .select("div.app")
         .append("div")
-        .attr("class", "tooltip")
+        .attr("class", "tooltip lineChart")
         .style("opacity", 0);
+
+      tooltip.append("div").attr("class", "value");
 
       const $keydot = graph
         .selectAll("dot")
@@ -126,22 +94,36 @@ export default class lineBarChart extends React.Component {
           return yScale(d[key]);
         })
         .on("mouseover", function(d) {
-          $keydiv
-            .transition()
-            .duration(200)
-            .style("opacity", 0.9);
-          $keydiv
-            .html(`<p class="tooltip"> ${d3.format(".2s")(d[key])}</p>`)
+          tooltip.html(`<p>${d3.format(".2s")(d[key])}</p>`);
+          tooltip.style("display", "block");
+          tooltip.style("opacity", 2);
+        })
+        .on("mousemove", function(d) {
+          tooltip
             .style("left", d3.event.pageX + "px")
             .style("top", d3.event.pageY - 28 + "px");
         })
-        .on("mouseout", d => {
-          $keydiv
-            .transition()
-            .duration(200)
-            .style("opacity", 0)
-            .style("display", "none");
+        .on("mouseout", function() {
+          tooltip.style("display", "none");
+          tooltip.style("opacity", 0);
         });
+      // .on("mouseover", function(d) {
+      //   tooltip
+      //     .transition()
+      //     .duration(200)
+      //     .style("opacity", 0.9);
+      //   tooltip
+      //     .html(`<p class="tooltip"> ${d3.format(".2s")(d[key])}</p>`)
+      //     .style("left", d3.event.pageX + "px")
+      //     .style("top", d3.event.pageY - 28 + "px");
+      // })
+      // .on("mouseout", d => {
+      //   tooltip
+      //     .transition()
+      //     .duration(200)
+      //     .style("opacity", 0)
+      //     .style("display", "none");
+      // });
     });
 
     // Add the X Axis

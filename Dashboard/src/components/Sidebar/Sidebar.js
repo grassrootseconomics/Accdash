@@ -39,10 +39,10 @@ export default class Sidebar extends React.Component {
               return (
                 <div className="filters">
                   <h6 className="title">Months</h6>
-                  <MonthDropdown
+                  {/* <MonthDropdown
                     options={data.filters[0].yearMonthList}
                     callback={this.getDropdown}
-                  />
+                  /> */}
                   <h6 className="title">Spend Types</h6>
                   <MultiselectDropdown
                     options={data.filters[0].spendTypeList}

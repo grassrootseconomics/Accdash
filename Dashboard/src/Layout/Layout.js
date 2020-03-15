@@ -6,7 +6,7 @@ import Summary from "../Summary/Summary";
 import Users from "../Components/Users/Users";
 import TradeVolumes from "../Components/TradeVolumes/TradeVolumes";
 import Transactions from "../Components/Transactions/Transactions";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Container } from "react-bootstrap";
 
 export default class Layout extends React.Component {
   state = {
@@ -48,7 +48,7 @@ export default class Layout extends React.Component {
   };
   render() {
     return (
-      <div className="container-fluid">
+      <Container fluid="md">
         <Backdrop
           show={this.state.showSidebar}
           clicked={this.sidebarCloseHandler}
@@ -95,7 +95,7 @@ export default class Layout extends React.Component {
             />
           </Col>
         </Row>
-      </div>
+      </Container>
     );
   }
 }

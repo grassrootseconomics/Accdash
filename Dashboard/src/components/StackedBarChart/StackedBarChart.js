@@ -64,30 +64,12 @@ export default class stackedBarChart extends React.Component {
       .nice();
 
     const tooltip = d3
-      .select("body")
+      .select("div.app")
       .append("div")
       .attr("class", `tooltip ${graphClass}`)
       .style("opacity", 0);
 
-    // const tooltip = svg
-    //   .append("g")
-    //   .attr("class", "tooltip")
-    //   .style("display", "none");
-
-    // tooltip
-    //   .append("rect")
-    //   .attr("width", 60)
-    //   .attr("height", 20)
-    //   .attr("fill", "white")
-    //   .style("opacity", 0.5);
-
-    // tooltip
-    //   .append("text")
-    //   .attr("x", 30)
-    //   .attr("dy", "1.2em")
-    //   .style("text-anchor", "middle")
-    //   .attr("font-size", "12px")
-    //   .attr("font-weight", "bold");
+    tooltip.append("div").attr("class", "value");
 
     const layer = graph
       .selectAll(".layer")
@@ -115,43 +97,37 @@ export default class stackedBarChart extends React.Component {
         // return isNaN(yScale(d[0]) - yScale(d[1])) ? 0 : height;
       })
       .attr("width", xScale.bandwidth())
-      .on("mouseover", d => {
+      .on("mouseover", function(d) {
+        tooltip.html(`<p>${d3.format(".2s")(d[1] - d[0])}</p>`);
+        tooltip.style("display", "block");
+        tooltip.style("opacity", 2);
+      })
+      .on("mousemove", function(d) {
         tooltip
-          .transition()
-          .duration(200)
-          .style("opacity", 0.9)
-          .style("display", "block");
-        tooltip
-          .html(`<p class=""tooltip>  ${d3.format(".2s")(d[1] - d[0])}  </p>`)
           .style("left", d3.event.pageX + "px")
           .style("top", d3.event.pageY - 28 + "px");
       })
-      .on("mouseout", d => {
-        tooltip
-          .transition()
-          .duration(200)
-          .style("opacity", 0)
-          .style("display", "none");
+      .on("mouseout", function() {
+        tooltip.style("display", "none");
+        tooltip.style("opacity", 0);
       });
-
-    //   var tooltip = svg.append("g")
-    // .attr("class", "tooltip")
-    // .style("display", "none");
-    // .on("mouseover", function() {
-    //   tooltip.style("display", null);
+    // .on("mouseover", d => {
+    //   tooltip
+    //     .transition()
+    //     .duration(200)
+    //     .style("opacity", 0.9)
+    //     .style("display", "block");
+    //   tooltip
+    //     .html(`<p class=""tooltip>  ${d3.format(".2s")(d[1] - d[0])}  </p>`)
+    //     .style("left", d3.event.pageX + "px")
+    //     .style("top", d3.event.pageY - 28 + "px");
     // })
-    // .on("mouseout", function() {
-    //   tooltip.style("display", "none");
-    // })
-    // .on("mousemove", function(d) {
-    //   console.log(d);
-    //   var xPosition = d3.mouse(this)[0] - 5;
-    //   var yPosition = d3.mouse(this)[1] - 5;
-    //   tooltip.attr(
-    //     "transform",
-    //     "translate(" + xPosition + "," + yPosition + ")"
-    //   );
-    //   tooltip.select("text").text(d[1] - d[0]);
+    // .on("mouseout", d => {
+    //   tooltip
+    //     .transition()
+    //     .duration(200)
+    //     .style("opacity", 0)
+    //     .style("display", "none");
     // });
 
     graph

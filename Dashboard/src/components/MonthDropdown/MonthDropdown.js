@@ -1,18 +1,22 @@
 import React from "react";
 import Picker from "react-month-picker";
-import MonthBox from "react-month-picker";
 import "./MonthDropDown.scss";
 
 export default class MonthDropdown extends React.Component {
-  state = {
-    selectedOptions: null
-  };
-  handleChange = selectedOptions => {
-    console.log("$$$$$$$", selectedOptions);
-    this.setState({ selectedOptions });
-    this.props.callback(selectedOptions);
-  };
-  options = this.props.options.map(o => ({ value: o.Item, label: o.Item }));
+  constructor(props, context) {
+    super(props, context);
+    this.state = {
+      value: this.props.value || "N/A"
+    };
+    this._handleClick = this._handleClick.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      value: nextProps.value || "N/A"
+    });
+  }
+
   render() {
     let pickerLang = {
         months: [
@@ -32,8 +36,8 @@ export default class MonthDropdown extends React.Component {
         from: "From",
         to: "To"
       },
-      mvalue = { year: 2015, month: 11 },
-      mrange = { from: { year: 2014, month: 8 }, to: { year: 2015, month: 5 } };
+      mvalue = { year: 2018, month: 11 },
+      mrange = { from: { year: 2018, month: 8 }, to: { year: 2020, month: 5 } };
 
     let makeText = m => {
       if (m && m.year && m.month)
@@ -47,14 +51,14 @@ export default class MonthDropdown extends React.Component {
           <div className="edit">
             <Picker
               ref="pickAMonth"
-              years={[2008, 2010, 2011, 2012, 2014, 2015, 2016, 2017]}
+              years={[2018, 2019, 2020]}
               value={mvalue}
               lang={pickerLang.months}
               onChange={this.handleAMonthChange}
               onDismiss={this.handleAMonthDissmis}
             >
-              <MonthBox
-                value={makeText(mvalue)}
+              <MonthDropdown
+                values={makeText(mvalue)}
                 onClick={this.handleClickMonthBox}
               />
             </Picker>
@@ -65,15 +69,15 @@ export default class MonthDropdown extends React.Component {
           <div className="edit">
             <Picker
               ref="pickRange"
-              years={{ min: 2010, max: 2018 }}
+              years={{ min: 2018, max: 2020 }}
               range={mrange}
               lang={pickerLang}
               theme="dark"
               onChange={this.handleRangeChange}
               onDismiss={this.handleRangeDismiss}
             >
-              <MonthBox
-                value={makeText(mrange.from) + " ~ " + makeText(mrange.to)}
+              <MonthDropdown
+                values={makeText(mrange.from) + " ~ " + makeText(mrange.to)}
                 onClick={this._handleClickRangeBox}
               />
             </Picker>

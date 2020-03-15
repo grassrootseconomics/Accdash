@@ -1,7 +1,7 @@
 import React from "react";
 
 import StackedBarChart from "../StackedBarChart/StackedBarChart";
-import PieChart from "../PieChat/PieChart";
+import PieChart from "../PieChart/PieChart";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 
