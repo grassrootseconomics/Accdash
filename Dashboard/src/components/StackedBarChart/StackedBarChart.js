@@ -25,7 +25,7 @@ export default class stackedBarChart extends React.Component {
       .padding(0.1);
     const yScale = d3.scaleLinear().range([height, 0]);
     const color = [...d3.schemePaired, ...d3.schemeTableau10];
-    const xAxis = d3.axisBottom(xScale).tickFormat(d3.timeFormat("%b"));
+    const xAxis = d3.axisBottom(xScale).tickFormat(d3.timeFormat("%b %Y"));
     const yAxis = d3.axisLeft(yScale).tickFormat(d3.format(".2s"));
     const svg = d3
       .select(`svg.${graphClass}`)
@@ -37,7 +37,7 @@ export default class stackedBarChart extends React.Component {
       );
     const graph = svg
       .append("g")
-      .attr("transform", "translate(" + 50 + "," + margin.top + ")");
+      .attr("transform", "translate(" + 50 + "," + 10 + ")");
 
     var stack = d3
       .stack()
@@ -46,9 +46,7 @@ export default class stackedBarChart extends React.Component {
       .offset(d3.stackOffsetNone);
 
     var layers = stack(data);
-    // data.sort(function(a, b) {
-    //   return b.total - a.total;
-    // });
+
     xScale.domain(
       data.map(function(d) {
         return parseMonth(d.yearMonth);
@@ -134,7 +132,12 @@ export default class stackedBarChart extends React.Component {
       .append("g")
       .attr("class", "axis axis--x")
       .attr("transform", "translate(0," + height + ")")
-      .call(xAxis);
+      .call(xAxis)
+      .selectAll("text")
+      .style("text-anchor", "end")
+      .attr("dx", "-.8em")
+      .attr("dy", ".15em")
+      .attr("transform", "rotate(-40)");
 
     graph
       .append("g")
@@ -149,15 +152,15 @@ export default class stackedBarChart extends React.Component {
       .attr("font-weight", "bold")
       .attr("text-anchor", "start");
 
-    graph
-      .append("text")
-      .attr(
-        "transform",
-        "translate(" + width / 2 + " ," + (height + margin.top + 8) + ")"
-      )
-      .attr("font-size", 12)
-      .style("text-anchor", "middle")
-      .text("Months");
+    // graph
+    //   .append("text")
+    //   .attr(
+    //     "transform",
+    //     "translate(" + width / 2 + " ," + (height + margin.top + 8) + ")"
+    //   )
+    //   .attr("font-size", 12)
+    //   .style("text-anchor", "middle")
+    //   .text("Months");
 
     // text label for the y axis
     graph
@@ -168,7 +171,7 @@ export default class stackedBarChart extends React.Component {
       .attr("x", 0 - height / 2)
       .attr("dy", "1.75rem")
       .style("text-anchor", "middle")
-      .text(graphTitle === "Trade Volumes" ? "Volume" : "No of Transactions");
+      .text(graphTitle);
 
     const legend = svg
       .append("g")

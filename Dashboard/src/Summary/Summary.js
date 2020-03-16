@@ -58,10 +58,7 @@ export default class Summary extends React.Component {
                 <div className="tile tile-1">
                   <Tile
                     title={"Registered Users"}
-                    // subTitle={"Current Month"}
                     value={data.summary[0].registeredUsers.total}
-                    month={"February"}
-                    // month={data.summary[0].registeredUsers[1].month}
                     icon={faUserTag}
                     trend={{
                       symbol: this.trend(
@@ -79,10 +76,7 @@ export default class Summary extends React.Component {
                 <div className="tile tile-2 ">
                   <Tile
                     title={"Total Traders"}
-                    // subTitle={"Current Month"}
                     value={data.summary[0].traders.total}
-                    month={"February"}
-                    // month={data.summary[0].activeUsers[1].month}
                     icon={faUserCog}
                     trend={{
                       symbol: this.trend(
@@ -95,17 +89,14 @@ export default class Summary extends React.Component {
                       )
                     }}
                     toolTip={
-                      "No of users with at least 4 transactions in a month"
+                      "No of traders with at least 1 transaction in a month"
                     }
                   />
                 </div>
                 <div className="tile tile-3 ">
                   <Tile
                     title={"Frequent Traders"}
-                    // subTitle={"Current Month"}
                     value={data.summary[0].frequentTraders.total}
-                    month={"February"}
-                    // month={data.summary[0].activeUsers[1].month}
                     icon={faUserCog}
                     trend={{
                       symbol: this.trend(
@@ -125,10 +116,7 @@ export default class Summary extends React.Component {
                 <div className="tile tile-4 ">
                   <Tile
                     title={"Total Trade Volume"}
-                    // subTitle={"Current Month"}
                     value={format(".2s")(data.summary[0].tradeVolumes.total)}
-                    month={"February"}
-                    // month={data.summary[0].tradeVolumes[1].month}
                     icon={faMoneyBillAlt}
                     trend={{
                       symbol: this.trend(
@@ -146,9 +134,7 @@ export default class Summary extends React.Component {
                 <div className="tile tile-5 ">
                   <Tile
                     title={"Total Transactions"}
-                    // subTitle={"Current Month"}
                     value={format(".2s")(data.summary[0].noTransactions.total)}
-                    month={"February"}
                     icon={faExchangeAlt}
                     trend={{
                       symbol: this.trend(

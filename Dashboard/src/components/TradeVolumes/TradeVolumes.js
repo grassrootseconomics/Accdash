@@ -8,12 +8,12 @@ import gql from "graphql-tag";
 import "./TradeVolumes.scss";
 
 const summary = gql(`
-query Summary($from:String!, $to:String!, $tokens:[String]!, $buisinessTypes:[String]!){
-   monthlysummary (fromDate:$from, toDate:$to,  tokenName:$tokens, spendType:$buisinessTypes, gender:[]){ 
+query Summary($from:String!, $to:String!, $tokens:[String]!, $buisinessTypes:[String]!, $gender:[String!]){
+   monthlysummary (fromDate:$from, toDate:$to,  tokenName:$tokens, spendType:$buisinessTypes, gender:$gender){ 
     tradeVolumesSpendType
   }
   spendtypesummary(
-    fromDate:$from, toDate:$to,  tokenName:$tokens, spendType:$buisinessTypes, gender:[]
+    fromDate:$from, toDate:$to,  tokenName:$tokens, spendType:$buisinessTypes, gender:$gender
     ){
       label
       value
@@ -32,7 +32,8 @@ export default class TradeVolumes extends React.Component {
             from: this.props.from,
             to: this.props.to,
             tokens: this.props.tokens,
-            buisinessTypes: this.props.buisinessTypes
+            buisinessTypes: this.props.buisinessTypes,
+            gender: this.props.gender
           }}
         >
           {({ loading, error, data }) => {

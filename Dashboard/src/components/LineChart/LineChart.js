@@ -17,7 +17,6 @@ export default class lineBarChart extends React.Component {
     const height = 350 - margin.top - margin.bottom;
     const color = this.props.colors;
     const data = this.props.data;
-
     const parseMonth = d3.timeParse("%Y-%m");
 
     const xScale = d3
@@ -26,7 +25,7 @@ export default class lineBarChart extends React.Component {
       .padding(1);
     const yScale = d3.scaleLinear().range([height, 0]);
 
-    const xAxis = d3.axisBottom(xScale).tickFormat(d3.timeFormat("%b"));
+    const xAxis = d3.axisBottom(xScale).tickFormat(d3.timeFormat(" %b %Y"));
     const yAxis = d3.axisLeft(yScale).tickFormat(d3.format(".2s"));
 
     var svg = d3
@@ -40,7 +39,7 @@ export default class lineBarChart extends React.Component {
 
     const graph = svg
       .append("g")
-      .attr("transform", "translate(" + 50 + "," + margin.top + ")");
+      .attr("transform", "translate(" + 50 + "," + 10 + ")");
 
     // Scale the range of the data
     xScale.domain(
@@ -130,20 +129,25 @@ export default class lineBarChart extends React.Component {
     graph
       .append("g")
       .attr("transform", "translate(0," + height + ")")
-      .call(xAxis);
+      .call(xAxis)
+      .selectAll("text")
+      .style("text-anchor", "end")
+      .attr("dx", "-.8em")
+      .attr("dy", ".15em")
+      .attr("transform", "rotate(-40)");
 
     // Add the Y Axis
     graph.append("g").call(yAxis);
 
-    graph
-      .append("text")
-      .attr(
-        "transform",
-        "translate(" + width / 2 + " ," + (height + margin.top + 5) + ")"
-      )
-      .attr("font-size", 12)
-      .style("text-anchor", "middle")
-      .text("Months");
+    // graph
+    //   .append("text")
+    //   .attr(
+    //     "transform",
+    //     "translate(" + width / 2 + " ," + (height + margin.top + 5) + ")"
+    //   )
+    //   .attr("font-size", 12)
+    //   .style("text-anchor", "middle")
+    //   .text("Months");
 
     // text label for the y axis
     graph

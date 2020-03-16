@@ -1,89 +1,93 @@
 import React from "react";
-import Picker from "react-month-picker";
+import DatePicker from "react-datepicker";
+import { timeFormat } from "d3";
 import "./MonthDropDown.scss";
 
 export default class MonthDropdown extends React.Component {
-  constructor(props, context) {
-    super(props, context);
-    this.state = {
-      value: this.props.value || "N/A"
-    };
-    this._handleClick = this._handleClick.bind(this);
-  }
+  show = false;
+  message = "";
+  state = {
+    selectedOptions: null,
+    startDate: new Date(),
+    endDate: undefined,
+    dateRange: `${timeFormat("%b %Y")(new Date())}`
+  };
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      value: nextProps.value || "N/A"
-    });
-  }
+  options = this.props.options.map(o => ({ value: o.Item, label: o.Item }));
+  handleChange = date => {
+    if (date && date > this.state.startDate) {
+      this.show = false;
+      this.setState({
+        endDate: date,
+        dateRange: `
+          ${timeFormat("%b %Y")(this.state.startDate)} -
+          ${timeFormat("%b %Y")(date)}`,
+        selectedOptions: {
+          from: `${timeFormat("%Y-%m")(this.state.startDate)}`,
+          to: `${timeFormat("%Y-%m")(date)}`
+        }
+      });
+      this.props.callback({
+        from: `${timeFormat("%Y-%m")(this.state.startDate)}`,
+        to: `${timeFormat("%Y-%m")(date)}`
+      });
+    } else {
+      if (date === this.state.startDate) {
+        this.show = false;
+        this.setState({
+          endDate: date,
+          dateRange: `${timeFormat("%b %Y")(date)}`,
+          selectedOptions: {
+            from: `${timeFormat("%Y-%m")(this.state.startDate)}`,
+            to: `${timeFormat("%Y-%m")(this.state.date)}`
+          }
+        });
+        this.props.callback({
+          from: `${timeFormat("%Y-%m")(this.state.startDate)}`,
+          to: `${timeFormat("%Y-%m")(this.state.date)}`
+        });
+      } else {
+        this.setState({
+          startDate: date,
+          endDate: undefined,
+          dateRange: `${timeFormat("%b %Y")(date)}`
+        });
+        this.show = true;
+        this.message = "Please select end date";
+      }
+    }
+  };
 
   render() {
-    let pickerLang = {
-        months: [
-          "Jan",
-          "Feb",
-          "Mar",
-          "Spr",
-          "May",
-          "Jun",
-          "Jul",
-          "Aug",
-          "Sep",
-          "Oct",
-          "Nov",
-          "Dec"
-        ],
-        from: "From",
-        to: "To"
-      },
-      mvalue = { year: 2018, month: 11 },
-      mrange = { from: { year: 2018, month: 8 }, to: { year: 2020, month: 5 } };
-
-    let makeText = m => {
-      if (m && m.year && m.month)
-        return pickerLang.months[m.month - 1] + ". " + m.year;
-      return "?";
-    };
-
+    const tooltip = this.show ? (
+      <div>
+        <div className="arrow"></div>
+        <div className="tooltip-inner">{this.message}</div>
+      </div>
+    ) : (
+      ""
+    );
     return (
-      <ul>
-        <li>
-          <div className="edit">
-            <Picker
-              ref="pickAMonth"
-              years={[2018, 2019, 2020]}
-              value={mvalue}
-              lang={pickerLang.months}
-              onChange={this.handleAMonthChange}
-              onDismiss={this.handleAMonthDissmis}
-            >
-              <MonthDropdown
-                values={makeText(mvalue)}
-                onClick={this.handleClickMonthBox}
-              />
-            </Picker>
-          </div>
-        </li>
-        <li>
-          <label>Pick A Span of Months</label>
-          <div className="edit">
-            <Picker
-              ref="pickRange"
-              years={{ min: 2018, max: 2020 }}
-              range={mrange}
-              lang={pickerLang}
-              theme="dark"
-              onChange={this.handleRangeChange}
-              onDismiss={this.handleRangeDismiss}
-            >
-              <MonthDropdown
-                values={makeText(mrange.from) + " ~ " + makeText(mrange.to)}
-                onClick={this._handleClickRangeBox}
-              />
-            </Picker>
-          </div>
-        </li>
-      </ul>
+      <div>
+        <DatePicker
+          minDate={new Date(this.options[0].value)}
+          maxDate={new Date(this.options[this.options.length - 1].value)}
+          selected={this.state.startDate}
+          showMonthYearPicker
+          dateFormat="MM/yyyy"
+          onChange={this.handleChange}
+          startDate={this.state.startDate}
+          endDate={this.state.endDate}
+          selectsEnd={Boolean(this.state.endDate)}
+          shouldCloseOnSelect={false}
+          customInput={
+            <div className="yearMonthPicker">
+              <span ref={this.target}>{this.state.dateRange}</span>
+              {tooltip}
+            </div>
+          }
+        />
+      </div>
     );
   }
 }

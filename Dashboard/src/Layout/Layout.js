@@ -14,30 +14,31 @@ export default class Layout extends React.Component {
     from: "2018-11",
     to: "2020-03",
     selectedTokenNames: [],
-    selectedSpendTypes: []
+    selectedSpendTypes: [],
+    selectedGender: []
   };
 
-  getSelectedYear = selectedOption => {
-    this.setState({ selectedYear: selectedOption.value });
-    console.log("!!!!!123452345!!!", this.state.selectedYear);
+  getGender = selectedOption => {
+    this.setState({ selectedGender: selectedOption.value });
   };
 
-  getselectedTokenNames = selectedOptions => {
+  getTokens = selectedOptions => {
     this.setState({
       selectedTokenNames: selectedOptions.map(({ value }) => value)
     });
-
-    console.log("$$$$$789452345$$$$", this.state.selectedTokenNames);
   };
 
-  getYearsCallback = selectedOption => {
+  getSpendTypes = selectedOptions => {
+    this.setState({
+      selectedSpendTypes: selectedOptions.map(({ value }) => value)
+    });
+  };
+  getMonths = selectedOption => {
     console.log("!!!!!2345!!!", selectedOption);
-    this.props.yearsCallback(selectedOption);
-  };
-
-  getCurrenciesCallback = selectedOptions => {
-    console.log("$$$$7895$$$", selectedOptions);
-    this.props.currenciesCallback(selectedOptions);
+    this.setState({
+      from: selectedOption.from,
+      to: selectedOption.to
+    });
   };
 
   sidebarCloseHandler = () => {
@@ -57,8 +58,10 @@ export default class Layout extends React.Component {
         <Sidebar
           open={this.state.showSidebar}
           close={this.sidebarCloseHandler}
-          yearsDropdown={this.getYearsCallback}
-          currenciesDropdown={this.getCurrenciesCallback}
+          gender={this.getGender}
+          tokens={this.getTokens}
+          spendTypes={this.getSpendTypes}
+          months={this.getMonths}
         />
         <Row>
           <Col xs={2}>
@@ -76,6 +79,7 @@ export default class Layout extends React.Component {
               to={this.state.to}
               tokens={this.state.selectedTokenNames}
               buisinessTypes={this.state.selectedSpendTypes}
+              gender={this.state.selectedGender}
             />
             <Transactions
               year={2019}
@@ -83,6 +87,7 @@ export default class Layout extends React.Component {
               to={this.state.to}
               tokens={this.state.selectedTokenNames}
               buisinessTypes={this.state.selectedSpendTypes}
+              gender={this.state.selectedGender}
             />
           </Col>
           <Col xs={5}>
@@ -92,6 +97,7 @@ export default class Layout extends React.Component {
               to={this.state.to}
               tokens={this.state.selectedTokenNames}
               buisinessTypes={this.state.selectedSpendTypes}
+              gender={this.state.selectedGender}
             />
           </Col>
         </Row>

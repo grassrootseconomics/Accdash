@@ -18,14 +18,21 @@ const filters = gql(`
 `);
 
 export default class Sidebar extends React.Component {
-  getDropdown = selectedOption => {
-    console.log("!!!!!!!!", selectedOption);
-    this.props.yearsDropdown(selectedOption);
+  getGender = selectedOption => {
+    this.props.gender(selectedOption);
   };
 
-  getMultiDropdown = selectedOptions => {
+  getSpendTypes = selectedOptions => {
+    this.props.spendTypes(selectedOptions);
+  };
+
+  getTokens = selectedOptions => {
+    this.props.tokens(selectedOptions);
+  };
+
+  getMonths = selectedOptions => {
     console.log("$$$$$$$", selectedOptions);
-    this.props.currenciesDropdown(selectedOptions);
+    this.props.months(selectedOptions);
   };
 
   render() {
@@ -39,24 +46,24 @@ export default class Sidebar extends React.Component {
               return (
                 <div className="filters">
                   <h6 className="title">Months</h6>
-                  {/* <MonthDropdown
+                  <MonthDropdown
                     options={data.filters[0].yearMonthList}
-                    callback={this.getDropdown}
-                  /> */}
+                    callback={this.getMonths}
+                  />
                   <h6 className="title">Spend Types</h6>
                   <MultiselectDropdown
                     options={data.filters[0].spendTypeList}
-                    callback={this.getMultiDropdown}
+                    callback={this.getSpendTypes}
                   />
                   <h6 className="title">Tokens</h6>
                   <MultiselectDropdown
                     options={data.filters[0].tokenNameList}
-                    callback={this.getMultiDropdown}
+                    callback={this.getTokens}
                   />
                   <h6 className="title">Gender</h6>
                   <Dropdown
                     options={data.filters[0].genderList}
-                    callback={this.getDropdown}
+                    callback={this.getGender}
                   />
                 </div>
               );
