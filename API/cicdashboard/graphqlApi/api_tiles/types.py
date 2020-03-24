@@ -9,3 +9,10 @@ class tiles(graphene.ObjectType):
 	total = graphene.Int()
 	start_month = graphene.Int()
 	end_month = graphene.Int()
+
+
+class tilesextended(graphene.ObjectType):
+	category = graphene.String()
+	total = graphene.Int()
+	start_month = graphene.Int()
+	end_month = graphene.Int()

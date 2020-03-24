@@ -5,15 +5,17 @@ This script contains helper functions for the main django application.
 import graphene
 import calendar
 import collections
+from . import models
 from django.conf import settings
 from django.core.cache import cache
-from django.db.models import Count, Sum, F
 from collections import Counter,OrderedDict
 from datetime import datetime,date,timedelta
 from django.core.cache.backends.base import DEFAULT_TIMEOUT
 from django.db.models.functions import TruncMonth, Coalesce
+from django.db.models import Count, Sum, F, Case, When, Value, CharField
 
 CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
+reporting_table = models.CicReportingTable
 
 """ DATE FILTER
 Date filter for from and to date. fromDate remains the same, except in the case of registered users.
@@ -53,3 +55,14 @@ def get_cache_values(key, query):
 	cache_key.update({"Query":query})
 	result = cache.get(cache_key)
 	return(cache_key, result)
+
+
+""" FILTERS FOR QUERIES
+common query filter used in a significant number of queries
+"""
+def get_filter_values(gender, token_name, spend_type):
+	reporting_data = reporting_table.objects.values('s_gender', 'tokenname', 't_business_type')
+	g_filter = reporting_data.values_list("s_gender", flat=True).distinct() if len(gender) == 0 else gender
+	t_filter = reporting_data.values_list("tokenname", flat=True).distinct() if len(token_name) == 0 else token_name
+	s_filter = reporting_data.values_list("t_business_type", flat=True).distinct() if len(spend_type) == 0 else spend_type
+	return (g_filter,t_filter, s_filter)

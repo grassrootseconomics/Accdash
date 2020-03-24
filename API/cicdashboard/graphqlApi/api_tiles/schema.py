@@ -5,9 +5,9 @@ GenericScaler types have been used in order to return the data in a format that 
 REMINDER - remove all unused pivots, libraries and variables after development is complete.
 """
 
-from .types import tiles
+from .types import *
 from .. functions import *
-from .resolvers import registeredusers, frequenttraders, tradevolumes, traders, notransactions
+from .resolvers import *
 
 class Query(graphene.ObjectType):
 
@@ -51,6 +51,22 @@ class Query(graphene.ObjectType):
 			return cache_data
 
 		data = tradevolumes(kwargs)
+		cache.set(cache_key,data, CACHE_TTL)
+		return data
+
+	tradevolumessubtype = graphene.List(tilesextended,
+		from_date = graphene.String(required=True),
+		to_date = graphene.String(required=True),
+		token_name= graphene.List(graphene.String,required=True),
+		spend_type =graphene.List(graphene.String,required=True),
+		gender =graphene.List(graphene.String),required=True)
+
+	def resolve_tradevolumessubtype(self, info, **kwargs):
+		cache_key, cache_data = get_cache_values(kwargs, "tradevolumessubtype")
+		if cache_data is not None:
+			return cache_data
+
+		data = tradevolumessubtype(kwargs)
 		cache.set(cache_key,data, CACHE_TTL)
 		return data
 

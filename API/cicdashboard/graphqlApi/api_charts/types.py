@@ -8,6 +8,6 @@ from graphene.types.generic import GenericScalar
 class chart_custom_response(graphene.ObjectType):
 	value = graphene.List(GenericScalar)
 
-class spendtypesummary(graphene.ObjectType):
+class category_chart(graphene.ObjectType):
 	label = graphene.String()
 	value = graphene.Int()

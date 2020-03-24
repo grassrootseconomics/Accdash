@@ -3,7 +3,7 @@ The resolvers below provide infromation found on tiles
 """
 from .. import models
 from .. functions import *
-from .types import tiles
+from .types import *
 
 
 FQ_TRADER_THRESHOLD = 4
@@ -83,6 +83,37 @@ def tradevolumes(kwargs):
 
 	return(trade_volume_data_response)
 
+#####################################
+# TRADE VOLUMES BY TRANSACTION TYPE #
+#####################################
+
+def tradevolumessubtype(kwargs):
+	from_date, to_date, token_name,spend_type, gender = kwargs['from_date'], kwargs['to_date'], kwargs['token_name'], kwargs['spend_type'], kwargs['gender']
+	from_date, to_date, to_date_plus_one_month, from_date_plus_one_month = create_date_points(from_date, to_date)
+	gender_filter, token_name_filter, spend_filter = get_filter_values(gender, token_name, spend_type)
+
+	query_data = reporting_table.objects.annotate(_month=TruncMonth('timestamp'))\
+	.filter(timestamp__gte = from_date,timestamp__lt = to_date_plus_one_month,tokenname__in = token_name_filter, t_business_type__in = spend_filter, s_gender__in = gender_filter)\
+	.values('_month','transfer_subtype')
+	
+	all_sub_types = query_data.values_list('transfer_subtype', flat = True).distinct()
+	query_data_all = query_data.values('transfer_subtype').annotate(value = Coalesce(Sum("weight"),0)).order_by()
+	query_data_first = query_data.filter(_month = from_date).annotate(value = Coalesce(Sum("weight"),0))
+	query_data_end = query_data.filter(_month = to_date).annotate(value = Coalesce(Sum("weight"),0))
+
+	trade_volume_data_response = []
+	for i in query_data_all:
+		first_month = [x['value'] for x in query_data_first if i['transfer_subtype'] == x['transfer_subtype']]
+		end_month = [x['value'] for x in query_data_end if i['transfer_subtype'] == x['transfer_subtype']]
+		trade_volume_data_response.append(
+			tilesextended(
+				category=i['transfer_subtype'],
+				total=i['value'], 
+				start_month = 0 if len(first_month) == 0 else first_month[0], 
+				end_month = 0 if len(end_month) == 0 else end_month[0]))
+		
+	return(trade_volume_data_response)
+
 
 #################
 # TRADERS COUNT #
@@ -131,3 +162,5 @@ def notransactions(kwargs):
 	no_transactions_data_response = [tiles(total=no_transactions_data_total, start_month = no_transactions_data_first_month, end_month = no_transactions_data_last_month)]
 	
 	return(no_transactions_data_response)
+
+
