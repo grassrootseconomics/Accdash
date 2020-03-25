@@ -64,6 +64,22 @@ class Query(graphene.ObjectType):
 		cache.set(cache_key,data, CACHE_TTL)
 		return data
 
+	tradeVolumesTxType = graphene.List(chart_custom_response,
+		from_date = graphene.String(required=True),
+		to_date = graphene.String(required=True),
+		token_name= graphene.List(graphene.String,required=True),
+		spend_type =graphene.List(graphene.String,required=True),
+		gender =graphene.List(graphene.String),required=True)
+
+	def resolve_tradeVolumesTxType(self, info, **kwargs):
+		cache_key, cache_data = get_cache_values(kwargs, "tradeVolumesTxType")
+		if cache_data is not None:
+			return cache_data
+
+		data = tv_txtype(kwargs)
+		cache.set(cache_key,data, CACHE_TTL)
+		return data
+
 	#############################
 	# TRANSACTION COUNT QUERIES #
 	#############################
@@ -117,6 +133,23 @@ class Query(graphene.ObjectType):
 		cache.set(cache_key,data, CACHE_TTL)
 		return data
 
+
+	noTransactionsTxType = graphene.List(chart_custom_response,
+		from_date = graphene.String(required=True),
+		to_date = graphene.String(required=True),
+		token_name= graphene.List(graphene.String,required=True),
+		spend_type =graphene.List(graphene.String,required=True),
+		gender =graphene.List(graphene.String),required=True)
+
+	def resolve_noTransactionsTxType(self, info, **kwargs):
+		cache_key, cache_data = get_cache_values(kwargs, "noTransactionsTxType")
+		if cache_data is not None:
+			return cache_data
+
+		data = tc_txtype(kwargs)
+		cache.set(cache_key,data, CACHE_TTL)
+		return data
+
 	#################
 	# OTHER QUERIES #
 	#################
@@ -134,23 +167,23 @@ class Query(graphene.ObjectType):
 			return cache_data
 
 		data = total_frequent(kwargs)
-		cache.set(cache_key,data, CACHE_TTL)
+		# cache.set(cache_key,data, CACHE_TTL)
 		return data
 
-	spendtypesummary = graphene.List(category_chart,
+	new_spendtypesummary = graphene.List(category_chart,
 		from_date = graphene.String(required=True),
 		to_date = graphene.String(required=True),
 		token_name= graphene.List(graphene.String,required=True),
 		spend_type =graphene.List(graphene.String,required=True),
 		gender =graphene.List(graphene.String),required=True)
 
-	def resolve_spendtypesummary(self, info, **kwargs):
-		cache_key, cache_data = get_cache_values(kwargs, "spendtypesummary")
+	def resolve_new_spendtypesummary(self, info, **kwargs):
+		cache_key, cache_data = get_cache_values(kwargs, "new_spendtypesummary")
 		if cache_data is not None:
 			return cache_data
 
 		data = spend_summary(kwargs)
-		cache.set(cache_key,data, CACHE_TTL)
+		# cache.set(cache_key,data, CACHE_TTL)
 		return data
 
 	gendersummary = graphene.List(category_chart,

@@ -45,41 +45,14 @@ def tv_spend(kwargs):
 	.filter(timestamp__gte = from_date,timestamp__lt = to_date_plus_one_month, tokenname__in = token_name_filter, t_business_type__in = spend_filter, s_gender__in = gender_filter)\
 	.order_by("_month")
 
-	top_half = summary_data.values('t_business_type')\
-	.exclude(t_business_type__in= ['Other', 'Unknown']).annotate(value = Sum("weight"))\
-	.order_by("-value").values_list('t_business_type', flat = True)[:5]
-
-	bottom_half = summary_data.exclude(t_business_type__in = top_half).values('t_business_type')\
-	.annotate(value = Sum("weight")).order_by("-value").values_list('t_business_type', flat = True)
-
-	trade_volume_top = summary_data.filter(t_business_type__in = top_half).values('_month', 't_business_type')\
+	selected_months = [] 
+	trade_volume_data  = summary_data.values('_month', 't_business_type')\
 	.annotate(value = Sum("weight")).order_by("_month" , "t_business_type")
 
-	trade_volume_bottom = summary_data.filter(t_business_type__in = bottom_half)\
-	.values('_month').annotate(value = Sum("weight")).order_by("_month")
+	populate_month = [selected_months.append(i['_month'].strftime('%Y-%m')) for i in trade_volume_data if i['_month'].strftime('%Y-%m') not in selected_months]
+	tv_per_spend = category_by_filter(trade_volume_data, selected_months, 't_business_type', spend_filter)
 
-	selected_months = [] 
-	populate_month = [selected_months\
-	.append(i['_month'].strftime('%Y-%m')) for i in trade_volume_top if i['_month'].strftime('%Y-%m') not in selected_months]
-
-	result =[]
-	for month in selected_months:
-		temp_dict = {"yearMonth":month}
-		filtered_results = [result for result in trade_volume_top if result['_month'].strftime('%Y-%m') == month]
-		for item in top_half: 
-			x = [temp_dict.update({e['t_business_type']:e['value']}) for e in filtered_results if e['t_business_type'] == item]
-			if len(x) == 0: temp_dict.update({item:0})
-		other_value = [temp_dict.update({'Other':e['value']}) for e in trade_volume_bottom if e['_month'].strftime('%Y-%m') == month]
-		result.append(temp_dict)
-
-	# selected_months = [] 
-	# trade_volume_data  = summary_data.values('_month', 't_business_type')\
-	# .annotate(value = Sum("weight")).order_by("_month" , "t_business_type")
-
-	# populate_month = [selected_months.append(i['_month'].strftime('%Y-%m')) for i in trade_volume_data if i['_month'].strftime('%Y-%m') not in selected_months]
-	# tv_per_spend = category_by_filter(trade_volume_data, selected_months, 't_business_type', spend_filter)
-
-	tv_spend_response = [chart_custom_response(value = result)]
+	tv_spend_response = [chart_custom_response(value = tv_per_spend)]
 
 	return(tv_spend_response)
 
@@ -104,6 +77,29 @@ def tv_gender(kwargs):
 	tv_gender_response = [chart_custom_response(value = tv_gender)]
 
 	return(tv_gender_response)
+
+##################################
+# TRADE VOLUMES TRANSACTION TYPE #
+##################################
+
+def tv_txtype(kwargs):
+	from_date, to_date, token_name, spend_type, gender = kwargs['from_date'], kwargs['to_date'], kwargs['token_name'], kwargs['spend_type'], kwargs['gender']
+	from_date, to_date, to_date_plus_one_month, from_date_plus_one_month = create_date_points(from_date, to_date)
+	gender_filter, token_name_filter, spend_filter = get_filter_values(gender, token_name, spend_type)
+
+	summary_data = reporting_table.objects.annotate(_month=TruncMonth('timestamp'))\
+	.filter(timestamp__gte = from_date,timestamp__lt = to_date_plus_one_month, tokenname__in = token_name_filter, t_business_type__in = spend_filter, s_gender__in = gender_filter)\
+	.order_by("_month")
+
+	tx_filter = reporting_table.objects.values_list("transfer_subtype", flat=True).distinct()
+
+	selected_months = [] 
+	trade_volume_data  = summary_data.values('_month', 'transfer_subtype').annotate(value = Sum("weight")).order_by("_month" , "transfer_subtype")
+	populate_month = [selected_months.append(i['_month'].strftime('%Y-%m')) for i in trade_volume_data if i['_month'].strftime('%Y-%m') not in selected_months]
+	tv_txtype = category_by_filter(trade_volume_data, selected_months, 'transfer_subtype', tx_filter)
+	tv_txtype_response = [chart_custom_response(value = tv_txtype)]
+
+	return(tv_txtype_response)
 
 #############################
 # TRANSACTION COUNT TOKENS #
@@ -140,38 +136,12 @@ def tc_spend(kwargs):
 	.filter(timestamp__gte = from_date,timestamp__lt = to_date_plus_one_month, tokenname__in = token_name_filter, t_business_type__in = spend_filter, s_gender__in = gender_filter)\
 	.order_by("_month")
 
-	top_half = summary_data.values('t_business_type').exclude(t_business_type__in= ['Other', 'Unknown']).annotate(value = Count("id"))\
-	.order_by("-value").values_list('t_business_type', flat = True)[:5]
-
-	bottom_half = summary_data.exclude(t_business_type__in = top_half).values('t_business_type')\
-	.annotate(value = Count("id")).order_by("-value").values_list('t_business_type', flat = True)
-
-	trade_volume_top = summary_data.filter(t_business_type__in = top_half).values('_month', 't_business_type')\
-	.annotate(value = Count("id")).order_by("_month" , "t_business_type")
-
-	trade_volume_bottom = summary_data.filter(t_business_type__in = bottom_half)\
-	.values('_month').annotate(value = Count("id")).order_by("_month")
-
 	selected_months = [] 
-	populate_month = [selected_months\
-	.append(i['_month'].strftime('%Y-%m')) for i in trade_volume_top if i['_month'].strftime('%Y-%m') not in selected_months]
+	no_trans_data  = summary_data.values('_month', 't_business_type').annotate(value = Count("id")).order_by("_month")
+	populate_month = [selected_months.append(i['_month'].strftime('%Y-%m')) for i in no_trans_data if i['_month'].strftime('%Y-%m') not in selected_months]
+	nt_per_spend = category_by_filter(no_trans_data, selected_months, 't_business_type', spend_filter)
 
-	result =[]
-	for month in selected_months:
-		temp_dict = {"yearMonth":month}
-		filtered_results = [result for result in trade_volume_top if result['_month'].strftime('%Y-%m') == month]
-		for item in top_half: 
-			x = [temp_dict.update({e['t_business_type']:e['value']}) for e in filtered_results if e['t_business_type'] == item]
-			if len(x) == 0: temp_dict.update({item:0})
-		other_value = [temp_dict.update({'Other':e['value']}) for e in trade_volume_bottom if e['_month'].strftime('%Y-%m') == month]
-		result.append(temp_dict)
-
-	# selected_months = [] 
-	# no_trans_data  = summary_data.values('_month', 't_business_type').annotate(value = Count("id")).order_by("_month")
-	# populate_month = [selected_months.append(i['_month'].strftime('%Y-%m')) for i in no_trans_data if i['_month'].strftime('%Y-%m') not in selected_months]
-	# nt_per_spend = category_by_filter(no_trans_data, selected_months, 't_business_type', spend_filter)
-
-	tc_spend_response = [chart_custom_response(value = result)]
+	tc_spend_response = [chart_custom_response(value = nt_per_spend)]
 	return(tc_spend_response)
 
 
@@ -195,6 +165,30 @@ def tc_gender(kwargs):
 
 	tc_gender_response = [chart_custom_response(value = tc_gender)]
 	return(tc_gender_response)
+
+
+######################################
+# TRANSACTION COUNT TRANSACTION TYPE #
+######################################
+
+def tc_txtype(kwargs):
+	from_date, to_date, token_name,spend_type, gender = kwargs['from_date'], kwargs['to_date'], kwargs['token_name'], kwargs['spend_type'], kwargs['gender']
+	from_date, to_date, to_date_plus_one_month, from_date_plus_one_month = create_date_points(from_date, to_date)
+	gender_filter, token_name_filter, spend_filter = get_filter_values(gender, token_name, spend_type)
+
+	summary_data = reporting_table.objects.annotate(_month=TruncMonth('timestamp'))\
+	.filter(timestamp__gte = from_date,timestamp__lt = to_date_plus_one_month, tokenname__in = token_name_filter, t_business_type__in = spend_filter, s_gender__in = gender_filter)\
+	.order_by("_month")
+
+	tx_filter = reporting_table.objects.values_list("transfer_subtype", flat=True).distinct()
+
+	selected_months = [] 
+	no_trans_data  = summary_data.values('_month', 'transfer_subtype').annotate(value = Count("id")).order_by("_month")
+	populate_month = [selected_months.append(i['_month'].strftime('%Y-%m')) for i in no_trans_data if i['_month'].strftime('%Y-%m') not in selected_months]
+	tc_txtype = category_by_filter(no_trans_data, selected_months, 'transfer_subtype', tx_filter)
+
+	tc_txtype_response = [chart_custom_response(value = tc_txtype)]
+	return(tc_txtype_response)
 
 #############################
 # TOTAL VS FREQUENT TRADERS #
