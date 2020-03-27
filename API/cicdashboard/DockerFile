@@ -1,0 +1,25 @@
+FROM python:3
+ENV PYTHONUNBUFFERED 1
+ENV ENVIRONMENT DEV
+
+RUN mkdir /code
+RUN mkdir /code/static
+
+WORKDIR /code
+
+RUN pip install uwsgi
+
+COPY requirements.txt /code/
+RUN pip install -r requirements.txt
+
+# COPY ./entrypoint.sh /code/entrypoint.sh
+
+COPY . /code/
+
+RUN python3 manage.py collectstatic
+
+EXPOSE 8080
+
+CMD ["uwsgi", "--ini", "/code/cic-dashboard.ini"]
+
+#CMD ["python", "manage.py", "runserver", "8080"]
