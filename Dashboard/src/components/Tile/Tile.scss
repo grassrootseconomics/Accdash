@@ -2,40 +2,116 @@
   color: #000000;
   background: #ffffff;
   cursor: pointer;
-  box-shadow: 0 0 5px 2px #000000;
+  // margin: 0.5em 0;
+  // box-shadow: 0 0 5px 2px #000000;
   .title {
-    font-size: x-large;
+    font-size: large;
     font-weight: 600;
-    margin: 0.3rem 0;
-    text-align: center;
+    margin: 0 0.3rem;
+    text-align: left;
   }
   .body {
-    display: flex;
-    justify-content: space-evenly;
-    padding: 0.25em;
-    align-items: center;
-    svg {
-      font-size: 4em;
-    }
+    align-items: left;
+
     .details {
+      display: flex;
+      justify-content: space-between;
+
       p {
-        font-size: 2em;
+        font-size: 1em;
         font-weight: 800;
         margin: 0;
         padding: 0;
+        margin-left: 5px;
       }
     }
     .trend {
       display: flex;
-      justify-content: center;
+      margin-right: 5px;
+      // justify-content: center;
+      &.angle-double-up {
+        color: green;
+      }
+      &.angle-double-down {
+        color: red;
+      }
       p {
-        font-size: 1.5em;
+        font-size: 1em;
         font-weight: 600;
         padding-left: 0.5em;
       }
       svg {
-        font-size: 2em;
+        font-size: 1em;
+        margin-right: 5px;
       }
     }
   }
+  @media (min-width: 576px) {
+  }
+
+  // Medium devices (tablets, 768px and up)
+  @media (min-width: 768px) {
+  }
+
+  // Large devices (desktops, 992px and up)
+  // @media (min-width: 992px) {
+  //   .title {
+  //     font-size: large;
+  //     font-weight: 600;
+  //     // margin: 0.3rem 0;
+  //     text-align: left;
+  //   }
+  //   .body {
+  //     // padding: 0.25em;
+  //     svg {
+  //       font-size: 3em;
+  //     }
+  //     .details {
+  //       p {
+  //         font-size: 1.5em;
+  //       }
+  //     }
+  //     .trend {
+  //       p {
+  //         font-size: 1em;
+  //         font-weight: 600;
+  //         padding-left: 0.5em;
+  //       }
+  //       svg {
+  //         font-size: 1.5em;
+  //       }
+  //     }
+  //   }
+  // }
+
+  // Extra large devices (large desktops, 1200px and up)
+  // @media (min-width: 1200px) {
+  //   .title {
+  //     font-size: large;
+  //     font-weight: 600;
+  //     // margin: 0.3rem 0;
+  //     text-align: left;
+  //   }
+  //   .body {
+  //     // padding: 0.25em;
+  //     svg {
+  //       font-size: 4em;
+  //     }
+  //     .details {
+  //       p {
+  //         font-size: 1em;
+  //       }
+  //     }
+  //     .trend {
+  //       p {
+  //         font-size: 1em;
+  //         font-weight: 600;
+  //         padding-left: 0.5em;
+  //       }
+  //       svg {
+  //         font-size: 1em;
+  //       }
+  //     }
+  //   }
+  // }
 }

@@ -6,9 +6,9 @@ import { Query } from "react-apollo";
 import gql from "graphql-tag";
 
 const summaryQuery = gql(`
-query Summary($from:String!, $to:String!, $tokens:[String]!, $buisinessTypes:[String]!, $gender:[String!]){
-  monthlysummary (fromDate:$from, toDate:$to,  tokenName:$tokens, spendType:$buisinessTypes, gender:$gender){ 
-    TradersVsFqtrader
+query MonthlySummary($from:String!, $to:String!, $tokens:[String]!, $spendTypes:[String]!, $gender:[String]!, $txType:[String]!){
+  monthlySummaryData  (fromDate:$from, toDate:$to,  tokenName:$tokens, spendType:$spendTypes, gender:$gender, txType:$txType, request:"tradevolumes-time-totalvsfrequent"){ 
+    value
   }
 }
 `);
@@ -17,15 +17,16 @@ export default class users extends React.Component {
   render() {
     return (
       <section id="users">
-        <p className="title">Frequent Traders vs Total Traders</p>
+        <p className="title">FREQUENT TRADERS vs TOTAL TRADERS</p>
         <Query
           query={summaryQuery}
           variables={{
             from: this.props.from,
             to: this.props.to,
             tokens: this.props.tokens,
-            buisinessTypes: this.props.buisinessTypes,
-            gender: this.props.gender
+            spendTypes: this.props.spendTypes,
+            gender: this.props.gender,
+            txType: this.props.txType
           }}
         >
           {({ loading, error, data }) => {
@@ -33,9 +34,11 @@ export default class users extends React.Component {
             return (
               <LineChart
                 title={"Traders vs Frequent Traders"}
-                data={data.monthlysummary[0].TradersVsFqtrader}
-                keys={["Frequent Traders", "Traders"]}
-                colors={["#20c997", "#80bdff  "]}
+                data={data.monthlySummaryData[0].value}
+                keys={Object.keys(data.monthlySummaryData[0].value[0]).slice(1)}
+                colors={["#66FCF1", "#4472C4"]}
+                width={900}
+                height={300}
               />
             );
           }}

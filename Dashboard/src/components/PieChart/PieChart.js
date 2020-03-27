@@ -12,22 +12,37 @@ export default class PieChart extends React.Component {
 
   createPieChart = () => {
     const graphClass = this.props.title.replace(/\s+/g, "-").toLowerCase();
-    const width = 750;
-    const height = 400;
+    const width = this.props.width;
+    const height = this.props.height;
     const data = this.props.data;
     const svg = d3
-      .select(`svg#${graphClass}`)
-      .attr("viewBox", `0 0 ${width} ${height}`)
-      .append("g");
+      .select(`svg.${graphClass}`)
+      // .attr("height", `${height}`).attr("width", `${width}`);
+      .attr("viewBox", `0 0 ${width} ${height}`);
+    svg.selectAll("g").remove();
+    const graph = svg.append("g");
 
-    svg.append("g").attr("class", "slices");
-    svg.append("g").attr("class", "labels");
-    svg.append("g").attr("class", "lines");
+    graph.append("g").attr("class", "slices");
+    graph.append("g").attr("class", "labels");
+    graph.append("g").attr("class", "lines");
 
-    const diameter = 300,
+    const diameter = 200,
       radius = diameter / 2;
 
-    const color = [...d3.schemePaired, ...d3.schemeTableau10];
+    const colors = [
+      "#CAF270",
+      "#38DCE2",
+      "#32AF93",
+      "#248890",
+      "#74D485",
+      "#68EEAB",
+      "#2FADB6",
+      "#66FCF1",
+      "#1A505B",
+      "#1B2A37",
+      "#8EBFF2",
+      "#403B51"
+    ];
 
     const pie = d3
       .pie()
@@ -39,21 +54,16 @@ export default class PieChart extends React.Component {
       .outerRadius(radius)
       .innerRadius(0);
 
-    const outerArc = d3
-      .arc()
-      .innerRadius(radius)
-      .outerRadius(radius * 0.8);
+    graph.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-    svg.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-
-    const slice = svg
+    const slice = graph
       .select(".slices")
       .selectAll(".slice")
       .data(pie(data))
       .enter()
       .append("g")
       .attr("class", "slice")
-      .attr("fill", (d, i) => color[i]);
+      .attr("fill", (d, i) => colors[i]);
 
     slice
       .append("path")
@@ -72,58 +82,17 @@ export default class PieChart extends React.Component {
         };
       });
 
-    /* ------- TEXT LABELS -------*/
-    function midAngle(d) {
-      return d.startAngle + (d.endAngle - d.startAngle) / 2;
-    }
-
-    const text = svg
-      .select(".labels")
-      .selectAll("text")
-      .data(pie(data));
-
-    text
-      .enter()
-      .append("text")
-      .attr("font-size", 10)
-      .attr("transform", function(d) {
-        return "translate(" + outerArc.centroid(d) + ")";
-      })
-      .attr("dy", ".35em")
-      .text(d => d.data.label)
-      .attr("transform", function(d) {
-        const pos = outerArc.centroid(d);
-        pos[0] = radius * 1.2 * (midAngle(d) < Math.PI ? 1 : -1);
-        return "translate(" + pos + ")";
-      })
-      .style("text-anchor", function(d) {
-        return midAngle(d) < Math.PI ? "start" : "end";
-      });
-
-    /* ------- SLICE TO TEXT POLYLINES -------*/
-
-    svg
-      .select(".lines")
-      .selectAll("polyline")
-      .data(pie(data))
-      .enter()
-      .append("polyline")
-      .attr("points", function(d) {
-        // see label transform function for explanations of these three lines.
-        const pos = outerArc.centroid(d);
-        pos[0] = radius * 1.1 * (midAngle(d) < Math.PI ? 1 : -1);
-        return [arc.centroid(d), outerArc.centroid(d), pos];
-      });
-
     const tooltip = d3
       .select("div.app")
       .append("div")
       .attr("class", "tooltip pieChart")
       .style("opacity", 0);
 
-    tooltip.append("div").attr("class", "value");
+    tooltip.append("span").attr("class", "label");
+    tooltip.append("span").attr("class", "value");
 
     slice.on("mouseover", function(d) {
+      tooltip.select(".label").html(d.data.label + ": ");
       tooltip.select(".value").html(d3.format(".2s")(d.value));
       tooltip.style("display", "block");
       tooltip.style("opacity", 2);
@@ -139,13 +108,38 @@ export default class PieChart extends React.Component {
       tooltip.style("display", "none");
       tooltip.style("opacity", 0);
     });
+
+    // const legend = svg
+    //   .append("g")
+    //   .attr("transform", `translate(-68, 0)`)
+    //   .attr("font-size", 9)
+    //   .attr("text-anchor", "end")
+    //   .selectAll("g")
+    //   .data(pie(data))
+    //   .enter()
+    //   .append("g")
+    //   .attr("transform", (d, i) => `translate(0, ${i * 15})`);
+
+    // legend
+    //   .append("rect")
+    //   .attr("x", width + 50)
+    //   .attr("width", 10)
+    //   .attr("height", 10)
+    //   .attr("fill", (d, i) => colors[i]);
+
+    // legend
+    //   .append("text")
+    //   .attr("x", width + 45)
+    //   .attr("y", 5)
+    //   .attr("dy", "0.32em")
+    //   .text(d => d.data.label);
   };
 
   render() {
     return (
       <svg
-        id={this.props.title.replace(/\s+/g, "-").toLowerCase()}
-        className=""
+        id="pieChart"
+        className={`${this.props.title.replace(/\s+/g, "-").toLowerCase()}`}
       ></svg>
     );
   }

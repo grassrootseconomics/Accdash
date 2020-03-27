@@ -1,6 +1,6 @@
 import React from "react";
 import "./Sidebar.scss";
-import Dropdown from "../Dropdown/Dropdown";
+// import Dropdown from "../Dropdown/Dropdown";
 import MultiselectDropdown from "../MultiselectDropdown/MultiselectDropdown";
 import MonthDropdown from "../MonthDropdown/MonthDropdown";
 import { Query } from "react-apollo";
@@ -12,14 +12,19 @@ const filters = gql(`
       yearMonthList
       tokenNameList
       spendTypeList
-      genderList      
+      genderList
+      txTypeList      
     }
   }
 `);
 
 export default class Sidebar extends React.Component {
-  getGender = selectedOption => {
-    this.props.gender(selectedOption);
+  getGender = selectedOptions => {
+    this.props.gender(selectedOptions);
+  };
+
+  getTransactionTypes = selectedOptions => {
+    this.props.transactionTypes(selectedOptions);
   };
 
   getSpendTypes = selectedOptions => {
@@ -31,7 +36,6 @@ export default class Sidebar extends React.Component {
   };
 
   getMonths = selectedOptions => {
-    console.log("$$$$$$$", selectedOptions);
     this.props.months(selectedOptions);
   };
 
@@ -55,15 +59,20 @@ export default class Sidebar extends React.Component {
                     options={data.filters[0].spendTypeList}
                     callback={this.getSpendTypes}
                   />
+                  <h6 className="title">Transaction Type</h6>
+                  <MultiselectDropdown
+                    options={data.filters[0].txTypeList}
+                    callback={this.getTransactionTypes}
+                  />
+                  <h6 className="title">Gender</h6>
+                  <MultiselectDropdown
+                    options={data.filters[0].genderList}
+                    callback={this.getGender}
+                  />
                   <h6 className="title">Tokens</h6>
                   <MultiselectDropdown
                     options={data.filters[0].tokenNameList}
                     callback={this.getTokens}
-                  />
-                  <h6 className="title">Gender</h6>
-                  <Dropdown
-                    options={data.filters[0].genderList}
-                    callback={this.getGender}
                   />
                 </div>
               );

@@ -10,7 +10,6 @@ export default class MultiselectDropdown extends React.Component {
     selectedOptions: null
   };
   handleChange = selectedOptions => {
-    console.log("$$$$$$$", selectedOptions);
     this.setState({ selectedOptions });
     this.props.callback(selectedOptions);
   };

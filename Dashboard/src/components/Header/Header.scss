@@ -1,15 +1,24 @@
 .header {
-  min-height: 50px;
-  width: 100%;
-  background: #ffffff;
+  height: 5%;
+  background: #1f2833;
+  display: flex;
+  #filters {
+    position: absolute;
+    color: #ffffff;
+    .dateRange {
+      margin-top: 0.5rem;
+      font-size: large;
+    }
+    #sidebarToggle {
+      color: #ffffff;
+    }
+  }
   p {
     font-weight: bold;
-    font-size: xx-large;
-    padding-top: 5px;
+    font-size: x-large;
     text-align: center;
-    margin-bottom: 0;
-  }
-  #sidebarToggle {
-    position: absolute;
+    margin-bottom: 0.5rem;
+    flex-grow: 1;
+    color: #ffffff;
   }
 }

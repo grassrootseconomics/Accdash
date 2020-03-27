@@ -14,12 +14,15 @@ export default class Tiles extends React.Component {
         <div className="card">
           <p className="title ">{this.props.title}</p>
           <div className="body">
-            <FontAwesomeIcon icon={this.props.icon} />
+            {/* <FontAwesomeIcon icon={this.props.icon} /> */}
             <div className="details">
               <p>{this.props.value}</p>
-              <div className="trend">
-                <FontAwesomeIcon icon={this.props.trend.symbol} />
-                <p>{this.props.trend.percent}%</p>
+              <div className={`trend ${this.props.trend.symbol.iconName}`}>
+                <p>
+                  {" "}
+                  <FontAwesomeIcon icon={this.props.trend.symbol} />
+                  {this.props.trend.percent}%
+                </p>
               </div>
             </div>
           </div>
