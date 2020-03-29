@@ -2,6 +2,7 @@
 
 import django.contrib.postgres.fields.jsonb
 from django.db import migrations, models
+from django.conf import settings
 
 
 class Migration(migrations.Migration):
@@ -36,7 +37,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 'db_table': 'cic_reporting_table',
-                'managed': False,
+                'managed': settings.IS_TESTING,
             },
         ),
         migrations.CreateModel(
@@ -58,7 +59,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 'db_table': 'cic_users',
-                'managed': False,
+                'managed':  settings.IS_TESTING,
             },
         ),
     ]

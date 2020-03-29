@@ -10,3 +10,4 @@ class filters(graphene.ObjectType):
 	tokenName_list = graphene.List(GenericScalar)
 	yearMonth_list = graphene.List(GenericScalar)
 	spendType_list = graphene.List(GenericScalar)
+	txType_list = graphene.List(GenericScalar)

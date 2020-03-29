@@ -11,7 +11,8 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-#os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cicdashboard.settings')
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cicdashboard.settings.development')
+if os.environ.get('ENVIRONMENT') is None: os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cicdashboard.settings.development')
+elif os.environ.get("ENVIRONMENT") == 'PROD': os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cicdashboard.settings.production')
+else: os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cicdashboard.settings.development')
 
 application = get_wsgi_application()

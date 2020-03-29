@@ -22,10 +22,9 @@ from django.conf.urls.static import static
 from graphene_django.views import GraphQLView
 from django.views.decorators.csrf import csrf_exempt
 
-if os.environ.get("ENVIRONMENT") == 'PROD':
-	graphiqlflag = False
-else:
-	graphiqlflag = True
+if os.environ.get('ENVIRONMENT') is None: graphiqlflag = True
+elif os.environ.get("ENVIRONMENT") == 'PROD': graphiqlflag = False
+else: graphiqlflag = True
 
 urlpatterns = [
     path('graphql/', csrf_exempt(GraphQLView.as_view(graphiql=graphiqlflag))),
