@@ -39,10 +39,9 @@ export default class TradeVolumesSpendType extends React.Component {
               <HBarChart
                 title={"Trade Volumes Bar"}
                 keys={this.props.spendTypes}
-                colors={this.color}
                 data={data.categorySummary}
                 width={300}
-                height={325}
+                height={300}
               />
             );
           }}

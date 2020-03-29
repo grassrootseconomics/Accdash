@@ -21,7 +21,7 @@ export default class Layout extends React.Component {
     selectedSpendTypes: [],
     selectedGender: [],
     selectedTransactionType: [],
-    toggleGraphs: "spendtype"
+    toggleGraphs: "txsubtype"
   };
 
   getGender = selectedOptions => {
@@ -160,22 +160,13 @@ export default class Layout extends React.Component {
             </Col>
           </Row>
           <Row id="toggleSection">
-            <Col className="col" lg={1}>
-              <div
-                className="btn-group-vertical btn-group-toggle"
-                data-toggle="buttons"
-              >
-                <label className="btn btn-secondary active">
-                  <input
-                    type="radio"
-                    name="options"
-                    id="option"
-                    value="spendtype"
-                    onChange={this.toggleTrade}
-                  />
-                  SPEND TYPES
-                </label>
-                <label className="btn btn-secondary">
+            <Col className="col" lg={6}>
+              <div className="btn-group btn-group-toggle" data-toggle="buttons">
+                <label
+                  className={`btn btn-secondary ${
+                    this.state.toggleGraphs === "txsubtype" ? "active" : ""
+                  }`}
+                >
                   <input
                     type="radio"
                     name="options"
@@ -185,7 +176,25 @@ export default class Layout extends React.Component {
                   />
                   TRANSACTION
                 </label>
-                <label className="btn btn-secondary">
+                <label
+                  className={`btn btn-secondary ${
+                    this.state.toggleGraphs === "spendtype" ? "active" : ""
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name="options"
+                    id="option"
+                    value="spendtype"
+                    onChange={this.toggleTrade}
+                  />
+                  SPEND TYPES
+                </label>
+                <label
+                  className={`btn btn-secondary ${
+                    this.state.toggleGraphs === "gender" ? "active" : ""
+                  }`}
+                >
                   <input
                     type="radio"
                     name="options"
@@ -196,8 +205,7 @@ export default class Layout extends React.Component {
                   GENDER
                 </label>
               </div>
-            </Col>
-            <Col className="col" lg={5}>
+
               <Transactions
                 from={this.state.from}
                 to={this.state.to}

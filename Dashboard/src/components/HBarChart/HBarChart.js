@@ -17,23 +17,42 @@ export default class HBarChart extends React.Component {
     // const parseMonth = d3.timeParse("%Y-%m");
     const width = this.props.width - margin.left - margin.right;
     const height = this.props.height - margin.top - margin.bottom;
+    const colors = [
+      "#38DCE2",
+      "#32AF93",
+      "#248890",
+      "#74D485",
+      "#68EEAB",
+      "#CAF270",
+      "#2FADB6",
+      "#66FCF1",
+      "#1A505B",
+      "#4472C4",
+      "#1B2A37",
+      "#8EBFF2"
+    ];
+
+    let mappedData = data.map((d, i) => ({ ...d, color: colors[i] }));
+    mappedData = mappedData.sort(function(a, b) {
+      return a.value - b.value;
+    });
 
     const xScale = d3
       .scaleLinear()
-      .range([0, width - 30])
+      .range([0, width - 50])
       .domain([
         0,
-        d3.max(data, function(d) {
+        d3.max(mappedData, function(d) {
           return d.value;
         })
       ]);
 
     const yScale = d3
       .scaleBand()
-      .range([height, 0])
-      .padding(0.2)
+      .range([height + margin.bottom, 0])
+      .padding(0.3)
       .domain(
-        data.map(function(d) {
+        mappedData.map(function(d) {
           return d.label;
         })
       );
@@ -50,24 +69,18 @@ export default class HBarChart extends React.Component {
     // .attr("width", `${width + margin.left + margin.right}`);
     svg.selectAll("g").remove();
 
-    const graph = svg
-      .append("g")
-      .attr("transform", "translate(" + 80 + "," + 15 + ")");
+    const graph = svg.append("g").attr("transform", "translate(100,15)");
 
     graph
       .append("g")
       .call(d3.axisLeft(yScale).tickSize(0))
       .call(g => g.select(".domain").remove())
       .selectAll("text")
-      .attr("font-size", 10);
-    // .style("text-anchor", "end")
-    // .attr("dx", "-.8em")
-    // .attr("dy", ".15em")
-    // .attr("transform", "rotate(-40)");
+      .attr("font-size", 13);
 
     const bars = graph
       .selectAll(".bar")
-      .data(data)
+      .data(mappedData)
       .enter()
       .append("g");
 
@@ -75,7 +88,8 @@ export default class HBarChart extends React.Component {
     bars
       .append("rect")
       .attr("class", "bar")
-      .style("fill", "#1f2833")
+
+      .style("fill", d => d.color)
       .attr("y", function(d) {
         return yScale(d.label);
       })
@@ -90,7 +104,7 @@ export default class HBarChart extends React.Component {
       .attr("class", "label")
       //y position of the label is halfway down the bar
       .attr("y", function(d) {
-        return yScale(d.label) + 12;
+        return yScale(d.label) + 14;
       })
       //x position is 3 pixels to the right of the bar
       .attr("x", function(d) {
@@ -99,7 +113,7 @@ export default class HBarChart extends React.Component {
       .text(function(d) {
         return d3.format(".2s")(d.value);
       })
-      .attr("font-size", 9);
+      .attr("font-size", 13);
   }
 
   render() {

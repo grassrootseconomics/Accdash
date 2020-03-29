@@ -10,27 +10,32 @@ import {
 import Tile from "../Components/Tile/Tile";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
-// import { format } from "d3";
+import { format } from "d3";
 import "./Summary.scss";
 
 const summary = gql(`
 query Summary($from:String!, $to:String!, $tokens:[String]!, $spendTypes:[String]!, $gender:[String]!, $txType:[String]! ){
-  registeredUsers:summaryData  (fromDate:$from, toDate:$to, tokenName:$tokens, spendType:$spendTypes, gender:$gender, txType:$txType, request:"registeredusers"){         
-    total
-    startMonth
-    endMonth
+    registeredUsers:summaryData  (fromDate:$from, toDate:$to, tokenName:$tokens, spendType:$spendTypes, gender:$gender, txType:$txType, request:"registeredusers"){         
+      total
+      startMonth
+      endMonth
+    }
+    traders:summaryData  (fromDate:$from, toDate:$to, tokenName:$tokens, spendType:$spendTypes, gender:$gender, txType:$txType, request:"traders"){         
+      total
+      startMonth
+      endMonth
+    }
+    frequentTraders:summaryData  (fromDate:$from, toDate:$to, tokenName:$tokens, spendType:$spendTypes, gender:$gender, txType:$txType, request:"frequenttraders"){         
+      total
+      startMonth
+      endMonth
+    }  
+    summaryDataBalance (
+      gender:[])
+    {
+      value
+    }
   }
-  traders:summaryData  (fromDate:$from, toDate:$to, tokenName:$tokens, spendType:$spendTypes, gender:$gender, txType:$txType, request:"traders"){         
-    total
-    startMonth
-    endMonth
-  }
-  frequentTraders:summaryData  (fromDate:$from, toDate:$to, tokenName:$tokens, spendType:$spendTypes, gender:$gender, txType:$txType, request:"frequenttraders"){         
-    total
-    startMonth
-    endMonth
-  }  
-}
 `);
 
 export default class UsersSummary extends React.Component {
@@ -74,12 +79,12 @@ export default class UsersSummary extends React.Component {
                 {/* <div className="tileTitle">
                   <p>USERS</p>
                 </div> */}
-                <Col lg={4} className="tile tile-1">
+                <Col lg={3} className="tile tile-1">
                   <Tile
                     title={"Registered Users"}
-                    value={data.registeredUsers[0].total}
+                    value1={format(".2s")(data.registeredUsers[0].total)}
                     icon={faUsers}
-                    trend={{
+                    trend1={{
                       symbol: this.trend(
                         data.registeredUsers[0].startMonth,
                         data.registeredUsers[0].endMonth
@@ -92,12 +97,12 @@ export default class UsersSummary extends React.Component {
                     toolTip={"No of Registered users"}
                   />
                 </Col>
-                <Col lg={4} className="tile tile-2 ">
+                <Col lg={3} className="tile tile-2 ">
                   <Tile
                     title={"Total Traders"}
-                    value={data.traders[0].total}
+                    value1={format(".2s")(data.traders[0].total)}
                     icon={faUserTag}
-                    trend={{
+                    trend1={{
                       symbol: this.trend(
                         data.traders[0].startMonth,
                         data.traders[0].endMonth
@@ -112,12 +117,12 @@ export default class UsersSummary extends React.Component {
                     }
                   />
                 </Col>
-                <Col lg={4} className="tile tile-3 ">
+                <Col lg={3} className="tile tile-3 ">
                   <Tile
                     title={"Frequent Traders"}
-                    value={data.frequentTraders[0].total}
+                    value1={format(".2s")(data.frequentTraders[0].total)}
                     icon={faUserCog}
-                    trend={{
+                    trend1={{
                       symbol: this.trend(
                         data.frequentTraders[0].startMonth,
                         data.frequentTraders[0].endMonth
@@ -127,6 +132,22 @@ export default class UsersSummary extends React.Component {
                         data.frequentTraders[0].endMonth
                       )
                     }}
+                    toolTip={
+                      "No of traders with over 4 trades on average in a month"
+                    }
+                  />
+                </Col>
+                <Col lg={3} className="tile tile-3 ">
+                  <Tile
+                    title={"Balance"}
+                    value1={format(".2s")(
+                      data.summaryDataBalance[0].value[0].total
+                    )}
+                    icon={faUserCog}
+                    value2={format(".2s")(
+                      data.summaryDataBalance[0].value[0].circulation
+                    )}
+                    units2={"(In Circulation)"}
                     toolTip={
                       "No of traders with over 4 trades on average in a month"
                     }

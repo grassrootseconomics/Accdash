@@ -15,14 +15,19 @@
 
     .details {
       display: flex;
-      justify-content: space-between;
+      // justify-content: space-between;
 
-      p {
+      p.label {
         font-size: 1em;
         font-weight: 800;
         margin: 0;
         padding: 0;
         margin-left: 5px;
+        span {
+          font-size: 0.75em;
+          font-weight: 500;
+          margin-left: 2px;
+        }
       }
     }
     .trend {
@@ -39,6 +44,7 @@
         font-size: 1em;
         font-weight: 600;
         padding-left: 0.5em;
+        margin-bottom: 0;
       }
       svg {
         font-size: 1em;

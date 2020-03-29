@@ -26,12 +26,12 @@ export default class stackedBarChart extends React.Component {
     const yScale = d3.scaleLinear().range([height, 0]);
 
     const colors = [
-      "#CAF270",
       "#38DCE2",
       "#32AF93",
       "#248890",
       "#74D485",
       "#68EEAB",
+      "#CAF270",
       "#2FADB6",
       "#66FCF1",
       "#1A505B",
@@ -162,7 +162,7 @@ export default class stackedBarChart extends React.Component {
     const legend = svg
       .append("g")
       .attr("transform", `translate(15, 0)`)
-      .attr("font-size", 9)
+      .attr("font-size", 10)
       .attr("text-anchor", "end")
       .selectAll("g")
       .data(this.props.keys.slice())

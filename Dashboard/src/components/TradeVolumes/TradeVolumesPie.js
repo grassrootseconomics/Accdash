@@ -39,10 +39,9 @@ export default class TradeVolumesPie extends React.Component {
               <PieChart
                 title={"Trade Volumes Pie"}
                 keys={this.props.spendTypes}
-                colors={this.color}
                 data={data.categorySummary}
                 width={300}
-                height={325}
+                height={300}
               />
             );
           }}

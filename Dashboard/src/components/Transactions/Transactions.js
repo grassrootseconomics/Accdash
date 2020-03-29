@@ -43,16 +43,16 @@ export default class Transactions extends React.Component {
                     title={"Transactions"}
                     data={chartData}
                     keys={Object.keys(chartData[0]).slice(1)}
-                    width={750}
-                    height={325}
+                    width={900}
+                    height={300}
                   />
                 ) : (
                   <LineChart
                     title={"Transactions"}
                     data={chartData}
                     keys={Object.keys(chartData[0]).slice(1)}
-                    width={750}
-                    height={325}
+                    width={900}
+                    height={300}
                   />
                 );
               }

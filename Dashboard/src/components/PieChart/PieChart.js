@@ -26,22 +26,22 @@ export default class PieChart extends React.Component {
     graph.append("g").attr("class", "labels");
     graph.append("g").attr("class", "lines");
 
-    const diameter = 200,
+    const diameter = 250,
       radius = diameter / 2;
 
     const colors = [
-      "#CAF270",
       "#38DCE2",
       "#32AF93",
       "#248890",
       "#74D485",
       "#68EEAB",
+      "#CAF270",
       "#2FADB6",
       "#66FCF1",
       "#1A505B",
+      "#4472C4",
       "#1B2A37",
-      "#8EBFF2",
-      "#403B51"
+      "#8EBFF2"
     ];
 
     const pie = d3
@@ -52,7 +52,7 @@ export default class PieChart extends React.Component {
     const arc = d3
       .arc()
       .outerRadius(radius)
-      .innerRadius(0);
+      .innerRadius(radius / 2);
 
     graph.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
@@ -109,30 +109,31 @@ export default class PieChart extends React.Component {
       tooltip.style("opacity", 0);
     });
 
-    // const legend = svg
-    //   .append("g")
-    //   .attr("transform", `translate(-68, 0)`)
-    //   .attr("font-size", 9)
-    //   .attr("text-anchor", "end")
-    //   .selectAll("g")
-    //   .data(pie(data))
-    //   .enter()
-    //   .append("g")
-    //   .attr("transform", (d, i) => `translate(0, ${i * 15})`);
+    const legend = svg
+      .append("g")
+      .attr("transform", `translate(20, -20)`)
+      .attr("font-size", 10)
+      // .attr("text-anchor", "end")
+      .selectAll("g")
+      .data(pie(data))
+      .enter()
+      .append("g")
+      .attr("transform", (d, i) => `translate(${i * 60}, ${height})`);
 
-    // legend
-    //   .append("rect")
-    //   .attr("x", width + 50)
-    //   .attr("width", 10)
-    //   .attr("height", 10)
-    //   .attr("fill", (d, i) => colors[i]);
+    legend
+      .append("rect")
+      .attr("x", 10)
+      .attr("y", 0)
+      .attr("width", 10)
+      .attr("height", 10)
+      .attr("fill", (d, i) => colors[i]);
 
-    // legend
-    //   .append("text")
-    //   .attr("x", width + 45)
-    //   .attr("y", 5)
-    //   .attr("dy", "0.32em")
-    //   .text(d => d.data.label);
+    legend
+      .append("text")
+      .attr("x", 25)
+      .attr("y", 5)
+      .attr("dy", "0.32em")
+      .text(d => d.data.label);
   };
 
   render() {

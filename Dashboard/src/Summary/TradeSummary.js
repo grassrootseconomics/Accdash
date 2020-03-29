@@ -14,16 +14,66 @@ import "./Summary.scss";
 
 const summary = gql(`
 query Summary($from:String!, $to:String!, $tokens:[String]!, $spendTypes:[String]!, $gender:[String]!, $txType:[String]! ){
-  tradeVolumes:summaryData (fromDate:$from, toDate:$to, tokenName:$tokens, spendType:$spendTypes, gender:$gender, txType:$txType, request:"tradevolumes"){     
-    total
-    startMonth
-    endMonth   
-  }
-  noTransactions:summaryData (fromDate:$from, toDate:$to, tokenName:$tokens, spendType:$spendTypes, gender:$gender, txType:$txType, request:"transactioncount"){     
-    total
-    startMonth
-    endMonth    
-  }  
+  standard:summaryDataSubtype(fromDate:$from, toDate:$to, tokenName:$tokens, spendType:$spendTypes, gender:$gender, txType:$txType, request:"standard"){     
+    
+      tradeVolumes
+      {
+        total
+        startMonth
+        endMonth
+      }
+      transactionCount
+      {
+        total
+        startMonth
+        endMonth
+      }
+    } 
+    disbursement:summaryDataSubtype(fromDate:$from, toDate:$to, tokenName:$tokens, spendType:$spendTypes, gender:$gender, txType:$txType, request:"disbursement"){     
+    
+      tradeVolumes
+      {
+        total
+        startMonth
+        endMonth
+      }
+      transactionCount
+      {
+        total
+        startMonth
+        endMonth
+      }
+    } 
+    agent_out:summaryDataSubtype(fromDate:$from, toDate:$to, tokenName:$tokens, spendType:$spendTypes, gender:$gender, txType:$txType, request:"agent_out"){     
+    
+      tradeVolumes
+      {
+        total
+        startMonth
+        endMonth
+      }
+      transactionCount
+      {
+        total
+        startMonth
+        endMonth
+      }
+    } 
+    reclamation:summaryDataSubtype(fromDate:$from, toDate:$to, tokenName:$tokens, spendType:$spendTypes, gender:$gender, txType:$txType, request:"reclamation"){     
+    
+      tradeVolumes
+      {
+        total
+        startMonth
+        endMonth
+      }
+      transactionCount
+      {
+        total
+        startMonth
+        endMonth
+      }
+    } 
 }
 `);
 
@@ -68,55 +118,137 @@ export default class TradeSummary extends React.Component {
                 {/* <div className="tileTitle">
                   <p>TRADES</p>
                 </div> */}
-                <Col lg={4} className="tile tile-1">
+                <Col lg={3} className="tile tile-1">
                   <Tile
-                    title={"Standard Trades"}
-                    value={format(".2s")(data.tradeVolumes[0].total)}
+                    title={"Standard"}
                     icon={faMoneyBillAlt}
-                    trend={{
+                    value1={format(".2s")(data.standard[0].tradeVolumes.total)}
+                    units1={"(KES)"}
+                    trend1={{
                       symbol: this.trend(
-                        data.tradeVolumes[0].startMonth,
-                        data.tradeVolumes.endMonth
+                        data.standard[0].tradeVolumes.startMonth,
+                        data.standard[0].tradeVolumes.endMonth
                       ),
                       percent: this.percent(
-                        data.tradeVolumes[0].startMonth,
-                        data.tradeVolumes[0].endMonth
+                        data.standard[0].tradeVolumes.startMonth,
+                        data.standard[0].tradeVolumes.endMonth
+                      )
+                    }}
+                    value2={format(".2s")(
+                      data.standard[0].transactionCount.total
+                    )}
+                    units2={"transactions"}
+                    trend2={{
+                      symbol: this.trend(
+                        data.standard[0].transactionCount.startMonth,
+                        data.standard[0].transactionCount.endMonth
+                      ),
+                      percent: this.percent(
+                        data.standard[0].transactionCount.startMonth,
+                        data.standard[0].transactionCount.endMonth
                       )
                     }}
                     toolTip={"Volumes of CICs traded"}
                   />
                 </Col>
-                <Col lg={4} className="tile tile-2">
+                <Col lg={3} className="tile tile-2">
                   <Tile
                     title={"Disbursement"}
-                    value={format(".2s")(data.noTransactions[0].total)}
                     icon={faExchangeAlt}
-                    trend={{
+                    value1={format(".2s")(
+                      data.disbursement[0].tradeVolumes.total
+                    )}
+                    units1={"(KES)"}
+                    trend1={{
                       symbol: this.trend(
-                        data.noTransactions[0].startMonth,
-                        data.noTransactions[0].endMonth
+                        data.disbursement[0].tradeVolumes.startMonth,
+                        data.disbursement[0].tradeVolumes.endMonth
                       ),
                       percent: this.percent(
-                        data.noTransactions[0].startMonth,
-                        data.noTransactions[0].endMonth
+                        data.disbursement[0].tradeVolumes.startMonth,
+                        data.disbursement[0].tradeVolumes.endMonth
+                      )
+                    }}
+                    value2={format(".2s")(
+                      data.disbursement[0].transactionCount.total
+                    )}
+                    units2={"transactions"}
+                    trend2={{
+                      symbol: this.trend(
+                        data.disbursement[0].transactionCount.startMonth,
+                        data.disbursement[0].transactionCount.endMonth
+                      ),
+                      percent: this.percent(
+                        data.disbursement[0].transactionCount.startMonth,
+                        data.disbursement[0].transactionCount.endMonth
                       )
                     }}
                     toolTip={"Total no of Transactions"}
                   />
                 </Col>
-                <Col lg={4} className="tile tile-3">
+                <Col lg={3} className="tile tile-3">
                   <Tile
                     title={"Agent Out"}
-                    value={format(".2s")(data.noTransactions[0].total)}
                     icon={faExchangeAlt}
-                    trend={{
+                    value1={format(".2s")(data.agent_out[0].tradeVolumes.total)}
+                    units1={"(KES)"}
+                    trend1={{
                       symbol: this.trend(
-                        data.noTransactions[0].startMonth,
-                        data.noTransactions[0].endMonth
+                        data.agent_out[0].tradeVolumes.startMonth,
+                        data.agent_out[0].tradeVolumes.endMonth
                       ),
                       percent: this.percent(
-                        data.noTransactions[0].startMonth,
-                        data.noTransactions[0].endMonth
+                        data.agent_out[0].tradeVolumes.startMonth,
+                        data.agent_out[0].tradeVolumes.endMonth
+                      )
+                    }}
+                    value2={format(".2s")(
+                      data.agent_out[0].transactionCount.total
+                    )}
+                    units2={"transactions"}
+                    trend2={{
+                      symbol: this.trend(
+                        data.agent_out[0].transactionCount.startMonth,
+                        data.agent_out[0].transactionCount.endMonth
+                      ),
+                      percent: this.percent(
+                        data.agent_out[0].transactionCount.startMonth,
+                        data.agent_out[0].transactionCount.endMonth
+                      )
+                    }}
+                    toolTip={"Total no of Transactions"}
+                  />
+                </Col>
+                <Col lg={3} className="tile tile-3">
+                  <Tile
+                    title={"Reclamation"}
+                    icon={faExchangeAlt}
+                    value1={format(".2s")(
+                      data.reclamation[0].tradeVolumes.total
+                    )}
+                    units1={"(KES)"}
+                    trend1={{
+                      symbol: this.trend(
+                        data.reclamation[0].tradeVolumes.startMonth,
+                        data.reclamation[0].tradeVolumes.endMonth
+                      ),
+                      percent: this.percent(
+                        data.reclamation[0].tradeVolumes.startMonth,
+                        data.reclamation[0].tradeVolumes.endMonth
+                      )
+                    }}
+                    value2={format(".2s")(
+                      data.reclamation[0].transactionCount.total
+                    )}
+                    units2={"transactions"}
+                    trend2={{
+                      symbol: this.trend(
+                        data.reclamation[0].transactionCount.startMonth,
+                        data.reclamation[0].transactionCount.endMonth
+                      ),
+                      percent: this.percent(
+                        data.reclamation[0].transactionCount.startMonth,
+                        data.reclamation[0].transactionCount.endMonth
                       )
                     }}
                     toolTip={"Total no of Transactions"}

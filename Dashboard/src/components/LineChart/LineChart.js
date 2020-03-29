@@ -19,12 +19,12 @@ export default class lineBarChart extends React.Component {
     const width = this.props.width - margin.left - margin.right;
     const height = this.props.height - margin.top - margin.bottom;
     const colors = [
-      "#CAF270",
       "#38DCE2",
       "#32AF93",
       "#248890",
       "#74D485",
       "#68EEAB",
+      "#CAF270",
       "#2FADB6",
       "#66FCF1",
       "#1A505B",
@@ -39,7 +39,7 @@ export default class lineBarChart extends React.Component {
       .scaleBand()
       .range([0, width])
       .padding(1);
-    const yScale = d3.scaleLinear().range([height, 0]);
+    const yScale = d3.scaleLinear().range([height, 20]);
 
     const xAxis = d3
       .axisBottom(xScale)
@@ -62,9 +62,7 @@ export default class lineBarChart extends React.Component {
           margin.bottom}`
       );
 
-    const graph = svg
-      .append("g")
-      .attr("transform", "translate(" + 50 + "," + 10 + ")");
+    const graph = svg.append("g").attr("transform", "translate(50, -10)");
 
     // Scale the range of the data
     xScale.domain(
@@ -72,13 +70,7 @@ export default class lineBarChart extends React.Component {
         return parseMonth(d.yearMonth);
       })
     );
-    yScale.domain([
-      0,
-      d3.max(data, d => d3.max(keys, k => d[k]))
-      // d3.max(data, function(d) {
-      //   return Math.max(d.Frequent, d.Total);
-      // })
-    ]);
+    yScale.domain([0, d3.max(data, d => d3.max(keys, k => d[k]))]);
 
     this.props.keys.forEach((key, i) => {
       graph
@@ -151,38 +143,32 @@ export default class lineBarChart extends React.Component {
       .call(yAxis)
       .call(g => g.select(".domain").remove());
 
-    // // text label for the y axis
-    // graph
-    //   .append("text")
-    //   .attr("transform", "rotate(-90)")
-    //   .attr("font-size", 12)
-    //   .attr("y", 0 - margin.left)
-    //   .attr("x", 0 - height / 2)
-    //   .attr("dy", "1.5rem")
-    //   .style("text-anchor", "middle")
-    //   .text("Users");
-
     const legend = svg
       .append("g")
-      .attr("transform", `translate(15, 0)`)
-      .attr("font-size", 9)
-      .attr("text-anchor", "end")
+      .attr(
+        "transform",
+        (d, i) =>
+          `translate(${(width + margin.left + margin.right) / 2 -
+            keys.length * 40}, 40)`
+      )
+      .attr("font-size", 10)
+      // .attr("text-anchor", "end")
       .selectAll("g")
       .data(this.props.keys.slice())
       .enter()
       .append("g")
-      .attr("transform", (d, i) => `translate(0, ${i * 15})`);
+      .attr("transform", (d, i) => `translate(${i * 100}, ${height})`);
 
     legend
       .append("rect")
-      .attr("x", width + 50)
+      .attr("x", 10)
       .attr("width", 10)
       .attr("height", 10)
       .attr("fill", (d, i) => colors[i]);
 
     legend
       .append("text")
-      .attr("x", width + 45)
+      .attr("x", 25)
       .attr("y", 5)
       .attr("dy", "0.32em")
       .text(function(d) {
