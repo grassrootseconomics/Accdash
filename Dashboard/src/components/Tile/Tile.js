@@ -4,6 +4,59 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 export default class Tiles extends React.Component {
+  renderSecondValue() {
+    if (this.props.value2) {
+      return (
+        <div className="details">
+          <p className="label">
+            {this.props.value2}
+
+            {this.renderSecondValueUnits()}
+          </p>
+          {this.renderSecondValueTrend()}
+        </div>
+      );
+    }
+  }
+
+  renderFirstValueUnits() {
+    if (this.props.units1) {
+      return <span>{this.props.units1}</span>;
+    }
+  }
+
+  renderFirstValueTrend() {
+    if (this.props.trend1) {
+      return (
+        <div className={`trend ${this.props.trend1.symbol.iconName}`}>
+          <p>
+            <FontAwesomeIcon icon={this.props.trend1.symbol} />
+            {`${this.props.trend1.percent}%`}
+          </p>
+        </div>
+      );
+    }
+  }
+
+  renderSecondValueTrend() {
+    if (this.props.trend2) {
+      return (
+        <div className={`trend ${this.props.trend2.symbol.iconName}`}>
+          <p>
+            <FontAwesomeIcon icon={this.props.trend2.symbol} />
+            {`${this.props.trend2.percent}%`}
+          </p>
+        </div>
+      );
+    }
+  }
+
+  renderSecondValueUnits() {
+    if (this.props.units2) {
+      return <span>{this.props.units2}</span>;
+    }
+  }
+
   render() {
     return (
       <OverlayTrigger
@@ -14,14 +67,16 @@ export default class Tiles extends React.Component {
         <div className="card">
           <p className="title ">{this.props.title}</p>
           <div className="body">
-            <FontAwesomeIcon icon={this.props.icon} />
+            {/* <FontAwesomeIcon icon={this.props.icon} /> */}
             <div className="details">
-              <p>{this.props.value}</p>
-              <div className="trend">
-                <FontAwesomeIcon icon={this.props.trend.symbol} />
-                <p>{this.props.trend.percent}%</p>
-              </div>
+              <p className="label">
+                {this.props.value1}
+                {this.renderFirstValueUnits()}
+              </p>
+              {this.renderFirstValueTrend()}
             </div>
+
+            {this.renderSecondValue()}
           </div>
         </div>
       </OverlayTrigger>

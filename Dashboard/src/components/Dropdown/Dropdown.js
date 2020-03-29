@@ -10,10 +10,12 @@ export default class Dropdown extends React.Component {
     this.props.callback(selectedOption);
   };
   options = this.props.options.map(o => ({ value: o.Item, label: o.Item }));
+  allOptions = [{ value: [], label: "" }, ...this.options];
+
   render() {
     return (
       <Select
-        options={this.options}
+        options={this.allOptions}
         className="mt-1 ml-1 mr-1 mb-1"
         onChange={this.handleChange}
       />

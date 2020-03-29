@@ -1,0 +1,39 @@
+#body {
+  min-height: 95%;
+  max-height: 95%;
+  .row {
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+    margin-bottom: 1em;
+  }
+  #summarySection {
+    margin-top: 1em;
+    display: flex;
+    min-height: 25%;
+  }
+
+  #dataSection {
+    display: flex;
+    min-height: 35%;
+  }
+  #toggleSection {
+    display: flex;
+    min-height: 40%;
+    .col {
+      background: #1f2833;
+    }
+    .btn-group-toggle {
+      font-size: large;
+      font-weight: 600;
+      margin-top: 1px;
+      .btn-secondary {
+        background: #1f2833;
+        border-color: #1f2833;
+        &.active {
+          background: #ffffff;
+          color: #1f2833;
+        }
+      }
+    }
+  }
+}

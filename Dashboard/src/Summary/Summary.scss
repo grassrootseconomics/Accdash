@@ -1,36 +1,30 @@
-#summary {
-  padding-left: 1em;
-  .tile {
-    margin-top: 2rem;
-  }
-  .tile-1 {
-    .card,
-    svg {
-      color: #108298;
+#tradeSummary,
+#usersSummary {
+  background: #1f2833;
+  // margin: 0 -1em;
+  #tiles {
+    margin: 0;
+    .tileTitle {
+      width: 10%;
+      p {
+        color: #ffffff;
+        transform-origin: 0 0;
+        transform: rotate(90deg);
+        margin-top: 50%;
+        font-size: large;
+        font-weight: 600;
+      }
+    }
+
+    .tile {
+      padding: 1em;
+      // width: 30%;
     }
   }
-  .tile-2 {
-    .card,
-    svg {
-      color: #80bdff;
-    }
-  }
-  .tile-3 {
-    .card,
-    svg {
-      color: #58d7b1;
-    }
-  }
-  .tile-4 {
-    .card,
-    svg {
-      color: #008080;
-    }
-  }
-  .tile-5 {
-    .card,
-    svg {
-      color: #0000bb;
-    }
-  }
+}
+#tradeSummary {
+  margin-right: -15px;
+}
+#usersSummary {
+  margin-left: -15px;
 }
