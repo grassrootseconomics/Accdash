@@ -10,40 +10,28 @@ export default class stackedBarChart extends React.Component {
   }
 
   createBarChart() {
-    const data = this.props.data;
-    const keys = this.props.keys;
     const graphTitle = this.props.title;
     const graphClass = graphTitle.replace(/\s+/g, "-").toLowerCase();
     const margin = { top: 20, right: 20, bottom: 40, left: 60 };
     const parseMonth = d3.timeParse("%Y-%m");
     const width = this.props.width - margin.left - margin.right;
     const height = this.props.height - margin.top - margin.bottom;
-
+    const { startMonth, endMonth, keys, data, colors } = this.props;
+    const parseDate = d3.timeParse("%Y-%m-%d");
+    const monthView = startMonth === endMonth;
     const xScale = d3
       .scaleBand()
-      .range([0, width - 50])
+      .range([0, width - 75])
       .padding(0.1);
     const yScale = d3.scaleLinear().range([height, 0]);
 
-    const colors = [
-      "#38DCE2",
-      "#32AF93",
-      "#248890",
-      "#74D485",
-      "#68EEAB",
-      "#CAF270",
-      "#2FADB6",
-      "#66FCF1",
-      "#1A505B",
-      "#4472C4",
-      "#1B2A37",
-      "#8EBFF2"
-    ];
-    // [...d3.schemePaired, ...d3.schemeTableau10];
     const xAxis = d3
       .axisBottom(xScale)
-      .tickFormat(d3.timeFormat("%b %Y"))
+      .tickFormat(
+        !monthView ? d3.timeFormat("%b %Y") : d3.timeFormat("%d %b %Y")
+      )
       .tickSize(0);
+
     const yAxis = d3
       .axisLeft(yScale)
       .tickFormat(d3.format(".2s"))
@@ -74,31 +62,44 @@ export default class stackedBarChart extends React.Component {
 
     xScale.domain(
       data.map(function(d) {
-        return parseMonth(d.yearMonth);
+        return !monthView ? parseMonth(d.yearMonth) : parseDate(d.dayMonth);
       })
     );
 
     yScale.domain([0, d3.max(data, d => d3.sum(keys, k => +d[k]))]).nice();
-
-    // data.forEach(function(d) {
-    //   d.total = d3.sum(keys, k => +d[k]);
-    //   return d;
-    // });
+    let total;
+    data.forEach(function(d) {
+      total = d3.sum(keys, k => +d[k]);
+      return d;
+    });
+    d3.select(`div.${graphClass}`).remove();
 
     const tooltip = d3
       .select("div.app")
       .append("div")
       .attr("class", `tooltip ${graphClass}`)
       .style("opacity", 0);
+
     tooltip.append("span").attr("class", "label");
     tooltip.append("span").attr("class", "value");
 
+    const mappedLayers = layers.map(layer => {
+      const newLayer = layer.map(rect => {
+        const newRect = [...rect, { key: layer.key, data: rect.data }];
+
+        return newRect;
+      });
+
+      return newLayer;
+    });
+
     const layer = graph
       .selectAll(".layer")
-      .data(layers)
+      .data(mappedLayers)
       .enter()
       .append("g")
       .attr("class", "layer")
+      .attr("data-type", d => d.key)
       .style("fill", (d, i) => colors[i]);
 
     layer
@@ -109,18 +110,21 @@ export default class stackedBarChart extends React.Component {
       .enter()
       .append("rect")
       .attr("x", function(d) {
-        return xScale(parseMonth(d.data.yearMonth));
+        return xScale(
+          !monthView
+            ? parseMonth(d[2].data.yearMonth)
+            : parseDate(d[2].data.dayMonth)
+        );
       })
       .attr("y", function(d) {
         return yScale(d[1]);
       })
       .attr("height", function(d) {
         return yScale(d[0]) - yScale(d[1]);
-        // return isNaN(yScale(d[0]) - yScale(d[1])) ? 0 : height;
       })
       .attr("width", xScale.bandwidth())
       .on("mouseover", function(d) {
-        // tooltip.select(".label").html(d.data.label + ": ");
+        tooltip.select(".label").html(d[2].key + ": ");
         tooltip.select(".value").html(d3.format(".2s")(d[1] - d[0]));
         tooltip.style("display", "block");
         tooltip.style("opacity", 2);

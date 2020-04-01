@@ -6,6 +6,7 @@ import UsersSummary from "../Summary/UsersSummary";
 import TradeSummary from "../Summary/TradeSummary";
 import Users from "../Components/Users/Users";
 import TradeVolumes from "../Components/TradeVolumes/TradeVolumes";
+import Traders from "../Components/TradeVolumes/Traders";
 import TradeVolumesPie from "../Components/TradeVolumes/TradeVolumesPie";
 import Transactions from "../Components/Transactions/Transactions";
 import TradeVolumesSpendType from "../Components/TradeVolumes/TradeVolumesSpendType";
@@ -15,12 +16,12 @@ import "./Layout.scss";
 export default class Layout extends React.Component {
   state = {
     showSidebar: false,
-    from: "2019-03",
-    to: "2020-02",
+    from: "2019-04",
+    to: "2020-03",
     selectedTokenNames: [],
     selectedSpendTypes: [],
-    selectedGender: [],
-    selectedTransactionType: [],
+    selectedGender: ["Male", "Female"],
+    selectedTransactionType: ["STANDARD"],
     toggleGraphs: "txsubtype"
   };
 
@@ -30,7 +31,7 @@ export default class Layout extends React.Component {
           selectedGender: selectedOptions.map(({ value }) => value)
         })
       : this.setState({
-          selectedGender: []
+          selectedGender: ["Male", "Female"]
         });
   };
 
@@ -50,7 +51,7 @@ export default class Layout extends React.Component {
           selectedSpendTypes: selectedOptions.map(({ value }) => value)
         })
       : this.setState({
-          selectedSpendTypes: []
+          selectedSpendTypes: ["STANDARD"]
         });
   };
 
@@ -103,6 +104,10 @@ export default class Layout extends React.Component {
           spendTypes={this.getSpendTypes}
           months={this.getMonths}
           transactionTypes={this.getTransactionType}
+          startDate={this.state.from}
+          endDate={this.state.to}
+          selectedGender={this.state.selectedGender}
+          selectedTXType={this.state.selectedTransactionType}
         />
         <div id="body">
           <Row id="summarySection">
@@ -158,54 +163,66 @@ export default class Layout extends React.Component {
                 txType={this.state.selectedTransactionType}
               />
             </Col>
+            <Col className="col" lg={2}>
+              <Traders
+                from={this.state.from}
+                to={this.state.to}
+                tokens={this.state.selectedTokenNames}
+                spendTypes={this.state.selectedSpendTypes}
+                gender={this.state.selectedGender}
+                txType={this.state.selectedTransactionType}
+              />
+            </Col>
+          </Row>
+          <Row id="toggleGroup">
+            <div className="btn-group btn-group-toggle" data-toggle="buttons">
+              <label
+                className={`btn btn-secondary firstTab ${
+                  this.state.toggleGraphs === "txsubtype" ? "active" : ""
+                }`}
+              >
+                <input
+                  type="radio"
+                  name="options"
+                  id="option"
+                  value="txsubtype"
+                  onChange={this.toggleTrade}
+                />
+                TRANSACTION
+              </label>
+              <label
+                className={`btn btn-secondary ${
+                  this.state.toggleGraphs === "spendtype" ? "active" : ""
+                }`}
+              >
+                <input
+                  type="radio"
+                  name="options"
+                  id="option"
+                  value="spendtype"
+                  onChange={this.toggleTrade}
+                />
+                SPEND TYPES
+              </label>
+              <label
+                className={`btn btn-secondary lastTab ${
+                  this.state.toggleGraphs === "gender" ? "active" : ""
+                }`}
+              >
+                <input
+                  type="radio"
+                  name="options"
+                  id="option"
+                  value="gender"
+                  onChange={this.toggleTrade}
+                />
+                GENDER
+              </label>
+            </div>
+            <div className="filler"></div>
           </Row>
           <Row id="toggleSection">
             <Col className="col" lg={6}>
-              <div className="btn-group btn-group-toggle" data-toggle="buttons">
-                <label
-                  className={`btn btn-secondary ${
-                    this.state.toggleGraphs === "txsubtype" ? "active" : ""
-                  }`}
-                >
-                  <input
-                    type="radio"
-                    name="options"
-                    id="option"
-                    value="txsubtype"
-                    onChange={this.toggleTrade}
-                  />
-                  TRANSACTION
-                </label>
-                <label
-                  className={`btn btn-secondary ${
-                    this.state.toggleGraphs === "spendtype" ? "active" : ""
-                  }`}
-                >
-                  <input
-                    type="radio"
-                    name="options"
-                    id="option"
-                    value="spendtype"
-                    onChange={this.toggleTrade}
-                  />
-                  SPEND TYPES
-                </label>
-                <label
-                  className={`btn btn-secondary ${
-                    this.state.toggleGraphs === "gender" ? "active" : ""
-                  }`}
-                >
-                  <input
-                    type="radio"
-                    name="options"
-                    id="option"
-                    value="gender"
-                    onChange={this.toggleTrade}
-                  />
-                  GENDER
-                </label>
-              </div>
-
               <Transactions
                 from={this.state.from}
                 to={this.state.to}

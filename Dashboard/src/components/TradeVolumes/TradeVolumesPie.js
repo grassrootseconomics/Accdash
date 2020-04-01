@@ -42,6 +42,7 @@ export default class TradeVolumesPie extends React.Component {
                 data={data.categorySummary}
                 width={300}
                 height={300}
+                colors={["#3b5998", "#8b9dc3", "#536878", "#4279a3"]}
               />
             );
           }}

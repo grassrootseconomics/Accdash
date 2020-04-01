@@ -11,29 +11,16 @@ export default class lineBarChart extends React.Component {
 
   createLineChart() {
     // set the dimensions and margins of the graph
-
-    const keys = this.props.keys;
     const graphTitle = this.props.title;
     const graphClass = graphTitle.replace(/\s+/g, "-").toLowerCase();
     const margin = { top: 20, right: 20, bottom: 40, left: 60 };
     const width = this.props.width - margin.left - margin.right;
     const height = this.props.height - margin.top - margin.bottom;
-    const colors = [
-      "#38DCE2",
-      "#32AF93",
-      "#248890",
-      "#74D485",
-      "#68EEAB",
-      "#CAF270",
-      "#2FADB6",
-      "#66FCF1",
-      "#1A505B",
-      "#4472C4",
-      "#1B2A37",
-      "#8EBFF2"
-    ];
-    const data = this.props.data;
+    const { startMonth, endMonth, keys, data, colors } = this.props;
+
     const parseMonth = d3.timeParse("%Y-%m");
+    const parseDate = d3.timeParse("%Y-%m-%d");
+    const monthView = startMonth === endMonth;
 
     const xScale = d3
       .scaleBand()
@@ -43,7 +30,9 @@ export default class lineBarChart extends React.Component {
 
     const xAxis = d3
       .axisBottom(xScale)
-      .tickFormat(d3.timeFormat(" %b %Y"))
+      .tickFormat(
+        !monthView ? d3.timeFormat("%b %Y") : d3.timeFormat("%d %b %Y")
+      )
       .tickSize(0);
     const yAxis = d3
       .axisLeft(yScale)
@@ -67,7 +56,7 @@ export default class lineBarChart extends React.Component {
     // Scale the range of the data
     xScale.domain(
       data.map(function(d) {
-        return parseMonth(d.yearMonth);
+        return !monthView ? parseMonth(d.yearMonth) : parseDate(d.dayMonth);
       })
     );
     yScale.domain([0, d3.max(data, d => d3.max(keys, k => d[k]))]);
@@ -83,14 +72,20 @@ export default class lineBarChart extends React.Component {
           "d",
           d3
             .line()
-            .x(d => xScale(parseMonth(d.yearMonth)))
+            .x(d =>
+              xScale(
+                !monthView ? parseMonth(d.yearMonth) : parseDate(d.dayMonth)
+              )
+            )
             .y(d => yScale(d[key]))
         );
+
+      d3.select(`div.${graphClass}`).remove();
 
       const tooltip = d3
         .select("div.app")
         .append("div")
-        .attr("class", "tooltip lineChart")
+        .attr("class", `tooltip ${graphClass}`)
         .style("opacity", 0);
 
       tooltip.append("div").attr("class", "value");
@@ -105,7 +100,9 @@ export default class lineBarChart extends React.Component {
 
       $keydot
         .attr("cx", function(d) {
-          return xScale(parseMonth(d.yearMonth));
+          return xScale(
+            !monthView ? parseMonth(d.yearMonth) : parseDate(d.dayMonth)
+          );
         })
         .attr("cy", function(d) {
           return yScale(d[key]);
@@ -151,7 +148,7 @@ export default class lineBarChart extends React.Component {
           `translate(${(width + margin.left + margin.right) / 2 -
             keys.length * 40}, 40)`
       )
-      .attr("font-size", 10)
+      .attr("font-size", 11)
       // .attr("text-anchor", "end")
       .selectAll("g")
       .data(this.props.keys.slice())

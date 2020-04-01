@@ -15,9 +15,13 @@ query MonthlySummary($from:String!, $to:String!, $tokens:[String]!, $spendTypes:
 
 export default class users extends React.Component {
   render() {
+    let title =
+      this.props.from === this.props.to
+        ? "TOTAL TRADERS"
+        : "TOTAL TRADERS vs FREQUENT TRADERS";
     return (
       <section id="users">
-        <p className="title">FREQUENT TRADERS vs TOTAL TRADERS</p>
+        <p className="title">{title}</p>
         <Query
           query={summaryQuery}
           variables={{
@@ -31,13 +35,22 @@ export default class users extends React.Component {
         >
           {({ loading, error, data }) => {
             if (loading) return <p>Loading data...</p>;
+
+            if (this.props.from === this.props.to) {
+              data.monthlySummaryData[0].value.forEach(element => {
+                delete element.Frequent;
+              });
+            }
             return (
               <LineChart
-                title={"Traders vs Frequent Traders"}
+                title={"Total Traders vs Frequent Traders"}
                 data={data.monthlySummaryData[0].value}
                 keys={Object.keys(data.monthlySummaryData[0].value[0]).slice(1)}
                 width={900}
-                height={280}
+                height={300}
+                startMonth={this.props.from}
+                endMonth={this.props.to}
+                colors={["#4472C4", "#1B2A37"]}
               />
             );
           }}

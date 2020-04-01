@@ -31,6 +31,23 @@ export default class Transactions extends React.Component {
           }}
         >
           {({ loading, error, data }) => {
+            const colors =
+              this.props.tradeType === "gender"
+                ? ["#3b5998", "#8b9dc3", "#536878", "#4279a3"]
+                : [
+                    "#38DCE2",
+                    "#32AF93",
+                    "#248890",
+                    "#74D485",
+                    "#68EEAB",
+                    "#CAF270",
+                    "#2FADB6",
+                    "#66FCF1",
+                    "#1A505B",
+                    "#4472C4",
+                    "#1B2A37",
+                    "#8EBFF2"
+                  ];
             if (loading) {
               return <p>Loading data...</p>;
             } else if (error) {
@@ -44,7 +61,10 @@ export default class Transactions extends React.Component {
                     data={chartData}
                     keys={Object.keys(chartData[0]).slice(1)}
                     width={900}
-                    height={300}
+                    height={325}
+                    startMonth={this.props.from}
+                    endMonth={this.props.to}
+                    colors={colors}
                   />
                 ) : (
                   <LineChart
@@ -52,7 +72,10 @@ export default class Transactions extends React.Component {
                     data={chartData}
                     keys={Object.keys(chartData[0]).slice(1)}
                     width={900}
-                    height={300}
+                    height={325}
+                    startMonth={this.props.from}
+                    endMonth={this.props.to}
+                    colors={colors}
                   />
                 );
               }

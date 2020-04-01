@@ -20,7 +20,7 @@ export default class TradeVolumesSpendType extends React.Component {
   render() {
     return (
       <section id="tradeVolumesSpendType">
-        <p className="title">TRADE VOLUMES BY SPEND</p>
+        <p className="title">TRADE VOLUMES BY SPEND TYPE</p>
         <Query
           query={summary}
           variables={{

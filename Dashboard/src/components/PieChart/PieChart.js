@@ -14,7 +14,7 @@ export default class PieChart extends React.Component {
     const graphClass = this.props.title.replace(/\s+/g, "-").toLowerCase();
     const width = this.props.width;
     const height = this.props.height;
-    const data = this.props.data;
+    const { data, colors } = this.props;
     const svg = d3
       .select(`svg.${graphClass}`)
       // .attr("height", `${height}`).attr("width", `${width}`);
@@ -29,21 +29,7 @@ export default class PieChart extends React.Component {
     const diameter = 250,
       radius = diameter / 2;
 
-    const colors = [
-      "#38DCE2",
-      "#32AF93",
-      "#248890",
-      "#74D485",
-      "#68EEAB",
-      "#CAF270",
-      "#2FADB6",
-      "#66FCF1",
-      "#1A505B",
-      "#4472C4",
-      "#1B2A37",
-      "#8EBFF2"
-    ];
-
+    const total = d3.sum(data, d => d.value);
     const pie = d3
       .pie()
       .sort((a, b) => a.value - b.value)
@@ -82,18 +68,23 @@ export default class PieChart extends React.Component {
         };
       });
 
+    d3.select(`div.${graphClass}`).remove();
     const tooltip = d3
       .select("div.app")
       .append("div")
-      .attr("class", "tooltip pieChart")
+      .attr("class", `tooltip ${graphClass}`)
       .style("opacity", 0);
 
     tooltip.append("span").attr("class", "label");
     tooltip.append("span").attr("class", "value");
+    tooltip.append("span").attr("class", "percent");
 
     slice.on("mouseover", function(d) {
       tooltip.select(".label").html(d.data.label + ": ");
       tooltip.select(".value").html(d3.format(".2s")(d.value));
+      tooltip
+        .select(".percent")
+        .html(" (" + d3.format(".2s")((d.value / total) * 100) + "%)");
       tooltip.style("display", "block");
       tooltip.style("opacity", 2);
     });
@@ -111,8 +102,8 @@ export default class PieChart extends React.Component {
 
     const legend = svg
       .append("g")
-      .attr("transform", `translate(20, -20)`)
-      .attr("font-size", 10)
+      .attr("transform", `translate(10, -15)`)
+      .attr("font-size", 12)
       // .attr("text-anchor", "end")
       .selectAll("g")
       .data(pie(data))

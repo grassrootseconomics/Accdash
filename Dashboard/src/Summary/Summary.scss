@@ -2,23 +2,21 @@
 #usersSummary {
   background: #1f2833;
   // margin: 0 -1em;
-  #tiles {
-    margin: 0;
-    .tileTitle {
-      width: 10%;
-      p {
-        color: #ffffff;
-        transform-origin: 0 0;
-        transform: rotate(90deg);
-        margin-top: 50%;
-        font-size: large;
-        font-weight: 600;
-      }
+  .tileTitle {
+    text-align: left;
+    margin-left: 10px;
+    p {
+      color: #ffffff;
+      margin: 0;
+      font-size: small;
+      font-weight: 500;
     }
-
+  }
+  #tiles {
+    margin-bottom: 0;
     .tile {
-      padding: 1em;
-      // width: 30%;
+      padding: 0 0.25em 0.5em 0.25em;
+      min-height: 100%;
     }
   }
 }

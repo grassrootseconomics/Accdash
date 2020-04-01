@@ -8,45 +8,16 @@ export default class MonthDropdown extends React.Component {
   message = "";
   state = {
     selectedOptions: null,
-    startDate: new Date(),
-    endDate: undefined,
-    dateRange: `${timeFormat("%b %Y")(new Date())}`
+    startDate: new Date(this.props.start),
+    endDate: new Date(this.props.end),
+    dateRange: `${timeFormat("%b %Y")(new Date(this.props.start))} -
+    ${timeFormat("%b %Y")(new Date(this.props.end))}`
   };
 
   options = this.props.options.map(o => ({ value: o.Item, label: o.Item }));
   handleChange = date => {
-    if (date && date > this.state.startDate) {
-      this.show = false;
-      this.setState({
-        endDate: date,
-        dateRange: `
-          ${timeFormat("%b %Y")(this.state.startDate)} -
-          ${timeFormat("%b %Y")(date)}`,
-        selectedOptions: {
-          from: `${timeFormat("%Y-%m")(this.state.startDate)}`,
-          to: `${timeFormat("%Y-%m")(date)}`
-        }
-      });
-      this.props.callback({
-        from: `${timeFormat("%Y-%m")(this.state.startDate)}`,
-        to: `${timeFormat("%Y-%m")(date)}`
-      });
-    } else {
-      if (date === this.state.startDate) {
-        this.show = false;
-        this.setState({
-          endDate: date,
-          dateRange: `${timeFormat("%b %Y")(date)}`,
-          selectedOptions: {
-            from: `${timeFormat("%Y-%m")(this.state.startDate)}`,
-            to: `${timeFormat("%Y-%m")(this.state.date)}`
-          }
-        });
-        this.props.callback({
-          from: `${timeFormat("%Y-%m")(this.state.startDate)}`,
-          to: `${timeFormat("%Y-%m")(this.state.date)}`
-        });
-      } else {
+    if (date) {
+      if (this.state.startDate && this.state.endDate) {
         this.setState({
           startDate: date,
           endDate: undefined,
@@ -54,7 +25,62 @@ export default class MonthDropdown extends React.Component {
         });
         this.show = true;
         this.message = "Please select end date";
+      } else {
+        if (date > this.state.startDate && !this.state.endDate) {
+          this.show = false;
+          this.setState({
+            endDate: date,
+            dateRange: `
+          ${timeFormat("%b %Y")(this.state.startDate)} -
+          ${timeFormat("%b %Y")(date)}`
+          });
+          this.props.callback({
+            from: `${timeFormat("%Y-%m")(this.state.startDate)}`,
+            to: `${timeFormat("%Y-%m")(date)}`
+          });
+        } else if (+date === +this.state.startDate) {
+          this.show = false;
+          this.setState({
+            endDate: date,
+            dateRange: `${timeFormat("%b %Y")(date)}`
+            // selectedOptions: {
+            //   from: `${timeFormat("%Y-%m")(this.state.startDate)}`,
+            //   to: `${timeFormat("%Y-%m")(date)}`
+            // }
+          });
+          this.props.callback({
+            from: `${timeFormat("%Y-%m")(this.state.startDate)}`,
+            to: `${timeFormat("%Y-%m")(date)}`
+          });
+        } else {
+          this.setState({
+            startDate: date,
+            endDate: undefined,
+            dateRange: `${timeFormat("%b %Y")(date)}`
+          });
+          this.show = true;
+          this.message = "Please select end date";
+        }
       }
+
+      //     this.props.callback({
+      //       from: `${timeFormat("%Y-%m")(this.state.startDate)}`,
+      //       to: `${timeFormat("%Y-%m")(date)}`
+      //     });
+      //   }
+      //     this.props.callback({
+      //       from: `${timeFormat("%Y-%m")(this.state.startDate)}`,
+      //       to: `${timeFormat("%Y-%m")(date)}`
+      //     });
+      //   } else {
+      //     this.setState({
+      //       startDate: date,
+      //       endDate: undefined,
+      //       dateRange: `${timeFormat("%b %Y")(date)}`
+      //     });
+      //     this.show = true;
+      //     this.message = "Please select end date";
+      //   }
     }
   };
 
@@ -72,13 +98,13 @@ export default class MonthDropdown extends React.Component {
         <DatePicker
           minDate={new Date(this.options[0].value)}
           maxDate={new Date(this.options[this.options.length - 1].value)}
-          selected={this.state.startDate}
+          // selected={this.state.startDate}
           showMonthYearPicker
           dateFormat="MM/yyyy"
           onChange={this.handleChange}
           startDate={this.state.startDate}
           endDate={this.state.endDate}
-          selectsEnd={Boolean(this.state.endDate)}
+          // selectsEnd={Boolean(this.state.endDate)}
           shouldCloseOnSelect={false}
           customInput={
             <div className="yearMonthPicker">

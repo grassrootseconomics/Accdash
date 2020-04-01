@@ -39,7 +39,7 @@ export default class HBarChart extends React.Component {
 
     const xScale = d3
       .scaleLinear()
-      .range([0, width - 50])
+      .range([0, width - 60])
       .domain([
         0,
         d3.max(mappedData, function(d) {
@@ -104,7 +104,7 @@ export default class HBarChart extends React.Component {
       .attr("class", "label")
       //y position of the label is halfway down the bar
       .attr("y", function(d) {
-        return yScale(d.label) + 14;
+        return yScale(d.label);
       })
       //x position is 3 pixels to the right of the bar
       .attr("x", function(d) {
@@ -113,7 +113,8 @@ export default class HBarChart extends React.Component {
       .text(function(d) {
         return d3.format(".2s")(d.value);
       })
-      .attr("font-size", 13);
+      .attr("font-size", 13)
+      .attr("transform", `translate(2, ${yScale.bandwidth() / 2 + 5})`);
   }
 
   render() {

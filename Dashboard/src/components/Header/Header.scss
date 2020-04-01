@@ -1,24 +1,37 @@
 .header {
-  height: 5%;
+  height: 45px;
   background: #1f2833;
   display: flex;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 999;
   #filters {
     position: absolute;
     color: #ffffff;
     .dateRange {
       margin-top: 0.5rem;
-      font-size: large;
+      font-size: medium;
     }
     #sidebarToggle {
       color: #ffffff;
     }
   }
   p {
+    text-align: center;
+    margin-bottom: 0;
+    flex-grow: 1;
+    margin-top: 3px;
     font-weight: bold;
     font-size: x-large;
-    text-align: center;
-    margin-bottom: 0.5rem;
-    flex-grow: 1;
     color: #ffffff;
+  }
+
+  @media (max-width: 576px) {
+    #filters {
+      .dateRange {
+        display: none;
+      }
+    }
   }
 }

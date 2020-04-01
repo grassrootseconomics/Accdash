@@ -1,6 +1,5 @@
 import React from "react";
 import "./Sidebar.scss";
-// import Dropdown from "../Dropdown/Dropdown";
 import MultiselectDropdown from "../MultiselectDropdown/MultiselectDropdown";
 import MonthDropdown from "../MonthDropdown/MonthDropdown";
 import { Query } from "react-apollo";
@@ -49,10 +48,14 @@ export default class Sidebar extends React.Component {
               if (loading) return <p>Loading data...</p>;
               return (
                 <div className="filters">
-                  <h6 className="title">Months</h6>
+                  <h6 className="title">
+                    Months <span>(Select Date Range)</span>
+                  </h6>
                   <MonthDropdown
                     options={data.filters[0].yearMonthList}
                     callback={this.getMonths}
+                    start={this.props.startDate}
+                    end={this.props.endDate}
                   />
                   <h6 className="title">Spend Types</h6>
                   <MultiselectDropdown
@@ -63,11 +66,13 @@ export default class Sidebar extends React.Component {
                   <MultiselectDropdown
                     options={data.filters[0].txTypeList}
                     callback={this.getTransactionTypes}
+                    selected={this.props.selectedTXType}
                   />
                   <h6 className="title">Gender</h6>
                   <MultiselectDropdown
                     options={data.filters[0].genderList}
                     callback={this.getGender}
+                    selected={this.props.selectedGender}
                   />
                   <h6 className="title">Tokens</h6>
                   <MultiselectDropdown

@@ -17,21 +17,20 @@ const summary = gql(`
 query Summary($from:String!, $to:String!, $tokens:[String]!, $spendTypes:[String]!, $gender:[String]!, $txType:[String]! ){
     registeredUsers:summaryData  (fromDate:$from, toDate:$to, tokenName:$tokens, spendType:$spendTypes, gender:$gender, txType:$txType, request:"registeredusers"){         
       total
-      startMonth
-      endMonth
+      start
+      end
     }
     traders:summaryData  (fromDate:$from, toDate:$to, tokenName:$tokens, spendType:$spendTypes, gender:$gender, txType:$txType, request:"traders"){         
       total
-      startMonth
-      endMonth
+      start
+      end
     }
     frequentTraders:summaryData  (fromDate:$from, toDate:$to, tokenName:$tokens, spendType:$spendTypes, gender:$gender, txType:$txType, request:"frequenttraders"){         
       total
-      startMonth
-      endMonth
+      start
+      end
     }  
-    summaryDataBalance (
-      gender:[])
+    summaryDataBalance (gender:$gender)
     {
       value
     }
@@ -57,6 +56,9 @@ export default class UsersSummary extends React.Component {
   render() {
     return (
       <section id="usersSummary">
+        <div className="tileTitle">
+          <p>USERS</p>
+        </div>
         <Query
           query={summary}
           variables={{
@@ -76,9 +78,6 @@ export default class UsersSummary extends React.Component {
             }
             return (
               <Row id="tiles">
-                {/* <div className="tileTitle">
-                  <p>USERS</p>
-                </div> */}
                 <Col lg={3} className="tile tile-1">
                   <Tile
                     title={"Registered Users"}
@@ -86,15 +85,17 @@ export default class UsersSummary extends React.Component {
                     icon={faUsers}
                     trend1={{
                       symbol: this.trend(
-                        data.registeredUsers[0].startMonth,
-                        data.registeredUsers[0].endMonth
+                        data.registeredUsers[0].start,
+                        data.registeredUsers[0].end
                       ),
                       percent: this.percent(
-                        data.registeredUsers[0].startMonth,
-                        data.registeredUsers[0].endMonth
+                        data.registeredUsers[0].start,
+                        data.registeredUsers[0].end
                       )
                     }}
-                    toolTip={"No of Registered users"}
+                    toolTip={
+                      "Total number of registered users from the start of the program to the max date selected"
+                    }
                   />
                 </Col>
                 <Col lg={3} className="tile tile-2 ">
@@ -104,16 +105,16 @@ export default class UsersSummary extends React.Component {
                     icon={faUserTag}
                     trend1={{
                       symbol: this.trend(
-                        data.traders[0].startMonth,
-                        data.traders[0].endMonth
+                        data.traders[0].start,
+                        data.traders[0].end
                       ),
                       percent: this.percent(
-                        data.traders[0].startMonth,
-                        data.traders[0].endMonth
+                        data.traders[0].start,
+                        data.traders[0].end
                       )
                     }}
                     toolTip={
-                      "No of traders with at least 1 transaction in a month"
+                      "Total number of users who have traded at least once in the time frame"
                     }
                   />
                 </Col>
@@ -124,32 +125,33 @@ export default class UsersSummary extends React.Component {
                     icon={faUserCog}
                     trend1={{
                       symbol: this.trend(
-                        data.frequentTraders[0].startMonth,
-                        data.frequentTraders[0].endMonth
+                        data.frequentTraders[0].start,
+                        data.frequentTraders[0].end
                       ),
                       percent: this.percent(
-                        data.frequentTraders[0].startMonth,
-                        data.frequentTraders[0].endMonth
+                        data.frequentTraders[0].start,
+                        data.frequentTraders[0].end
                       )
                     }}
                     toolTip={
-                      "No of traders with over 4 trades on average in a month"
+                      "Total number of users who have traded 4 times or more on average per month"
                     }
                   />
                 </Col>
                 <Col lg={3} className="tile tile-3 ">
                   <Tile
-                    title={"Balance"}
+                    title={"Balances"}
                     value1={format(".2s")(
                       data.summaryDataBalance[0].value[0].total
                     )}
+                    units1={"(total)"}
                     icon={faUserCog}
                     value2={format(".2s")(
                       data.summaryDataBalance[0].value[0].circulation
                     )}
-                    units2={"(In Circulation)"}
+                    units2={"(in circulation)"}
                     toolTip={
-                      "No of traders with over 4 trades on average in a month"
+                      "Total balance available & Total balance in circulation "
                     }
                   />
                 </Col>

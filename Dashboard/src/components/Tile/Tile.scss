@@ -2,10 +2,10 @@
   color: #000000;
   background: #ffffff;
   cursor: pointer;
-  // margin: 0.5em 0;
+  height: 100%; // margin: 0.5em 0;
   // box-shadow: 0 0 5px 2px #000000;
   .title {
-    font-size: large;
+    font-size: small;
     font-weight: 600;
     margin: 0 0.3rem;
     text-align: left;
@@ -15,16 +15,16 @@
 
     .details {
       display: flex;
-      // justify-content: space-between;
+      justify-content: space-between;
 
       p.label {
-        font-size: 1em;
+        font-size: large;
         font-weight: 800;
         margin: 0;
         padding: 0;
         margin-left: 5px;
         span {
-          font-size: 0.75em;
+          font-size: 0.5em;
           font-weight: 500;
           margin-left: 2px;
         }
@@ -40,15 +40,23 @@
       &.angle-double-down {
         color: red;
       }
+      &.grey {
+        color: grey;
+        svg {
+          display: none;
+        }
+      }
       p {
-        font-size: 1em;
-        font-weight: 600;
         padding-left: 0.5em;
         margin-bottom: 0;
-      }
-      svg {
-        font-size: 1em;
-        margin-right: 5px;
+        .trendLabel {
+          font-size: 0.75em;
+          font-weight: 600;
+        }
+        svg {
+          font-size: 1em;
+          margin-right: 5px;
+        }
       }
     }
   }

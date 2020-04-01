@@ -1,11 +1,11 @@
 #tradeVolumes {
   background: #ffffff;
   // box-shadow: 0 0 5px 2px #000000;
-  margin: 1rem 0;
+  margin: 0 0 1rem 0;
   .title {
     display: flex;
-    justify-content: center;
-    font-size: large;
+    text-align: left;
+    font-size: small;
     font-weight: 600;
     margin-bottom: 0;
   }

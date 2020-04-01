@@ -25,7 +25,9 @@ export default class Header extends React.Component {
           </button>
           <label className="dateRange">{dateRange}</label>
         </section>
-        <p>CIC Dashboard</p>
+        <p>
+          <span>CIC Dashboard</span>
+        </p>
       </Row>
     );
   }

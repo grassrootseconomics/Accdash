@@ -2,6 +2,7 @@ import React from "react";
 import "./Tile.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
+import { format } from "d3";
 
 export default class Tiles extends React.Component {
   renderSecondValue() {
@@ -28,10 +29,18 @@ export default class Tiles extends React.Component {
   renderFirstValueTrend() {
     if (this.props.trend1) {
       return (
-        <div className={`trend ${this.props.trend1.symbol.iconName}`}>
+        <div
+          className={`trend ${
+            this.props.trend1.percent === 0
+              ? "grey"
+              : this.props.trend1.symbol.iconName
+          }`}
+        >
           <p>
             <FontAwesomeIcon icon={this.props.trend1.symbol} />
-            {`${this.props.trend1.percent}%`}
+            <span className="trendLabel">{`${format(".2s")(
+              this.props.trend1.percent
+            )}%`}</span>
           </p>
         </div>
       );
@@ -41,10 +50,18 @@ export default class Tiles extends React.Component {
   renderSecondValueTrend() {
     if (this.props.trend2) {
       return (
-        <div className={`trend ${this.props.trend2.symbol.iconName}`}>
+        <div
+          className={`trend ${
+            this.props.trend2.percent === 0
+              ? "grey"
+              : this.props.trend2.symbol.iconName
+          }`}
+        >
           <p>
             <FontAwesomeIcon icon={this.props.trend2.symbol} />
-            {`${this.props.trend2.percent}%`}
+            <span className="trendLabel">{`${format(".2s")(
+              this.props.trend2.percent
+            )}%`}</span>
           </p>
         </div>
       );

@@ -14,13 +14,20 @@ export default class MultiselectDropdown extends React.Component {
     this.props.callback(selectedOptions);
   };
   options = this.props.options.map(o => ({ value: o.Item, label: o.Item }));
+
+  default = this.props.selected
+    ? this.props.selected.map(s => {
+        return this.options.find(o => o.value === s);
+      })
+    : [];
+
   render() {
     return (
       <Select
         className="mt-1 ml-1 mr-1 mb-1"
         closeMenuOnSelect={false}
         components={animatedComponents}
-        defaultValue={[]}
+        defaultValue={this.default}
         isMulti
         options={this.options}
         onChange={this.handleChange}
