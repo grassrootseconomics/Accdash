@@ -48,32 +48,39 @@ export default class TradeVolumes extends React.Component {
                     "#1B2A37",
                     "#8EBFF2"
                   ];
-
-            return loading ? (
-              <p>Loading data...</p>
-            ) : this.props.tradeType === "spendtype" ? (
-              <StackedBarChart
-                title={"Trade Volumes"}
-                data={data.monthlySummaryData[0].value}
-                keys={Object.keys(data.monthlySummaryData[0].value[0]).slice(1)}
-                width={900}
-                height={325}
-                startMonth={this.props.from}
-                endMonth={this.props.to}
-                colors={colors}
-              />
-            ) : (
-              <LineChart
-                title={"Trade Volumes"}
-                data={data.monthlySummaryData[0].value}
-                keys={Object.keys(data.monthlySummaryData[0].value[0]).slice(1)}
-                width={900}
-                height={325}
-                startMonth={this.props.from}
-                endMonth={this.props.to}
-                colors={colors}
-              />
-            );
+            if (loading) {
+              return <p>Loading data...</p>;
+            } else if (error) {
+              return <p>API returned an error Please try again</p>;
+            } else {
+              const chartData = data.monthlySummaryData[0].value;
+              if (chartData.length > 0) {
+                return this.props.tradeType === "spendtype" ? (
+                  <StackedBarChart
+                    title={"Trade Volumes"}
+                    data={chartData}
+                    keys={Object.keys(chartData[0]).slice(1)}
+                    width={900}
+                    height={325}
+                    startMonth={this.props.from}
+                    endMonth={this.props.to}
+                    colors={colors}
+                  />
+                ) : (
+                  <LineChart
+                    title={"Trade Volumes"}
+                    data={chartData}
+                    keys={Object.keys(chartData[0]).slice(1)}
+                    width={900}
+                    height={325}
+                    startMonth={this.props.from}
+                    endMonth={this.props.to}
+                    colors={colors}
+                  />
+                );
+              }
+              return <p>There is no data for the current selection</p>;
+            }
           }}
         </Query>
       </section>

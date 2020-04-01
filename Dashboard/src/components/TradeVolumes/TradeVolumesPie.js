@@ -33,18 +33,25 @@ export default class TradeVolumesPie extends React.Component {
           }}
         >
           {({ loading, error, data }) => {
-            if (loading) return <p>Loading data...</p>;
-
-            return (
-              <PieChart
-                title={"Trade Volumes Pie"}
-                keys={this.props.spendTypes}
-                data={data.categorySummary}
-                width={300}
-                height={300}
-                colors={["#3b5998", "#8b9dc3", "#536878", "#4279a3"]}
-              />
-            );
+            if (loading) {
+              return <p>Loading data...</p>;
+            } else if (error) {
+              return <p>API returned an error Please try again</p>;
+            } else {
+              const chartData = data.categorySummary;
+              if (chartData.length > 0) {
+                return (
+                  <PieChart
+                    title={"Trade Volumes Pie"}
+                    data={chartData}
+                    width={300}
+                    height={300}
+                    colors={["#3b5998", "#8b9dc3", "#536878", "#4279a3"]}
+                  />
+                );
+              }
+              return <p>There is no data for the current selection</p>;
+            }
           }}
         </Query>
       </section>

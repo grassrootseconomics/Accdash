@@ -33,17 +33,25 @@ export default class TradeVolumesSpendType extends React.Component {
           }}
         >
           {({ loading, error, data }) => {
-            if (loading) return <p>Loading data...</p>;
-
-            return (
-              <HBarChart
-                title={"Trade Volumes Bar"}
-                keys={this.props.spendTypes}
-                data={data.categorySummary}
-                width={300}
-                height={300}
-              />
-            );
+            if (loading) {
+              return <p>Loading data...</p>;
+            } else if (error) {
+              return <p>API returned an error Please try again</p>;
+            } else {
+              const chartData = data.categorySummary;
+              if (chartData.length > 0) {
+                return (
+                  <HBarChart
+                    title={"Trade Volumes Bar"}
+                    keys={this.props.spendTypes}
+                    data={data.categorySummary}
+                    width={300}
+                    height={300}
+                  />
+                );
+              }
+              return <p>There is no data for the current selection</p>;
+            }
           }}
         </Query>
       </section>

@@ -51,7 +51,7 @@ export default class Transactions extends React.Component {
             if (loading) {
               return <p>Loading data...</p>;
             } else if (error) {
-              return <p>Section will be loaded shortly</p>;
+              return <p>API returned an error Please try again</p>;
             } else {
               const chartData = data.monthlySummaryData[0].value;
               if (chartData.length > 0) {
@@ -79,6 +79,7 @@ export default class Transactions extends React.Component {
                   />
                 );
               }
+              return <p>There is no data for the current selection</p>;
             }
           }}
         </Query>

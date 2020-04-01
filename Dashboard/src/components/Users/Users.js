@@ -34,25 +34,33 @@ export default class users extends React.Component {
           }}
         >
           {({ loading, error, data }) => {
-            if (loading) return <p>Loading data...</p>;
-
-            if (this.props.from === this.props.to) {
-              data.monthlySummaryData[0].value.forEach(element => {
-                delete element.Frequent;
-              });
+            if (loading) {
+              return <p>Loading data...</p>;
+            } else if (error) {
+              return <p>API returned an error Please try again</p>;
+            } else {
+              const chartData = data.monthlySummaryData[0].value;
+              if (chartData.length > 0) {
+                if (this.props.from === this.props.to) {
+                  chartData.forEach(element => {
+                    delete element.Frequent;
+                  });
+                }
+                return (
+                  <LineChart
+                    title={"Total Traders vs Frequent Traders"}
+                    data={chartData}
+                    keys={Object.keys(chartData[0]).slice(1)}
+                    width={900}
+                    height={300}
+                    startMonth={this.props.from}
+                    endMonth={this.props.to}
+                    colors={["#4472C4", "#1B2A37"]}
+                  />
+                );
+              }
+              return <p>There is no data for the current selection</p>;
             }
-            return (
-              <LineChart
-                title={"Total Traders vs Frequent Traders"}
-                data={data.monthlySummaryData[0].value}
-                keys={Object.keys(data.monthlySummaryData[0].value[0]).slice(1)}
-                width={900}
-                height={300}
-                startMonth={this.props.from}
-                endMonth={this.props.to}
-                colors={["#4472C4", "#1B2A37"]}
-              />
-            );
           }}
         </Query>
       </section>

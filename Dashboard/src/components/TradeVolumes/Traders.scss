@@ -1,0 +1,32 @@
+#topTraders {
+  background: #ffffff;
+  // box-shadow: 0 0 5px 2px #000000;
+  margin: 0 0 1rem 0;
+  .title {
+    display: flex;
+    text-align: left;
+    font-size: small;
+    font-weight: 600;
+    margin-bottom: 0;
+  }
+
+  table {
+    th {
+      background: #1f2833;
+      color: white;
+      text-align: left;
+      font-size: 0.75rem;
+      padding: 4px;
+      border: none;
+      //   border: 1px solid #c4c4c4;
+    }
+
+    td {
+      padding: 4px;
+      //   border: 1px solid #c4c4c4;
+      text-align: left;
+      font-size: 0.75rem;
+      border: none;
+    }
+  }
+}

@@ -80,12 +80,12 @@ export default class lineBarChart extends React.Component {
             .y(d => yScale(d[key]))
         );
 
-      d3.select(`div.${graphClass}`).remove();
+      d3.select(`div.${graphClass}-${key}`).remove();
 
       const tooltip = d3
         .select("div.app")
         .append("div")
-        .attr("class", `tooltip ${graphClass}`)
+        .attr("class", `tooltip ${graphClass}-${key}`)
         .style("opacity", 0);
 
       tooltip.append("div").attr("class", "value");
