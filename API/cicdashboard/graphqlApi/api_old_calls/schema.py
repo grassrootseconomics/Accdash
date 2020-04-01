@@ -8,6 +8,7 @@ REMINDER - remove all unused pivots, libraries and variables after development i
 import time
 import graphene
 import collections
+from .types import *
 from .. functions import *
 from django.conf import settings
 from django.core.cache import cache
@@ -17,7 +18,6 @@ from graphene.types.generic import GenericScalar
 from django.db.models.functions import TruncMonth, Coalesce
 from django.db.models import Count, Sum, F, Value
 from django.core.cache.backends.base import DEFAULT_TIMEOUT
-from .types import summary, summary_tiles, spendtypesummary, monthlySummary
 
 from .. import models
 FQ_TRADER_THRESHOLD = 4
@@ -33,25 +33,21 @@ these functions perfrom the neccessary data manipulations
 and returns the data as defined by the respective classes above
 """
 
-def get_cache_values(key, query):
-	cache_key = key
-	cache_key.update({"Query":query})
-	result = cache.get(cache_key)
-
-	return(cache_key, result)
 
 class Query(graphene.ObjectType):
 
 
-	summary = graphene.List(summary,
-		from_date = graphene.String(required=True),
+	summary = graphene.List(summary, 
+		from_date = graphene.String(required=True), 
 		to_date = graphene.String(required=True),
 		token_name= graphene.List(graphene.String,required=True),
 		spend_type =graphene.List(graphene.String,required=True),
-		gender =graphene.List(graphene.String),required=True)
+		gender =graphene.List(graphene.String,required=True), 
+		tx_type =graphene.List(graphene.String, required=True)
+		)
 
 	def resolve_summary(self, info, **kwargs):
-		from_date, to_date, token_name,spend_type, gender = kwargs['from_date'], kwargs['to_date'], kwargs['token_name'], kwargs['spend_type'], kwargs['gender']
+		from_date, to_date, token_name, spend_type, gender, tx_type = kwargs['from_date'], kwargs['to_date'], kwargs['token_name'], kwargs['spend_type'], kwargs['gender'], kwargs['tx_type']
 
 		cache_key = kwargs
 		cache_key.update({"Query":"summary"})
@@ -66,9 +62,17 @@ class Query(graphene.ObjectType):
 		gender_filter = reporting_data.values_list("s_gender", flat=True).distinct() if len(gender) == 0 else gender
 		token_name_filter = reporting_data.values_list("tokenname", flat=True).distinct() if len(token_name) == 0 else token_name
 		spend_filter = reporting_data.values_list("t_business_type", flat=True).distinct() if len(spend_type) == 0 else spend_type
+		tx_type_filter = reporting_data.values_list("transfer_subtype", flat=True).distinct() if len(tx_type) == 0 else tx_type
 
 		summary_data = reporting_data.annotate(_month=TruncMonth('timestamp'))\
-		.filter(timestamp__gte = from_date,timestamp__lt = to_date_plus_one_month, tokenname__in = token_name_filter, t_business_type__in = spend_filter, s_gender__in = gender_filter).order_by("_month")
+		.filter(
+			timestamp__gte = from_date,
+			timestamp__lt = to_date_plus_one_month, 
+			tokenname__in = token_name_filter, 
+			t_business_type__in = spend_filter, 
+			s_gender__in = gender_filter,
+			transfer_subtype__in = tx_type_filter
+			).order_by("_month")
 
 		# get number of months selected, used in frequent trader calculation
 		month_count = summary_data.values_list("_month", flat=True).distinct()
@@ -114,15 +118,17 @@ class Query(graphene.ObjectType):
 		cache.set(cache_key,summary_response, CACHE_TTL)
 		return(summary_response)
 
-	monthlysummary = graphene.List(monthlySummary,
+	monthlysummary = graphene.List(monthlysummary,
 		from_date = graphene.String(required=True),
 		to_date = graphene.String(required=True),
-		token_name=graphene.List(graphene.String,required=True),
+		token_name= graphene.List(graphene.String,required=True),
 		spend_type =graphene.List(graphene.String,required=True),
-		gender =graphene.List(graphene.String), required=True)
+		gender =graphene.List(graphene.String,required=True), 
+		tx_type =graphene.List(graphene.String, required=True)
+		)
 
 	def resolve_monthlysummary(self, info, **kwargs):
-		from_date,to_date, token_name, spend_type,gender= kwargs['from_date'], kwargs['to_date'], kwargs['token_name'], kwargs['spend_type'], kwargs['gender']
+		from_date, to_date, token_name, spend_type, gender, tx_type = kwargs['from_date'], kwargs['to_date'], kwargs['token_name'], kwargs['spend_type'], kwargs['gender'], kwargs['tx_type']
 
 		cache_key = kwargs
 		cache_key.update({"Query":"monthlysummary"})
@@ -136,11 +142,19 @@ class Query(graphene.ObjectType):
 		gender_filter = reporting_data.values_list("s_gender", flat=True).distinct() if len(gender) == 0 else gender
 		token_name_filter = reporting_data.values_list("tokenname", flat=True).distinct() if len(token_name) == 0 else token_name
 		spend_filter = reporting_data.values_list("t_business_type", flat=True).distinct() if len(spend_type) == 0 else spend_type
+		tx_type_filter = reporting_data.values_list("transfer_subtype", flat=True).distinct() if len(tx_type) == 0 else tx_type
 
-		_from_date, _to_date, to_date_plus_one_month, from_date_plus_one_month = create_date_points(from_date, to_date)
+		from_date, to_date, to_date_plus_one_month, from_date_plus_one_month = create_date_points(from_date, to_date)
 
 		summary_data = reporting_data.annotate(_month=TruncMonth('timestamp'))\
-		.filter(timestamp__gte = _from_date,timestamp__lt = to_date_plus_one_month, tokenname__in = token_name_filter, t_business_type__in = spend_filter, s_gender__in = gender_filter).order_by("_month")
+		.filter(
+			timestamp__gte = from_date,
+			timestamp__lt = to_date_plus_one_month, 
+			tokenname__in = token_name_filter, 
+			t_business_type__in = spend_filter, 
+			s_gender__in = gender_filter,
+			transfer_subtype__in = tx_type_filter
+			).order_by("_month")
 		
 		""" PER TOKEN
 		Trade volume 
@@ -204,7 +218,7 @@ class Query(graphene.ObjectType):
 			au_month_dict.update({"yearMonth":m,"Total":tr_count, "Frequent":fq_count})
 			trader_vs_fqtrader_response.append(au_month_dict)
 
-		mSummary = [monthlySummary(
+		mSummary = [monthlysummary(
 			trade_volumes_tokens =tv_per_token,
 			trade_volumes_spend_type = tv_per_spend,
 			no_transactions_token = nt_per_token,
@@ -216,15 +230,17 @@ class Query(graphene.ObjectType):
 
 
 	spendtypesummary = graphene.List(spendtypesummary,
-		from_date = graphene.String(required=True),
+		from_date = graphene.String(required=True), 
 		to_date = graphene.String(required=True),
 		token_name= graphene.List(graphene.String,required=True),
 		spend_type =graphene.List(graphene.String,required=True),
-		gender =graphene.List(graphene.String),required=True)
+		gender =graphene.List(graphene.String,required=True), 
+		tx_type =graphene.List(graphene.String, required=True)
+		)
 
 
 	def resolve_spendtypesummary(self, info, **kwargs):
-		from_date, to_date, token_name,spend_type, gender = kwargs['from_date'], kwargs['to_date'], kwargs['token_name'], kwargs['spend_type'], kwargs['gender']
+		from_date, to_date, token_name, spend_type, gender, tx_type = kwargs['from_date'], kwargs['to_date'], kwargs['token_name'], kwargs['spend_type'], kwargs['gender'], kwargs['tx_type']
 		
 		cache_key = kwargs
 		cache_key.update({"Query":"spendtypesummary"})
@@ -240,16 +256,23 @@ class Query(graphene.ObjectType):
 		"""
 		reporting_data = reporting_table.objects.all()
 
-		_from_date, _to_date, to_date_plus_one_month, from_date_plus_one_month = create_date_points(from_date, to_date)
+		from_date, to_date, to_date_plus_one_month, from_date_plus_one_month = create_date_points(from_date, to_date)
 
 		## set the filters so if an empty array is passed, it get all the unique elements of the filter
 
 		gender_filter = reporting_data.values_list("s_gender", flat=True).distinct() if len(gender) == 0 else gender
 		token_name_filter = reporting_data.values_list("tokenname", flat=True).distinct() if len(token_name) == 0 else token_name
 		spend_filter = reporting_data.values_list("t_business_type", flat=True).distinct() if len(spend_type) == 0 else spend_type
+		tx_type_filter = reporting_data.values_list("transfer_subtype", flat=True).distinct() if len(tx_type) == 0 else tx_type
 
 		## get the main query with filters applied
-		summary_data = reporting_data.filter(timestamp__gte = _from_date,timestamp__lt = to_date_plus_one_month, tokenname__in = token_name_filter, t_business_type__in = spend_filter, s_gender__in = gender_filter).order_by("t_business_type")
+		summary_data = reporting_data.filter(
+			timestamp__gte = from_date,
+			timestamp__lt = to_date_plus_one_month,
+			tokenname__in = token_name_filter, 
+			t_business_type__in = spend_filter,
+			s_gender__in = gender_filter,
+			transfer_subtype__in = tx_type_filter).order_by("t_business_type")
 
 		spend_type_data = summary_data.annotate(label = F('t_business_type')).values("label").annotate(value=Sum("weight"))
 		spend_type_data_response = [spendtypesummary(label=i['label'], value =i['value']) for i in spend_type_data]

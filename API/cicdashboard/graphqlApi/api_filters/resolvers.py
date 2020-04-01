@@ -23,6 +23,9 @@ def resolve_filters(kwargs):
 	gender_list = reporting_data.values_list("s_gender", flat=True).distinct()
 	gender_list = [{"Item":i} for i in gender_list]
 
-	filter_list = [filters(yearMonth_list = yearMonth_list, tokenName_list = tokenName_list, spendType_list = spendType_list, gender_list = gender_list)]
+	txType_list = reporting_data.values_list("transfer_subtype", flat=True).distinct()
+	txType_list = [{"Item":i} for i in txType_list]
+
+	filter_list = [filters(yearMonth_list = yearMonth_list, tokenName_list = tokenName_list, spendType_list = spendType_list, gender_list = gender_list, txType_list = txType_list)]
 
 	return(filter_list)

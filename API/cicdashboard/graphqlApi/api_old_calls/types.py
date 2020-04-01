@@ -17,11 +17,17 @@ class summary_tiles(graphene.ObjectType):
 	start_month = graphene.Int()
 	end_month = graphene.Int()
 
+class summary_tiles_extended(graphene.ObjectType):
+	category = graphene.String()
+	total = graphene.Int()
+	start_month = graphene.Int()
+	end_month = graphene.Int()
+
 class spendtypesummary(graphene.ObjectType):
 	label = graphene.String()
 	value = graphene.Int()
 
-class monthlySummary(graphene.ObjectType):
+class monthlysummary(graphene.ObjectType):
 	Traders_Vs_Fqtrader = graphene.List(GenericScalar)
 	trade_volumes_tokens = graphene.List(GenericScalar)
 	no_transactions_token = graphene.List(GenericScalar)
