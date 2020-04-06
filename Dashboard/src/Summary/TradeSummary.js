@@ -3,9 +3,9 @@ import { Row, Col } from "react-bootstrap";
 import {
   faAngleDoubleDown,
   faAngleDoubleUp,
-  faMoneyBillAlt,
-  faExchangeAlt
+  faChartLine
 } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Tile from "../Components/Tile/Tile";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
@@ -97,6 +97,7 @@ export default class TradeSummary extends React.Component {
     return (
       <section id="tradeSummary">
         <div className="tileTitle">
+          <FontAwesomeIcon icon={faChartLine} />
           <p>TRADES</p>
         </div>
         <Query
@@ -121,7 +122,6 @@ export default class TradeSummary extends React.Component {
                 <Col lg={3} className="tile tile-1">
                   <Tile
                     title={"Standard"}
-                    icon={faMoneyBillAlt}
                     value1={format(".2s")(data.standard[0].tradeVolumes.total)}
                     units1={"(KES)"}
                     trend1={{
@@ -156,7 +156,6 @@ export default class TradeSummary extends React.Component {
                 <Col lg={3} className="tile tile-2">
                   <Tile
                     title={"Disbursement"}
-                    icon={faExchangeAlt}
                     value1={format(".2s")(
                       data.disbursement[0].tradeVolumes.total
                     )}
@@ -193,7 +192,6 @@ export default class TradeSummary extends React.Component {
                 <Col lg={3} className="tile tile-3">
                   <Tile
                     title={"Agent Out"}
-                    icon={faExchangeAlt}
                     value1={format(".2s")(data.agent_out[0].tradeVolumes.total)}
                     units1={"(KES)"}
                     trend1={{
@@ -228,7 +226,6 @@ export default class TradeSummary extends React.Component {
                 <Col lg={3} className="tile tile-3">
                   <Tile
                     title={"Reclamation"}
-                    icon={faExchangeAlt}
                     value1={format(".2s")(
                       data.reclamation[0].tradeVolumes.total
                     )}

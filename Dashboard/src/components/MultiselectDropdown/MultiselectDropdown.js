@@ -13,7 +13,10 @@ export default class MultiselectDropdown extends React.Component {
     this.setState({ selectedOptions });
     this.props.callback(selectedOptions);
   };
-  options = this.props.options.map(o => ({ value: o.Item, label: o.Item }));
+  options = this.props.options.map(o => ({
+    value: o.Item,
+    label: o.Item.charAt(0).toUpperCase() + o.Item.slice(1).toLowerCase()
+  }));
 
   default = this.props.selected
     ? this.props.selected.map(s => {

@@ -69,14 +69,14 @@ export default class HBarChart extends React.Component {
     // .attr("width", `${width + margin.left + margin.right}`);
     svg.selectAll("g").remove();
 
-    const graph = svg.append("g").attr("transform", "translate(100,15)");
+    const graph = svg.append("g").attr("transform", "translate(100,10)");
 
     graph
       .append("g")
       .call(d3.axisLeft(yScale).tickSize(0))
       .call(g => g.select(".domain").remove())
       .selectAll("text")
-      .attr("font-size", 13);
+      .attr("font-size", 12);
 
     const bars = graph
       .selectAll(".bar")
@@ -113,7 +113,7 @@ export default class HBarChart extends React.Component {
       .text(function(d) {
         return d3.format(".2s")(d.value);
       })
-      .attr("font-size", 13)
+      .attr("font-size", 12)
       .attr("transform", `translate(2, ${yScale.bandwidth() / 2 + 5})`);
   }
 

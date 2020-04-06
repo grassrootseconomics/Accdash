@@ -61,7 +61,7 @@ export default class TradeVolumes extends React.Component {
                     data={chartData}
                     keys={Object.keys(chartData[0]).slice(1)}
                     width={900}
-                    height={325}
+                    height={275}
                     startMonth={this.props.from}
                     endMonth={this.props.to}
                     colors={colors}
@@ -72,7 +72,7 @@ export default class TradeVolumes extends React.Component {
                     data={chartData}
                     keys={Object.keys(chartData[0]).slice(1)}
                     width={900}
-                    height={325}
+                    height={275}
                     startMonth={this.props.from}
                     endMonth={this.props.to}
                     colors={colors}

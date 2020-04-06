@@ -37,16 +37,21 @@ export default class Traders extends React.Component {
             } else {
               const chartData = data.summaryDataTopTraders[0].value;
               if (chartData.length > 0) {
-                let tableData = data.summaryDataTopTraders[0].value.map(d => ({
-                  ...d,
-                  Volume: format(".2s")(d.volume),
-                  TXs: format(".2s")(d.count),
-                  BusinessType: d.s_business_type
-                }));
+                let tableData = data.summaryDataTopTraders[0].value.map(
+                  (d, i) => ({
+                    ...d,
+                    Volume: format(".2s")(d.volume),
+                    TXs: format(".2s")(d.count),
+                    BusinessType: d.s_business_type,
+                    Gender: d.s_gender,
+                    url: `https://blockscout.com/poa/xdai/address/${d.source}/transactions`,
+                    No: i + 1
+                  })
+                );
                 return (
                   <Table
                     title={"Top Traders"}
-                    keys={["BusinessType", "Volume", "TXs"]}
+                    keys={["No", "BusinessType", "Gender", "Volume", "TXs"]}
                     data={tableData}
                   />
                 );

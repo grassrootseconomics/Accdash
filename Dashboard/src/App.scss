@@ -1,7 +1,7 @@
 .app {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  // background-color: #f2f2f2;
-  height: 100vh;
+  font-family: Tahoma, "Segoe UI", Geneva, Verdana, sans-serif;
+  background-color: #f4f7fa;
+
   @media (prefers-reduced-motion: no-preference) {
     .App-logo {
       animation: App-logo-spin infinite 20s linear;

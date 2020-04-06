@@ -12,9 +12,7 @@ export default class PieChart extends React.Component {
 
   createPieChart = () => {
     const graphClass = this.props.title.replace(/\s+/g, "-").toLowerCase();
-    const width = this.props.width;
-    const height = this.props.height;
-    const { data, colors } = this.props;
+    const { data, colors, diameter, height, width } = this.props;
     const svg = d3
       .select(`svg.${graphClass}`)
       // .attr("height", `${height}`).attr("width", `${width}`);
@@ -26,8 +24,7 @@ export default class PieChart extends React.Component {
     graph.append("g").attr("class", "labels");
     graph.append("g").attr("class", "lines");
 
-    const diameter = 250,
-      radius = diameter / 2;
+    const radius = diameter / 2;
 
     const total = d3.sum(data, d => d.value);
     const pie = d3
@@ -40,7 +37,10 @@ export default class PieChart extends React.Component {
       .outerRadius(radius)
       .innerRadius(radius / 2);
 
-    graph.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+    graph.attr(
+      "transform",
+      "translate(" + width / 2 + "," + (height / 2 - 10) + ")"
+    );
 
     const slice = graph
       .select(".slices")
@@ -102,8 +102,11 @@ export default class PieChart extends React.Component {
 
     const legend = svg
       .append("g")
-      .attr("transform", `translate(10, -15)`)
-      .attr("font-size", 12)
+      .attr(
+        "transform",
+        `translate(${width / 2 - (data.length / 2) * 60}, -20)`
+      )
+      .attr("font-size", 10)
       // .attr("text-anchor", "end")
       .selectAll("g")
       .data(pie(data))

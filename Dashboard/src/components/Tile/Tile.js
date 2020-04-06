@@ -31,16 +31,19 @@ export default class Tiles extends React.Component {
       return (
         <div
           className={`trend ${
-            this.props.trend1.percent === 0
+            this.props.trend1.percent === 0 ||
+            this.props.trend1.percent === "NA"
               ? "grey"
               : this.props.trend1.symbol.iconName
           }`}
         >
           <p>
             <FontAwesomeIcon icon={this.props.trend1.symbol} />
-            <span className="trendLabel">{`${format(".2s")(
-              this.props.trend1.percent
-            )}%`}</span>
+            <span className="trendLabel">{`${
+              this.props.trend1.percent !== "NA"
+                ? format(".2s")(this.props.trend1.percent) + "%"
+                : this.props.trend1.percent
+            }`}</span>
           </p>
         </div>
       );
@@ -52,16 +55,19 @@ export default class Tiles extends React.Component {
       return (
         <div
           className={`trend ${
-            this.props.trend2.percent === 0
+            this.props.trend2.percent === 0 ||
+            this.props.trend1.percent === "NA"
               ? "grey"
               : this.props.trend2.symbol.iconName
           }`}
         >
           <p>
             <FontAwesomeIcon icon={this.props.trend2.symbol} />
-            <span className="trendLabel">{`${format(".2s")(
-              this.props.trend2.percent
-            )}%`}</span>
+            <span className="trendLabel">{`${
+              this.props.trend1.percent !== "NA"
+                ? format(".2s")(this.props.trend2.percent) + "%"
+                : this.props.trend2.percent
+            }`}</span>
           </p>
         </div>
       );

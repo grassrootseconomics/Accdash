@@ -21,7 +21,7 @@ export default class stackedBarChart extends React.Component {
     const monthView = startMonth === endMonth;
     const xScale = d3
       .scaleBand()
-      .range([0, width - 75])
+      .range([0, width - 65])
       .padding(0.1);
     const yScale = d3.scaleLinear().range([height, 0]);
 
@@ -35,7 +35,9 @@ export default class stackedBarChart extends React.Component {
     const yAxis = d3
       .axisLeft(yScale)
       .tickFormat(d3.format(".2s"))
+      .ticks(6)
       .tickSize(0);
+
     const svg = d3
       .select(`svg.${graphClass}`)
       // .attr("width", `${width + margin.left + margin.right}`)
@@ -67,11 +69,11 @@ export default class stackedBarChart extends React.Component {
     );
 
     yScale.domain([0, d3.max(data, d => d3.sum(keys, k => +d[k]))]).nice();
-    let total;
-    data.forEach(function(d) {
-      total = d3.sum(keys, k => +d[k]);
-      return d;
-    });
+    // let total;
+    // data.forEach(function(d) {
+    //   total = d3.sum(keys, k => +d[k]);
+    //   return d;
+    // });
     d3.select(`div.${graphClass}`).remove();
 
     const tooltip = d3
@@ -143,6 +145,7 @@ export default class stackedBarChart extends React.Component {
       .attr("class", "axis axis--x")
       .attr("transform", "translate(0," + height + ")")
       .call(xAxis)
+      .call(g => g.select(".domain").remove())
       .selectAll("text")
       .style("text-anchor", "end")
       .attr("dx", "-.8em")

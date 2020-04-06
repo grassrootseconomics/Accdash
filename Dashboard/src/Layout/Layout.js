@@ -7,7 +7,7 @@ import TradeSummary from "../Summary/TradeSummary";
 import Users from "../Components/Users/Users";
 import TradeVolumes from "../Components/TradeVolumes/TradeVolumes";
 import Traders from "../Components/TradeVolumes/Traders";
-import TradeVolumesPie from "../Components/TradeVolumes/TradeVolumesPie";
+import TradeVolumesGender from "../Components/TradeVolumes/TradeVolumesGender";
 import Transactions from "../Components/Transactions/Transactions";
 import TradeVolumesSpendType from "../Components/TradeVolumes/TradeVolumesSpendType";
 import { Row, Col, Container } from "react-bootstrap";
@@ -18,11 +18,11 @@ export default class Layout extends React.Component {
     showSidebar: false,
     from: "2019-04",
     to: "2020-03",
-    selectedTokenNames: [],
+    selectedTokens: [],
     selectedSpendTypes: [],
     selectedGender: ["Male", "Female"],
     selectedTransactionType: ["STANDARD"],
-    toggleGraphs: "txsubtype"
+    toggleGraphs: "spendtype"
   };
 
   getGender = selectedOptions => {
@@ -31,17 +31,17 @@ export default class Layout extends React.Component {
           selectedGender: selectedOptions.map(({ value }) => value)
         })
       : this.setState({
-          selectedGender: ["Male", "Female"]
+          selectedGender: []
         });
   };
 
   getTokens = selectedOptions => {
     selectedOptions !== null
       ? this.setState({
-          selectedTokenNames: selectedOptions.map(({ value }) => value)
+          selectedTokens: selectedOptions.map(({ value }) => value)
         })
       : this.setState({
-          selectedTokenNames: []
+          selectedTokens: []
         });
   };
 
@@ -51,7 +51,7 @@ export default class Layout extends React.Component {
           selectedSpendTypes: selectedOptions.map(({ value }) => value)
         })
       : this.setState({
-          selectedSpendTypes: ["STANDARD"]
+          selectedSpendTypes: []
         });
   };
 
@@ -75,6 +75,7 @@ export default class Layout extends React.Component {
   sidebarCloseHandler = () => {
     this.setState({ showSidebar: false });
   };
+
   toggleSidebar = () => {
     this.setState({ showSidebar: !this.state.showSidebar });
   };
@@ -86,7 +87,7 @@ export default class Layout extends React.Component {
   };
   render() {
     return (
-      <Container fluid="md">
+      <Container fluid>
         <Backdrop
           show={this.state.showSidebar}
           clicked={this.sidebarCloseHandler}
@@ -95,6 +96,10 @@ export default class Layout extends React.Component {
           toggleFilters={this.toggleSidebar}
           dateRangeFrom={this.state.from}
           dateRangeTo={this.state.to}
+          selectedGender={this.state.selectedGender}
+          selectedTXType={this.state.selectedTransactionType}
+          selectedSpendType={this.state.selectedSpendTypes}
+          selectedTokens={this.state.selectedTokens}
         />
         <Sidebar
           open={this.state.showSidebar}
@@ -111,140 +116,147 @@ export default class Layout extends React.Component {
         />
         <div id="body">
           <Row id="summarySection">
-            <Col lg={6}>
+            <Col className="column" lg={6}>
               <UsersSummary
                 from={this.state.from}
                 to={this.state.to}
-                tokens={this.state.selectedTokenNames}
+                tokens={this.state.selectedTokens}
                 spendTypes={this.state.selectedSpendTypes}
                 gender={this.state.selectedGender}
                 txType={this.state.selectedTransactionType}
               />
             </Col>
-            <Col lg={6}>
+            <Col className="column" lg={6}>
               <TradeSummary
                 from={this.state.from}
                 to={this.state.to}
-                tokens={this.state.selectedTokenNames}
+                tokens={this.state.selectedTokens}
                 spendTypes={this.state.selectedSpendTypes}
                 gender={this.state.selectedGender}
                 txType={this.state.selectedTransactionType}
               />
             </Col>
           </Row>
+
           <Row id="dataSection">
-            <Col lg={6}>
+            <Col className="column users" lg={6}>
               <Users
                 from={this.state.from}
                 to={this.state.to}
-                tokens={this.state.selectedTokenNames}
+                tokens={this.state.selectedTokens}
                 spendTypes={this.state.selectedSpendTypes}
                 gender={this.state.selectedGender}
                 txType={this.state.selectedTransactionType}
               />
             </Col>
-            <Col lg={2}>
-              <TradeVolumesSpendType
-                from={this.state.from}
-                to={this.state.to}
-                tokens={this.state.selectedTokenNames}
-                spendTypes={this.state.selectedSpendTypes}
-                gender={this.state.selectedGender}
-                txType={this.state.selectedTransactionType}
-              />
-            </Col>
-            <Col className="col" lg={2}>
-              <TradeVolumesPie
-                from={this.state.from}
-                to={this.state.to}
-                tokens={this.state.selectedTokenNames}
-                spendTypes={this.state.selectedSpendTypes}
-                gender={this.state.selectedGender}
-                txType={this.state.selectedTransactionType}
-              />
-            </Col>
-            <Col className="col" lg={2}>
-              <Traders
-                from={this.state.from}
-                to={this.state.to}
-                tokens={this.state.selectedTokenNames}
-                spendTypes={this.state.selectedSpendTypes}
-                gender={this.state.selectedGender}
-                txType={this.state.selectedTransactionType}
-              />
-            </Col>
-          </Row>
-          <Row id="toggleGroup">
-            <div className="btn-group btn-group-toggle" data-toggle="buttons">
-              <label
-                className={`btn btn-secondary firstTab ${
-                  this.state.toggleGraphs === "txsubtype" ? "active" : ""
-                }`}
-              >
-                <input
-                  type="radio"
-                  name="options"
-                  id="option"
-                  value="txsubtype"
-                  onChange={this.toggleTrade}
-                />
-                TRANSACTION
-              </label>
-              <label
-                className={`btn btn-secondary ${
-                  this.state.toggleGraphs === "spendtype" ? "active" : ""
-                }`}
-              >
-                <input
-                  type="radio"
-                  name="options"
-                  id="option"
-                  value="spendtype"
-                  onChange={this.toggleTrade}
-                />
-                SPEND TYPES
-              </label>
-              <label
-                className={`btn btn-secondary lastTab ${
-                  this.state.toggleGraphs === "gender" ? "active" : ""
-                }`}
-              >
-                <input
-                  type="radio"
-                  name="options"
-                  id="option"
-                  value="gender"
-                  onChange={this.toggleTrade}
-                />
-                GENDER
-              </label>
-            </div>
-            <div className="filler"></div>
-          </Row>
-          <Row id="toggleSection">
-            <Col className="col" lg={6}>
-              <Transactions
-                from={this.state.from}
-                to={this.state.to}
-                tokens={this.state.selectedTokenNames}
-                spendTypes={this.state.selectedSpendTypes}
-                gender={this.state.selectedGender}
-                txType={this.state.selectedTransactionType}
-                tradeType={this.state.toggleGraphs}
-              />
-            </Col>
-            <Col className="col" lg={6}>
-              <TradeVolumes
-                from={this.state.from}
-                to={this.state.to}
-                tokens={this.state.selectedTokenNames}
-                spendTypes={this.state.selectedSpendTypes}
-                gender={this.state.selectedGender}
-                txType={this.state.selectedTransactionType}
-                tradeType={this.state.toggleGraphs}
-              />
+            <Col className="column trades" lg={6}>
+              <Row>
+                <Col className="column spend" lg={4}>
+                  <TradeVolumesSpendType
+                    from={this.state.from}
+                    to={this.state.to}
+                    tokens={this.state.selectedTokens}
+                    spendTypes={this.state.selectedSpendTypes}
+                    gender={this.state.selectedGender}
+                    txType={this.state.selectedTransactionType}
+                  />
+                </Col>
+                <Col className="column gender" lg={4}>
+                  <TradeVolumesGender
+                    from={this.state.from}
+                    to={this.state.to}
+                    tokens={this.state.selectedTokens}
+                    spendTypes={this.state.selectedSpendTypes}
+                    gender={this.state.selectedGender}
+                    txType={this.state.selectedTransactionType}
+                  />
+                </Col>
+                <Col className="column traders" lg={4}>
+                  <Traders
+                    from={this.state.from}
+                    to={this.state.to}
+                    tokens={this.state.selectedTokens}
+                    spendTypes={this.state.selectedSpendTypes}
+                    gender={this.state.selectedGender}
+                    txType={this.state.selectedTransactionType}
+                  />
+                </Col>
+              </Row>
             </Col>
           </Row>
+
+          <div className="togglableSection">
+            <Row id="toggleGroup">
+              <div className="btn-group btn-group-toggle" data-toggle="buttons">
+                <label
+                  className={`btn btn-secondary ${
+                    this.state.toggleGraphs === "spendtype" ? "active" : ""
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name="options"
+                    id="option"
+                    value="spendtype"
+                    onChange={this.toggleTrade}
+                  />
+                  Spend Types
+                </label>
+                <label
+                  className={`btn btn-secondary ${
+                    this.state.toggleGraphs === "txsubtype" ? "active" : ""
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name="options"
+                    id="option"
+                    value="txsubtype"
+                    onChange={this.toggleTrade}
+                  />
+                  Transactions
+                </label>
+                <label
+                  className={`btn btn-secondary ${
+                    this.state.toggleGraphs === "gender" ? "active" : ""
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name="options"
+                    id="option"
+                    value="gender"
+                    onChange={this.toggleTrade}
+                  />
+                  Gender
+                </label>
+              </div>
+            </Row>
+            <Row id="toggleGraphs">
+              <Col className="column" lg={6}>
+                <Transactions
+                  from={this.state.from}
+                  to={this.state.to}
+                  tokens={this.state.selectedTokens}
+                  spendTypes={this.state.selectedSpendTypes}
+                  gender={this.state.selectedGender}
+                  txType={this.state.selectedTransactionType}
+                  tradeType={this.state.toggleGraphs}
+                />
+              </Col>
+              <Col className="column" lg={6}>
+                <TradeVolumes
+                  from={this.state.from}
+                  to={this.state.to}
+                  tokens={this.state.selectedTokens}
+                  spendTypes={this.state.selectedSpendTypes}
+                  gender={this.state.selectedGender}
+                  txType={this.state.selectedTransactionType}
+                  tradeType={this.state.toggleGraphs}
+                />
+              </Col>
+            </Row>
+          </div>
         </div>
       </Container>
     );

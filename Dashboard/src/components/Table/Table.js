@@ -56,14 +56,16 @@ export default class stackedBarChart extends React.Component {
       .selectAll("td")
       .data(function(d) {
         return keys.map(function(k) {
-          return { value: d[k], name: k };
+          return { value: d[k], name: k, url: d.url };
         });
       })
       .enter()
       .append("td")
-      .attr("data-th", function(d) {
-        return d.name;
+      .append("a")
+      .attr("href", function(d) {
+        return d.url;
       })
+      .attr("target", "_blank")
       .text(function(d) {
         return d.value;
       });

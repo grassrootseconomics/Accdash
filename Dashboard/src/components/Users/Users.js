@@ -52,7 +52,7 @@ export default class users extends React.Component {
                     data={chartData}
                     keys={Object.keys(chartData[0]).slice(1)}
                     width={900}
-                    height={300}
+                    height={250}
                     startMonth={this.props.from}
                     endMonth={this.props.to}
                     colors={["#4472C4", "#1B2A37"]}

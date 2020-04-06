@@ -45,8 +45,8 @@ export default class TradeVolumesSpendType extends React.Component {
                     title={"Trade Volumes Bar"}
                     keys={this.props.spendTypes}
                     data={data.categorySummary}
-                    width={300}
-                    height={300}
+                    width={250}
+                    height={225}
                   />
                 );
               }

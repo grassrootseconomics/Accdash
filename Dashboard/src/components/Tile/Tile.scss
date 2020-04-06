@@ -2,12 +2,13 @@
   color: #000000;
   background: #ffffff;
   cursor: pointer;
-  height: 100%; // margin: 0.5em 0;
-  // box-shadow: 0 0 5px 2px #000000;
+  max-height: 90px;
+  min-height: 90px;
+  border-radius: 8px;
+
   .title {
-    font-size: small;
-    font-weight: 600;
-    margin: 0 0.3rem;
+    font-size: 14px;
+    margin: 0 0.5rem;
     text-align: left;
   }
   .body {
@@ -15,14 +16,12 @@
 
     .details {
       display: flex;
-      justify-content: space-between;
-
       p.label {
-        font-size: large;
+        font-size: 1.5rem;
         font-weight: 800;
         margin: 0;
         padding: 0;
-        margin-left: 5px;
+        margin-left: 0.5rem;
         span {
           font-size: 0.5em;
           font-weight: 500;
@@ -32,8 +31,7 @@
     }
     .trend {
       display: flex;
-      margin-right: 5px;
-      // justify-content: center;
+      margin-top: 0.5rem;
       &.angle-double-up {
         color: green;
       }
@@ -47,85 +45,64 @@
         }
       }
       p {
-        padding-left: 0.5em;
+        padding-left: 5px;
         margin-bottom: 0;
         .trendLabel {
           font-size: 0.75em;
-          font-weight: 600;
         }
         svg {
-          font-size: 1em;
-          margin-right: 5px;
+          font-size: 0.75em;
+          margin-right: 2px;
         }
       }
     }
   }
-  @media (min-width: 576px) {
+  /* Large devices (desktops, 992px and up) */
+  @media (max-width: 1400px) and (min-width: 992px) {
+    .title {
+      font-size: 12px;
+      margin: 0 0.25rem;
+    }
+    .body {
+      .details {
+        p.label {
+          font-size: 0.95rem;
+          font-weight: 600;
+          margin-left: 0.25rem;
+          span {
+            font-size: 0.45em;
+            font-weight: 500;
+            margin-left: 2px;
+          }
+        }
+      }
+      .trend {
+        display: flex;
+        margin-top: 0;
+        &.angle-double-up {
+          color: green;
+        }
+        &.angle-double-down {
+          color: red;
+        }
+        &.grey {
+          color: grey;
+          svg {
+            display: none;
+          }
+        }
+        p {
+          padding-left: 4px;
+          margin-bottom: 0;
+          .trendLabel {
+            font-size: 0.5em;
+          }
+          svg {
+            font-size: 0.5em;
+            margin-right: 2px;
+          }
+        }
+      }
+    }
   }
-
-  // Medium devices (tablets, 768px and up)
-  @media (min-width: 768px) {
-  }
-
-  // Large devices (desktops, 992px and up)
-  // @media (min-width: 992px) {
-  //   .title {
-  //     font-size: large;
-  //     font-weight: 600;
-  //     // margin: 0.3rem 0;
-  //     text-align: left;
-  //   }
-  //   .body {
-  //     // padding: 0.25em;
-  //     svg {
-  //       font-size: 3em;
-  //     }
-  //     .details {
-  //       p {
-  //         font-size: 1.5em;
-  //       }
-  //     }
-  //     .trend {
-  //       p {
-  //         font-size: 1em;
-  //         font-weight: 600;
-  //         padding-left: 0.5em;
-  //       }
-  //       svg {
-  //         font-size: 1.5em;
-  //       }
-  //     }
-  //   }
-  // }
-
-  // Extra large devices (large desktops, 1200px and up)
-  // @media (min-width: 1200px) {
-  //   .title {
-  //     font-size: large;
-  //     font-weight: 600;
-  //     // margin: 0.3rem 0;
-  //     text-align: left;
-  //   }
-  //   .body {
-  //     // padding: 0.25em;
-  //     svg {
-  //       font-size: 4em;
-  //     }
-  //     .details {
-  //       p {
-  //         font-size: 1em;
-  //       }
-  //     }
-  //     .trend {
-  //       p {
-  //         font-size: 1em;
-  //         font-weight: 600;
-  //         padding-left: 0.5em;
-  //       }
-  //       svg {
-  //         font-size: 1em;
-  //       }
-  //     }
-  //   }
-  // }
 }

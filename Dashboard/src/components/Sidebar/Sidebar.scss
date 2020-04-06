@@ -10,10 +10,14 @@
   /* top layer */
   z-index: 9999;
   transition: transform 0.3s ease-out;
-  .filters {
+
+  .filters { 
+    margin-top:1rem;   
     .title {
+      font-size:small;
+      font-weight:600;
       margin-left: 0.5rem;
-      margin-top: 1rem;
+      margin-bottom:0;
     }
   }
 }

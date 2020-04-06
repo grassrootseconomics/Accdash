@@ -24,7 +24,7 @@ export default class lineBarChart extends React.Component {
 
     const xScale = d3
       .scaleBand()
-      .range([0, width])
+      .range([0, width - 65])
       .padding(1);
     const yScale = d3.scaleLinear().range([height, 20]);
 
@@ -34,9 +34,11 @@ export default class lineBarChart extends React.Component {
         !monthView ? d3.timeFormat("%b %Y") : d3.timeFormat("%d %b %Y")
       )
       .tickSize(0);
+
     const yAxis = d3
       .axisLeft(yScale)
       .tickFormat(d3.format(".2s"))
+      .ticks(6)
       .tickSize(0);
 
     var svg = d3.select(`svg.${graphClass}`);
@@ -128,6 +130,7 @@ export default class lineBarChart extends React.Component {
       .append("g")
       .attr("transform", "translate(0," + height + ")")
       .call(xAxis)
+      .call(g => g.select(".domain").remove())
       .selectAll("text")
       .style("text-anchor", "end")
       .attr("dx", "-.8em")
