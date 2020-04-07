@@ -1,0 +1,10 @@
+phases:
+  install:
+    runtime-versions:
+      nodejs: 12
+  build:
+    commands:
+      - yarn install
+      - yarn build
+      - ls
+   
