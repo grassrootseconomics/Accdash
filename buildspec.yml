@@ -18,4 +18,5 @@ phases:
     commands:
       - echo Entered the pre_build phase...
       - yarn install
+      - ls -ltr
    
