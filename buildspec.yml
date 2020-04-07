@@ -17,6 +17,13 @@ phases:
   pre_build:
     commands:
       - echo Entered the pre_build phase...
+      - cd Dashboard
       - yarn install
+      - ls -ltr
+  build:
+    commands:
+      - echo Entered the build phase...
+      - pwd
+	    - yarn build
       - ls -ltr
    
