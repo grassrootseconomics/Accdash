@@ -24,6 +24,6 @@ phases:
     commands:
       - echo Entered the build phase...
       - pwd
-      - yarn build
+      - yarn run build
       - ls -ltr
    
