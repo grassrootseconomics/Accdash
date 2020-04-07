@@ -4,19 +4,20 @@ phases:
   install:
     runtime-versions:
       nodejs: 12
+    commands:
+      - echo Entered the install phase...
+      - apt-get update -y
+      - apt-get install apt-transport-https
+      # Setup for Yarn
+      - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+      - echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+      # Do it!
+      - apt-get update -y
+      - apt-get install -y yarn
   pre_build:
     commands:
-      - echo prepare env. Ensure latest version of node is available. 
-      - sudo apt-get update
-      - sudo apt-get install -y apt-transport-https
-      - sudo curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-      - echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-      - curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash - 
-      - sudo apt-get update
-      - sudo apt-get install -y build-essential
-      - sudo npm -v
-      - sudo apt-get install -y yarn
-      - echo done with prepare env.
+      - echo Entered the pre_build phase...
+      - yarn install
   build:
     commands:
       - yarn install
