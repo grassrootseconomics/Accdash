@@ -46,7 +46,7 @@ export default class TradeVolumesSpendType extends React.Component {
                     keys={this.props.spendTypes}
                     data={data.categorySummary}
                     width={250}
-                    height={225}
+                    height={250}
                   />
                 );
               }

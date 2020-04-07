@@ -1,11 +1,11 @@
 .top-bar {
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  width: 100%;
   .header {
     height: 45px;
     background: #1f2833;
-    position: fixed;
-    z-index: 999;
-    top: 0;
-    width: 100%;
 
     p {
       text-align: center;
@@ -20,7 +20,6 @@
   .filters {
     color: #1f2833;
     background: #ffffff;
-    margin-top: 45px;
     button.primary {
       margin: 0.5rem 0;
       font-size: small;
