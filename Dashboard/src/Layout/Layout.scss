@@ -72,6 +72,11 @@
     }
   }
 
+  /* X-Small devices (landscape phones, 576px and below) */
+  @media (max-width: 576px) {
+    margin-top: 45px;
+  }
+
   /* Large devices (desktops, 992px and up) */
   @media (min-width: 992px) {
     .row {

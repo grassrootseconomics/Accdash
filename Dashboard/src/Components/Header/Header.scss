@@ -15,6 +15,9 @@
       font-weight: bold;
       font-size: x-large;
       color: #ffffff;
+      .mobile-only {
+        display: none;
+      }
     }
   }
   .filters {
@@ -47,6 +50,34 @@
 
     #sidebarToggle {
       color: #1f2833;
+    }
+  }
+
+  /* X-Small devices (landscape phones, 576px and below) */
+  @media (max-width: 576px) {
+    .header {
+      .mobileOnly {
+        display: block;
+      }
+      .nonMobile {
+        display: none;
+      }
+    }
+    .filters {
+      &.nonMobile {
+        visibility: hidden;
+        background: #f4f7fa;
+      }
+    }
+  }
+
+  /* Small devices (tablets, 768px and below) The navbar toggle appears at this breakpoint */
+  @media (max-width: 768px) {
+    .header {
+      p {
+        margin-top: 10px;
+        font-size: large;
+      }
     }
   }
 }
