@@ -1,0 +1,68 @@
+#topTraders {
+  .title {
+    display: flex;
+    text-align: left;
+    font-size: small;
+    font-weight: 600;
+    margin: 0.5rem 0;
+  }
+
+  table {
+    th,
+    td {
+      text-align: left;
+      font-size: 10px;
+      padding: 4px;
+      border: none;
+      a {
+        color: #1f2833;
+        &:hover {
+          text-decoration: none;
+        }
+      }
+    }
+    th {
+      background: #1f2833;
+      color: white;
+    }
+    tr:hover {
+      background: #c2c2c2;
+    }
+  }
+
+  /* Large devices (desktops, 992px and up) */
+  @media (min-width: 992px) {
+    table {
+      th,
+      td {
+        font-size: 4.5px;
+      }
+    }
+  }
+
+  /* Extra large devices (large desktops, 1200px and up) */
+  @media (min-width: 1200px) {
+    table {
+      th,
+      td {
+        font-size: 7px;
+      }
+    }
+  }
+  @media (min-width: 1500px) {
+    table {
+      th,
+      td {
+        font-size: 10px;
+      }
+    }
+  }
+  @media (min-width: 1800px) {
+    table {
+      th,
+      td {
+        font-size: 12px;
+      }
+    }
+  }
+}
