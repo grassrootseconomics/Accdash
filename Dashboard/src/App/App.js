@@ -1,7 +1,7 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.scss";
-import Layout from "../../Layout/Layout";
+import Layout from "../Layout/Layoutyout";
 
 class App extends React.Component {
   render() {
