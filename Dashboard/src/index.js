@@ -9,7 +9,7 @@ import { createHttpLink } from "apollo-link-http";
 import { InMemoryCache } from "apollo-cache-inmemory";
 
 const httpLink = createHttpLink({
-  uri: "https://b51ycagx5g.execute-api.eu-central-1.amazonaws.com/dev1/graphql/"
+  uri: "https://iqr3ivy96j.execute-api.eu-central-1.amazonaws.com/prod/graphql/"
 });
 
 const client = new ApolloClient({
