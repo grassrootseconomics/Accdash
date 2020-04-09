@@ -1,7 +1,7 @@
 import React from "react";
 import "./Users.scss";
 
-import LineChart from "../LineChart/LineChart";
+import LineChart from "../Components/LineChart/LineChart";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 

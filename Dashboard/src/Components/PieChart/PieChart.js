@@ -104,7 +104,7 @@ export default class PieChart extends React.Component {
       .append("g")
       .attr(
         "transform",
-        `translate(${width / 2 - (data.length / 2) * 60}, -20)`
+        `translate(${width / 2 - (data.length / 2) * 60 - 10}, -20)`
       )
       .attr("font-size", 10)
       // .attr("text-anchor", "end")

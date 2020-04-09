@@ -24,7 +24,7 @@ export default class lineBarChart extends React.Component {
 
     const xScale = d3
       .scaleBand()
-      .range([0, width - 65])
+      .range([0, width - 5])
       .padding(1);
     const yScale = d3.scaleLinear().range([height, 20]);
 

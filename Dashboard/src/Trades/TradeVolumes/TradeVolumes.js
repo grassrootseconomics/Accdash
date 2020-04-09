@@ -1,6 +1,6 @@
 import React from "react";
-import StackedBarChart from "../StackedBarChart/StackedBarChart";
-import LineChart from "../LineChart/LineChart";
+import StackedBarChart from "../../Components/StackedBarChart/StackedBarChart";
+import LineChart from "../../Components/LineChart/LineChart";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import "./TradeVolumes.scss";

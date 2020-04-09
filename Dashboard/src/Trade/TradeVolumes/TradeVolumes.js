@@ -1,23 +1,23 @@
 import React from "react";
-import LineChart from "../LineChart/LineChart";
-import StackedBarChart from "../StackedBarChart/StackedBarChart";
+import StackedBarChart from "../../Components/StackedBarChart/StackedBarChart";
+import LineChart from "../../Components/LineChart/LineChart";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
-import "./Transactions.scss";
+import "./TradeVolumes.scss";
 
 const summary = gql(`
 query MonthlySummary($from:String!, $to:String!, $tokens:[String]!, $spendTypes:[String]!, $gender:[String]!, $txType:[String]!, $tradeType:String!){
-  monthlySummaryData  (fromDate:$from, toDate:$to,  tokenName:$tokens, spendType:$spendTypes, gender:$gender, txType:$txType, request:$tradeType){ 
+  monthlySummaryData  (fromDate:$from, toDate:$to,  tokenName:$tokens, spendType:$spendTypes, gender:$gender, txType:$txType, , request:$tradeType){ 
     value
   }
 }
 `);
 
-export default class Transactions extends React.Component {
+export default class TradeVolumes extends React.Component {
   render() {
     return (
-      <section id="transactions">
-        <p className="title">NO OF TRANSACTIONS</p>
+      <section id="tradeVolumes">
+        <p className="title">TRADE VOLUMES</p>
         <Query
           query={summary}
           variables={{
@@ -27,7 +27,7 @@ export default class Transactions extends React.Component {
             spendTypes: this.props.spendTypes,
             gender: this.props.gender,
             txType: this.props.txType,
-            tradeType: `transactioncount-time-${this.props.tradeType}`
+            tradeType: `tradevolumes-time-${this.props.tradeType}`
           }}
         >
           {({ loading, error, data }) => {
@@ -57,7 +57,7 @@ export default class Transactions extends React.Component {
               if (chartData.length > 0) {
                 return this.props.tradeType === "spendtype" ? (
                   <StackedBarChart
-                    title={"Transactions"}
+                    title={"Trade Volumes"}
                     data={chartData}
                     keys={Object.keys(chartData[0]).slice(1)}
                     width={900}
@@ -68,7 +68,7 @@ export default class Transactions extends React.Component {
                   />
                 ) : (
                   <LineChart
-                    title={"Transactions"}
+                    title={"Trade Volumes"}
                     data={chartData}
                     keys={Object.keys(chartData[0]).slice(1)}
                     width={900}

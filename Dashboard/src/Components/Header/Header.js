@@ -45,11 +45,14 @@ export default class Header extends React.Component {
       <div className="top-bar">
         <Row className="header">
           <p>
-            <span>COMMUNITY INCLUSION CURRENCIES DASHBOARD</span>
+            <span className="nonMobile">
+              COMMUNITY INCLUSION CURRENCIES DASHBOARD
+            </span>
+            <span className="mobileOnly">CIC DASHBOARD</span>
           </p>
         </Row>
 
-        <Row className="filters">
+        <Row className="filters nonMobile">
           <button
             type="button"
             id="sidebarToggle"

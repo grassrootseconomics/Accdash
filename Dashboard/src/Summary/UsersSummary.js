@@ -120,8 +120,9 @@ export default class UsersSummary extends React.Component {
                 </Col>
                 <Col lg={3} className="tile tile-2 ">
                   <Tile
-                    title={"Total Traders"}
+                    title={"Traders"}
                     value1={format(".2s")(data.traders[0].total)}
+                    units1={"(total)"}
                     trend1={{
                       symbol: this.trend(
                         data.traders[0].start,
@@ -132,14 +133,28 @@ export default class UsersSummary extends React.Component {
                         data.traders[0].end
                       )
                     }}
+                    value2={format(".2s")(data.frequentTraders[0].total)}
+                    units2={"(frequent)"}
+                    trend2={{
+                      symbol: this.trend(
+                        data.frequentTraders[0].start,
+                        data.frequentTraders[0].end
+                      ),
+                      percent: sameMonth
+                        ? "NA"
+                        : this.percent(
+                            data.frequentTraders[0].start,
+                            data.frequentTraders[0].end
+                          )
+                    }}
                     toolTip={
-                      "Total number of users who have traded at least once in the time frame"
+                      "Total number of users who have traded at least once in the time frame &  Frequent - Total number of users who have traded 4 times or more on average per month"
                     }
                   />
                 </Col>
                 <Col lg={3} className="tile tile-3 ">
                   <Tile
-                    title={"Frequent Traders"}
+                    title={"Supply & Reserve"}
                     value1={format(".2s")(data.frequentTraders[0].total)}
                     trend1={{
                       symbol: this.trend(
@@ -153,25 +168,17 @@ export default class UsersSummary extends React.Component {
                             data.frequentTraders[0].end
                           )
                     }}
-                    toolTip={
-                      "Total number of users who have traded 4 times or more on average per month"
-                    }
+                    // toolTip={}
                   />
                 </Col>
                 <Col lg={3} className="tile tile-3 ">
                   <Tile
                     title={"Balances"}
                     value1={format(".2s")(
-                      data.summaryDataBalance[0].value[0].total
-                    )}
-                    units1={"(total)"}
-                    value2={format(".2s")(
                       data.summaryDataBalance[0].value[0].circulation
                     )}
-                    units2={"(in circulation)"}
-                    toolTip={
-                      "Total balance available & Total balance in circulation "
-                    }
+                    units1={"(in circulation)"}
+                    toolTip={"Total balance in circulation"}
                   />
                 </Col>
               </Row>

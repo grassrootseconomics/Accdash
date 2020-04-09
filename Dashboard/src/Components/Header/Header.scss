@@ -1,26 +1,28 @@
 .top-bar {
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  width: 100%;
   .header {
     height: 45px;
     background: #1f2833;
-    position: fixed;
-    z-index: 999;
-    top: 0;
-    width: 100%;
 
     p {
       text-align: center;
       margin-bottom: 0;
       flex-grow: 1;
-      margin-top: 3px;
+      margin-top: 5px;
       font-weight: bold;
       font-size: x-large;
       color: #ffffff;
+      .mobile-only {
+        display: none;
+      }
     }
   }
   .filters {
     color: #1f2833;
     background: #ffffff;
-    margin-top: 45px;
     button.primary {
       margin: 0.5rem 0;
       font-size: small;
@@ -48,6 +50,34 @@
 
     #sidebarToggle {
       color: #1f2833;
+    }
+  }
+
+  /* X-Small devices (landscape phones, 576px and below) */
+  @media (max-width: 576px) {
+    .header {
+      .mobileOnly {
+        display: block;
+      }
+      .nonMobile {
+        display: none;
+      }
+    }
+    .filters {
+      &.nonMobile {
+        visibility: hidden;
+        background: #f4f7fa;
+      }
+    }
+  }
+
+  /* Small devices (tablets, 768px and below) The navbar toggle appears at this breakpoint */
+  @media (max-width: 768px) {
+    .header {
+      p {
+        margin-top: 10px;
+        font-size: large;
+      }
     }
   }
 }

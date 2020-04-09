@@ -1,5 +1,5 @@
 import React from "react";
-import PieChart from "../PieChart/PieChart";
+import PieChart from "../../Components/PieChart/PieChart";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 
@@ -45,7 +45,7 @@ export default class TradeVolumesGender extends React.Component {
                     title={"Trade Volumes Gender"}
                     data={chartData}
                     width={250}
-                    height={225}
+                    height={250}
                     diameter={175}
                     colors={["#3b5998", "#8b9dc3", "#536878", "#4279a3"]}
                   />

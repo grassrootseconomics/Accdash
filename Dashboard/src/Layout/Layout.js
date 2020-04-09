@@ -4,12 +4,12 @@ import Sidebar from ".././Components/Sidebar/Sidebar";
 import Backdrop from "../Backdrop/Backdrop";
 import UsersSummary from "../Summary/UsersSummary";
 import TradeSummary from "../Summary/TradeSummary";
-import Users from "../Components/Users/Users";
-import TradeVolumes from "../Components/TradeVolumes/TradeVolumes";
-import Traders from "../Components/TradeVolumes/Traders";
-import TradeVolumesGender from "../Components/TradeVolumes/TradeVolumesGender";
-import Transactions from "../Components/Transactions/Transactions";
-import TradeVolumesSpendType from "../Components/TradeVolumes/TradeVolumesSpendType";
+import Users from "../Users/Users";
+import TradeVolumes from "../Trades/TradeVolumes/TradeVolumes";
+import Traders from "../Trades/Traders/Traders";
+import TradeVolumesGender from "../Trades/TradeVolumesGender/TradeVolumesGender";
+import Transactions from "../Trades/Transactions/Transactions";
+import TradeVolumesSpendType from "../Trades/TradeVolumesSpendType/TradeVolumesSpendType";
 import { Row, Col, Container } from "react-bootstrap";
 import "./Layout.scss";
 
@@ -116,7 +116,7 @@ export default class Layout extends React.Component {
         />
         <div id="body">
           <Row id="summarySection">
-            <Col className="column" lg={6}>
+            <Col className="col" lg={6}>
               <UsersSummary
                 from={this.state.from}
                 to={this.state.to}
@@ -126,7 +126,7 @@ export default class Layout extends React.Component {
                 txType={this.state.selectedTransactionType}
               />
             </Col>
-            <Col className="column" lg={6}>
+            <Col className="col" lg={6}>
               <TradeSummary
                 from={this.state.from}
                 to={this.state.to}

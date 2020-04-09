@@ -20,10 +20,13 @@
     }
   }
   #tiles {
+    margin-left: 0.25em;
+    margin-right: 0.25em;
+
     margin-bottom: 0;
     .tile {
-      padding: 0 0.5rem;
-      margin-bottom: 1rem;
+      padding: 0 0.25rem;
+      margin-bottom: 0.5rem;
     }
   }
 }

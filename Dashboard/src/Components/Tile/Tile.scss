@@ -2,18 +2,17 @@
   color: #000000;
   background: #ffffff;
   cursor: pointer;
-  max-height: 90px;
-  min-height: 90px;
+  max-height: 100px;
+  min-height: 100px;
   border-radius: 8px;
 
   .title {
-    font-size: 14px;
+    font-size: small;
     margin: 0 0.5rem;
     text-align: left;
   }
   .body {
     align-items: left;
-
     .details {
       display: flex;
       p.label {
@@ -23,7 +22,7 @@
         padding: 0;
         margin-left: 0.5rem;
         span {
-          font-size: 0.5em;
+          font-size: 0.5rem;
           font-weight: 500;
           margin-left: 2px;
         }
@@ -57,40 +56,20 @@
       }
     }
   }
-  /* Large devices (desktops, 992px and up) */
-  @media (max-width: 1400px) and (min-width: 992px) {
-    .title {
-      font-size: 12px;
-      margin: 0 0.25rem;
-    }
+
+  /* Large devices (desktops, 992px and upto 1200px) */
+  @media (min-width: 992px) and (max-width: 1200px) {
     .body {
       .details {
         p.label {
-          font-size: 0.95rem;
-          font-weight: 600;
-          margin-left: 0.25rem;
+          font-size: 1.05rem;
           span {
-            font-size: 0.45em;
-            font-weight: 500;
-            margin-left: 2px;
+            font-size: 0.5rem;
           }
         }
       }
       .trend {
-        display: flex;
-        margin-top: 0;
-        &.angle-double-up {
-          color: green;
-        }
-        &.angle-double-down {
-          color: red;
-        }
-        &.grey {
-          color: grey;
-          svg {
-            display: none;
-          }
-        }
+        margin-top: 0.15rem;
         p {
           padding-left: 4px;
           margin-bottom: 0;
@@ -99,6 +78,34 @@
           }
           svg {
             font-size: 0.5em;
+            margin-right: 2px;
+          }
+        }
+      }
+    }
+  }
+
+  /* Large devices (desktops, 1200px and upto 1400px) */
+  @media (min-width: 1200px) and (max-width: 1400px) {
+    .body {
+      .details {
+        p.label {
+          font-size: 1.25rem;
+          span {
+            font-size: 0.5rem;
+          }
+        }
+      }
+      .trend {
+        margin-top: 0.25rem;
+        p {
+          padding-left: 4px;
+          margin-bottom: 0;
+          .trendLabel {
+            font-size: 0.75em;
+          }
+          svg {
+            font-size: 0.75em;
             margin-right: 2px;
           }
         }

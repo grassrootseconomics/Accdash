@@ -1,14 +1,14 @@
 import React from "react";
-import HBarChart from "../HBarChart/HBarChart";
+import PieChart from "../../Components/PieChart/PieChart";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 
-import "./TradeVolumesSpendType.scss";
+import "./TradeVolumesGender.scss";
 
 const summary = gql(`
 query Summary($from:String!, $to:String!, $tokens:[String]!, $spendTypes:[String]!, $gender:[String]!, $txType:[String]!){  
   categorySummary (
-    fromDate:$from, toDate:$to,  tokenName:$tokens, spendType:$spendTypes, gender:$gender, txType:$txType, request:"tradevolumes-category-spendtype"
+    fromDate:$from, toDate:$to,  tokenName:$tokens, spendType:$spendTypes, gender:$gender, txType:$txType, request:"tradevolumes-category-gender"
     ){
       label
       value
@@ -16,11 +16,11 @@ query Summary($from:String!, $to:String!, $tokens:[String]!, $spendTypes:[String
 }
 `);
 
-export default class TradeVolumesSpendType extends React.Component {
+export default class TradeVolumesGender extends React.Component {
   render() {
     return (
-      <section id="tradeVolumesSpendType">
-        <p className="title">TRADE VOLUMES BY SPEND TYPE</p>
+      <section id="tradeVolumesGender">
+        <p className="title">TRADE VOLUMES BY GENDER</p>
         <Query
           query={summary}
           variables={{
@@ -41,12 +41,13 @@ export default class TradeVolumesSpendType extends React.Component {
               const chartData = data.categorySummary;
               if (chartData.length > 0) {
                 return (
-                  <HBarChart
-                    title={"Trade Volumes Bar"}
-                    keys={this.props.spendTypes}
-                    data={data.categorySummary}
+                  <PieChart
+                    title={"Trade Volumes Gender"}
+                    data={chartData}
                     width={250}
-                    height={225}
+                    height={250}
+                    diameter={175}
+                    colors={["#3b5998", "#8b9dc3", "#536878", "#4279a3"]}
                   />
                 );
               }

@@ -1,7 +1,7 @@
 import React from "react";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
-import Table from "../Table/Table";
+import Table from "../../Components/Table/Table";
 import { format } from "d3";
 import "./Traders.scss";
 
@@ -43,7 +43,14 @@ export default class Traders extends React.Component {
                     Volume: format(".2s")(d.volume),
                     TXs: format(".2s")(d.count),
                     BusinessType: d.s_business_type,
-                    Gender: d.s_gender,
+                    Gender:
+                      d.s_gender === "Male"
+                        ? "M"
+                        : d.s_gender === "Female"
+                        ? "F"
+                        : d.s_gender === "Unknown"
+                        ? ""
+                        : "Other",
                     url: `https://blockscout.com/poa/xdai/address/${d.source}/transactions`,
                     No: i + 1
                   })
