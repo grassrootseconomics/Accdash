@@ -83,9 +83,9 @@ export default class Tiles extends React.Component {
   render() {
     return (
       <OverlayTrigger
-        key={"right"}
-        placement={"right"}
-        overlay={<Tooltip id={`tooltip-right`}>{this.props.toolTip}</Tooltip>}
+        key={"bottom"}
+        placement={"bottom"}
+        overlay={<Tooltip id={`tooltip-bottom`}>{this.props.toolTip}</Tooltip>}
       >
         <div className="card">
           <p className="title ">{this.props.title}</p>
