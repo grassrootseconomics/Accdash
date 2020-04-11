@@ -2,7 +2,7 @@ import React from "react";
 import { Row } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Header.scss";
-import { faFilter } from "@fortawesome/free-solid-svg-icons";
+import { faFilter, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { timeFormat } from "d3";
 export default class Header extends React.Component {
   render() {
@@ -44,12 +44,27 @@ export default class Header extends React.Component {
     return (
       <div className="top-bar">
         <Row className="header">
+          <button
+            type="button"
+            id="sidebarToggle"
+            className="btn mobileOnly"
+            onClick={this.props.toggleFilters}
+          >
+            <FontAwesomeIcon icon={faFilter} size="2x" />
+          </button>
           <p>
             <span className="nonMobile">
               COMMUNITY INCLUSION CURRENCIES DASHBOARD
             </span>
             <span className="mobileOnly">CIC DASHBOARD</span>
           </p>
+          <a
+            href="http://cichub.org/"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <FontAwesomeIcon icon={faInfoCircle} size="2x" />
+          </a>
         </Row>
 
         <Row className="filters nonMobile">
