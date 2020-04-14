@@ -12,6 +12,7 @@
     "apollo-boost": "^0.4.7",
     "bootstrap": "^4.4.1",
     "d3": "^5.15.0",
+    "env-cmd": "^10.1.0",
     "graphql": "^14.6.0",
     "graphql-tag": "^2.10.1",
     "node-sass": "^4.13.1",
@@ -24,8 +25,9 @@
     "react-select": "^3.0.8"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "env-cmd -f .env.development react-scripts start",
+    "build:development": "env-cmd -f .env.development react-scripts build",
+    "build:production": "env-cmd -f .env.production react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

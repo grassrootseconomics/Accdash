@@ -59,6 +59,8 @@
 
   /* Large devices (desktops, 992px and upto 1200px) */
   @media (min-width: 992px) and (max-width: 1200px) {
+    max-height: 90px;
+    min-height: 90px;
     .body {
       .details {
         p.label {
@@ -87,6 +89,8 @@
 
   /* Large devices (desktops, 1200px and upto 1400px) */
   @media (min-width: 1200px) and (max-width: 1400px) {
+    max-height: 85px;
+    min-height: 85px;
     .body {
       .details {
         p.label {
