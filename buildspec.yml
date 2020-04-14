@@ -25,7 +25,8 @@ phases:
     commands:
       - echo Entered the post_build phase...
       - cd build
-      - aws s3 cp . s3://cic-dashboard-frontend-webpage-prod/ --recursive
+      - echo $s3_bucket
+      - aws s3 cp . s3://$s3_bucket/ --recursive
       - cd ..
       - rm -rf build
       - echo Successful
