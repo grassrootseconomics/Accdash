@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Row, Col, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Header.scss";
 import { faFilter, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
@@ -74,24 +74,27 @@ export default class Header extends React.Component {
         </Row>
 
         <Row className="filters nonMobile">
-          <button
-            type="button"
-            id="sidebarToggle"
-            className="btn"
-            onClick={this.props.toggleFilters}
-          >
-            <FontAwesomeIcon icon={faFilter} size="2x" />
-          </button>
-          <button
-            className="primary dateRange"
-            onClick={this.props.toggleFilters}
-          >
-            {dateRange}
-          </button>
-          {transactions}
-          {spendTypes}
-          {genders}
-          {tokens}
+          <Col className="col" lg={12}>
+            <button
+              type="button"
+              id="sidebarToggle"
+              className="btn"
+              onClick={this.props.toggleFilters}
+            >
+              <FontAwesomeIcon icon={faFilter} size="2x" />
+            </button>
+            <button
+              className="primary dateRange"
+              onClick={this.props.toggleFilters}
+            >
+              {dateRange}
+            </button>
+            {transactions}
+            {spendTypes}
+            {genders}
+            {tokens}
+            <span className="threeDots">...</span>
+          </Col>
         </Row>
       </div>
     );

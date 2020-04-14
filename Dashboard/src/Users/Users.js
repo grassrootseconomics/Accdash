@@ -6,11 +6,12 @@ import { Query } from "react-apollo";
 import gql from "graphql-tag";
 
 const summaryQuery = gql(`
-query MonthlySummary($from:String!, $to:String!, $tokens:[String]!, $spendTypes:[String]!, $gender:[String]!, $txType:[String]!){
-  monthlySummaryData  (fromDate:$from, toDate:$to,  tokenName:$tokens, spendType:$spendTypes, gender:$gender, txType:$txType, request:"users-time-totalvsfrequent"){ 
+query MonthlySummary($from:String!, $to:String!, $tokens:[String]!, $spendTypes:[String]!, $gender:[String]!, $txType:[String]!, $graphType:String!){
+  monthlySummaryData  (fromDate:$from, toDate:$to,  tokenName:$tokens, spendType:$spendTypes, gender:$gender, txType:$txType, request:$graphType){ 
     value
   }
 }
+
 `);
 
 export default class users extends React.Component {
@@ -30,7 +31,10 @@ export default class users extends React.Component {
             tokens: this.props.tokens,
             spendTypes: this.props.spendTypes,
             gender: this.props.gender,
-            txType: this.props.txType
+            txType: this.props.txType,
+            graphType: this.props.registeredUsers
+              ? "registeredusers-cumulative"
+              : "users-time-totalvsfrequent"
           }}
         >
           {({ loading, error, data }) => {
@@ -55,7 +59,7 @@ export default class users extends React.Component {
                     height={250}
                     startMonth={this.props.from}
                     endMonth={this.props.to}
-                    colors={["#4472C4", "#1B2A37"]}
+                    colors={["#4472C4", "#1B2A37", "#32AF93"]}
                   />
                 );
               }

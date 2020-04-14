@@ -155,19 +155,15 @@ export default class UsersSummary extends React.Component {
                 <Col lg={3} className="tile tile-3 ">
                   <Tile
                     title={"Supply & Reserve"}
-                    value1={format(".2s")(data.frequentTraders[0].total)}
-                    trend1={{
-                      symbol: this.trend(
-                        data.frequentTraders[0].start,
-                        data.frequentTraders[0].end
-                      ),
-                      percent: sameMonth
-                        ? "NA"
-                        : this.percent(
-                            data.frequentTraders[0].start,
-                            data.frequentTraders[0].end
-                          )
-                    }}
+                    value1={format(".2s")(
+                      data.summaryDataBalance[0].value[0].supply
+                    )}
+                    units1={"(supply)"}
+                    value2={format(".2s")(
+                      data.summaryDataBalance[0].value[0].reserve
+                    )}
+                    units2={"(reserve)"}
+
                     // toolTip={}
                   />
                 </Col>

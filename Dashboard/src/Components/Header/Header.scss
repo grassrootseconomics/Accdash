@@ -35,6 +35,7 @@
   .filters {
     color: #1f2833;
     background: #ffffff;
+    padding-right: 5px;
     button.primary {
       margin: 0.5rem 0;
       font-size: small;
@@ -59,14 +60,20 @@
         background: #f4f7fa;
       }
     }
+    button:nth-child(2) {
+      color: red;
+    }
 
     #sidebarToggle {
       color: #1f2833;
     }
+    .threeDots {
+      display: none;
+    }
   }
 
   /* X-Small devices (landscape phones, 576px and below) */
-  @media (max-width: 600px) {
+  @media (max-width: 576px) {
     .header {
       .mobileOnly {
         display: block;
@@ -81,7 +88,18 @@
     .filters {
       &.nonMobile {
         visibility: hidden;
-        background: #f4f7fa;
+      }
+    }
+  }
+
+  /* X-Small devices (landscape phones, 576px and below) */
+  @media (max-width: 600px) {
+    .header {
+      .mobileOnly {
+        display: block;
+      }
+      .nonMobile {
+        display: none;
       }
     }
   }
@@ -92,6 +110,14 @@
       p {
         margin-top: 10px;
         font-size: large;
+      }
+    }
+  }
+
+  @media (min-width: 1500px) {
+    .filters {
+      .primary:nth-child(10) {
+        color: red;
       }
     }
   }

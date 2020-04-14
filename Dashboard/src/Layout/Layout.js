@@ -22,7 +22,8 @@ export default class Layout extends React.Component {
     selectedSpendTypes: [],
     selectedGender: ["Male", "Female"],
     selectedTransactionType: ["STANDARD"],
-    toggleGraphs: "spendtype"
+    toggleGraphs: "spendtype",
+    toggleRegisteredUsers: false
   };
 
   getGender = selectedOptions => {
@@ -85,6 +86,12 @@ export default class Layout extends React.Component {
       this.setState({ toggleGraphs: e.currentTarget.value });
     }
   };
+
+  toggleUsers = e => {
+    if (e.currentTarget) {
+      this.setState({ toggleRegisteredUsers: e.currentTarget.checked });
+    }
+  };
   render() {
     return (
       <Container fluid>
@@ -114,7 +121,16 @@ export default class Layout extends React.Component {
           selectedGender={this.state.selectedGender}
           selectedTXType={this.state.selectedTransactionType}
         />
-        <div id="body">
+        <div
+          id="body"
+          className={`${
+            1 +
+            this.state.selectedGender.length +
+            this.state.selectedTransactionType.length +
+            this.state.selectedSpendTypes.length +
+            this.state.selectedTokens.length
+          }`}
+        >
           <Row id="summarySection">
             <Col className="col" lg={6}>
               <UsersSummary
@@ -147,7 +163,15 @@ export default class Layout extends React.Component {
                 spendTypes={this.state.selectedSpendTypes}
                 gender={this.state.selectedGender}
                 txType={this.state.selectedTransactionType}
+                registeredUsers={this.state.toggleRegisteredUsers}
               />
+              <div className="toggle">
+                <label className="switch">
+                  <input type="checkbox" onChange={this.toggleUsers} />
+                  <span className="slider round"></span>
+                </label>
+                <span className="text">Registered Users</span>
+              </div>
             </Col>
             <Col className="column trades" lg={6}>
               <Row>
