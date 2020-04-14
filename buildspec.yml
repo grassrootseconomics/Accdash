@@ -20,7 +20,7 @@ phases:
   build:
     commands:
       - echo Entered the build phase...
-      - yarn build
+      - yarn build:$build_env
   post_build:
     commands:
       - echo Entered the post_build phase...
