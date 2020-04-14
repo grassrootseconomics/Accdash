@@ -1,5 +1,5 @@
 import React from "react";
-import { Row } from "react-bootstrap";
+import { Row, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Header.scss";
 import { faFilter, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
@@ -58,13 +58,19 @@ export default class Header extends React.Component {
             </span>
             <span className="mobileOnly">CIC DASHBOARD</span>
           </p>
-          <a
-            href="http://cichub.org/"
-            rel="noopener noreferrer"
-            target="_blank"
+          <OverlayTrigger
+            key={"bottom"}
+            placement={"bottom"}
+            overlay={<Tooltip id={`tooltip-bottom`}>{"CIC Hub"}</Tooltip>}
           >
-            <FontAwesomeIcon icon={faInfoCircle} size="2x" />
-          </a>
+            <a
+              href="http://cichub.org/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <FontAwesomeIcon icon={faInfoCircle} size="2x" />
+            </a>
+          </OverlayTrigger>
         </Row>
 
         <Row className="filters nonMobile">
