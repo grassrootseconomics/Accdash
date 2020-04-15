@@ -3,7 +3,7 @@
   "name": "Community Inclusion Currencies",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "../src/resources/CIC-Logo-white-100x50-1.png",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     }

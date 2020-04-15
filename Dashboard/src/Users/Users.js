@@ -50,6 +50,9 @@ export default class users extends React.Component {
                     delete element.Frequent;
                   });
                 }
+                const colors = this.props.registeredUsers
+                  ? ["#32AF93", "#4472C4", "#1B2A37"]
+                  : ["#4472C4", "#1B2A37"];
                 return (
                   <LineChart
                     title={"Total Traders vs Frequent Traders"}
@@ -59,7 +62,7 @@ export default class users extends React.Component {
                     height={250}
                     startMonth={this.props.from}
                     endMonth={this.props.to}
-                    colors={["#4472C4", "#1B2A37", "#32AF93"]}
+                    colors={colors}
                   />
                 );
               }
