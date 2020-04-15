@@ -41,7 +41,7 @@ export default class Tiles extends React.Component {
             <FontAwesomeIcon icon={this.props.trend1.symbol} />
             <span className="trendLabel">{`${
               this.props.trend1.percent !== "NA"
-                ? format(".2s")(this.props.trend1.percent) + "%"
+                ? format(".3s")(this.props.trend1.percent) + "%"
                 : this.props.trend1.percent
             }`}</span>
           </p>
@@ -65,7 +65,7 @@ export default class Tiles extends React.Component {
             <FontAwesomeIcon icon={this.props.trend2.symbol} />
             <span className="trendLabel">{`${
               this.props.trend1.percent !== "NA"
-                ? format(".2s")(this.props.trend2.percent) + "%"
+                ? format(".3s")(this.props.trend2.percent) + "%"
                 : this.props.trend2.percent
             }`}</span>
           </p>

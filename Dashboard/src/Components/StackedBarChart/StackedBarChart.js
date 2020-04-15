@@ -34,7 +34,7 @@ export default class stackedBarChart extends React.Component {
 
     const yAxis = d3
       .axisLeft(yScale)
-      .tickFormat(d3.format(".2s"))
+      .tickFormat(d3.format(".3s"))
       .ticks(6)
       .tickSize(0);
 
@@ -44,9 +44,9 @@ export default class stackedBarChart extends React.Component {
       // .attr("height", ` ${height + margin.top + margin.bottom}`);
       .attr(
         "viewBox",
-        `0 0 ${width + margin.left + margin.right} ${height +
-          margin.top +
-          margin.bottom}`
+        `0 0 ${width + margin.left + margin.right} ${
+          height + margin.top + margin.bottom
+        }`
       );
     svg.selectAll("g").remove();
 
@@ -63,7 +63,7 @@ export default class stackedBarChart extends React.Component {
     const layers = stack(data);
 
     xScale.domain(
-      data.map(function(d) {
+      data.map(function (d) {
         return !monthView ? parseMonth(d.yearMonth) : parseDate(d.dayMonth);
       })
     );
@@ -106,37 +106,37 @@ export default class stackedBarChart extends React.Component {
 
     layer
       .selectAll("rect")
-      .data(function(d) {
+      .data(function (d) {
         return d;
       })
       .enter()
       .append("rect")
-      .attr("x", function(d) {
+      .attr("x", function (d) {
         return xScale(
           !monthView
             ? parseMonth(d[2].data.yearMonth)
             : parseDate(d[2].data.dayMonth)
         );
       })
-      .attr("y", function(d) {
+      .attr("y", function (d) {
         return yScale(d[1]);
       })
-      .attr("height", function(d) {
+      .attr("height", function (d) {
         return yScale(d[0]) - yScale(d[1]);
       })
       .attr("width", xScale.bandwidth())
-      .on("mouseover", function(d) {
+      .on("mouseover", function (d) {
         tooltip.select(".label").html(d[2].key + ": ");
-        tooltip.select(".value").html(d3.format(".2s")(d[1] - d[0]));
+        tooltip.select(".value").html(d3.format(".3s")(d[1] - d[0]));
         tooltip.style("display", "block");
         tooltip.style("opacity", 2);
       })
-      .on("mousemove", function(d) {
+      .on("mousemove", function (d) {
         tooltip
           .style("left", d3.event.pageX + "px")
           .style("top", d3.event.pageY - 28 + "px");
       })
-      .on("mouseout", function() {
+      .on("mouseout", function () {
         tooltip.style("display", "none");
         tooltip.style("opacity", 0);
       });
@@ -189,7 +189,7 @@ export default class stackedBarChart extends React.Component {
       .attr("x", width + 45)
       .attr("y", 5)
       .attr("dy", "0.32em")
-      .text(function(d) {
+      .text(function (d) {
         return d;
       });
   }

@@ -37,7 +37,7 @@ export default class lineBarChart extends React.Component {
 
     const yAxis = d3
       .axisLeft(yScale)
-      .tickFormat(d3.format(".2s"))
+      .tickFormat(d3.format(".3s"))
       .ticks(6)
       .tickSize(0);
 
@@ -48,16 +48,16 @@ export default class lineBarChart extends React.Component {
       // .attr("height", `${height + margin.top + margin.bottom}`);
       .attr(
         "viewBox",
-        `0 0 ${width + margin.left + margin.right} ${height +
-          margin.top +
-          margin.bottom}`
+        `0 0 ${width + margin.left + margin.right} ${
+          height + margin.top + margin.bottom
+        }`
       );
 
     const graph = svg.append("g").attr("transform", "translate(50, -10)");
 
     // Scale the range of the data
     xScale.domain(
-      data.map(function(d) {
+      data.map(function (d) {
         return !monthView ? parseMonth(d.yearMonth) : parseDate(d.dayMonth);
       })
     );
@@ -101,25 +101,25 @@ export default class lineBarChart extends React.Component {
         .attr("r", 5);
 
       $keydot
-        .attr("cx", function(d) {
+        .attr("cx", function (d) {
           return xScale(
             !monthView ? parseMonth(d.yearMonth) : parseDate(d.dayMonth)
           );
         })
-        .attr("cy", function(d) {
+        .attr("cy", function (d) {
           return yScale(d[key]);
         })
-        .on("mouseover", function(d) {
-          tooltip.html(`<p>${d3.format(".2s")(d[key])}</p>`);
+        .on("mouseover", function (d) {
+          tooltip.html(`<p>${d3.format(".3s")(d[key])}</p>`);
           tooltip.style("display", "block");
           tooltip.style("opacity", 2);
         })
-        .on("mousemove", function(d) {
+        .on("mousemove", function (d) {
           tooltip
             .style("left", d3.event.pageX + "px")
             .style("top", d3.event.pageY - 28 + "px");
         })
-        .on("mouseout", function() {
+        .on("mouseout", function () {
           tooltip.style("display", "none");
           tooltip.style("opacity", 0);
         });
@@ -148,8 +148,9 @@ export default class lineBarChart extends React.Component {
       .attr(
         "transform",
         (d, i) =>
-          `translate(${(width + margin.left + margin.right) / 2 -
-            keys.length * 40}, 40)`
+          `translate(${
+            (width + margin.left + margin.right) / 2 - keys.length * 40
+          }, 40)`
       )
       .attr("font-size", 11)
       // .attr("text-anchor", "end")
@@ -171,7 +172,7 @@ export default class lineBarChart extends React.Component {
       .attr("x", 25)
       .attr("y", 5)
       .attr("dy", "0.32em")
-      .text(function(d) {
+      .text(function (d) {
         return d;
       });
   }

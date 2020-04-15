@@ -40,8 +40,8 @@ export default class Traders extends React.Component {
                 let tableData = data.summaryDataTopTraders[0].value.map(
                   (d, i) => ({
                     ...d,
-                    Volume: format(".2s")(d.volume),
-                    TXs: format(".2s")(d.count),
+                    Volume: format(".3s")(d.volume),
+                    TXs: format(".3s")(d.count),
                     BusinessType: d.s_business_type,
                     Gender:
                       d.s_gender === "Male"

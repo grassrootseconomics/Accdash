@@ -122,7 +122,7 @@ export default class TradeSummary extends React.Component {
                 <Col lg={3} className="tile tile-1">
                   <Tile
                     title={"Standard"}
-                    value1={format(".2s")(data.standard[0].tradeVolumes.total)}
+                    value1={format(".3s")(data.standard[0].tradeVolumes.total)}
                     units1={"(KES)"}
                     trend1={{
                       symbol: this.trend(
@@ -134,7 +134,7 @@ export default class TradeSummary extends React.Component {
                         data.standard[0].tradeVolumes.end
                       )
                     }}
-                    value2={format(".2s")(
+                    value2={format(".3s")(
                       data.standard[0].transactionCount.total
                     )}
                     units2={"TXs"}
@@ -156,7 +156,7 @@ export default class TradeSummary extends React.Component {
                 <Col lg={3} className="tile tile-2">
                   <Tile
                     title={"Disbursement"}
-                    value1={format(".2s")(
+                    value1={format(".3s")(
                       data.disbursement[0].tradeVolumes.total
                     )}
                     units1={"(KES)"}
@@ -170,7 +170,7 @@ export default class TradeSummary extends React.Component {
                         data.disbursement[0].tradeVolumes.end
                       )
                     }}
-                    value2={format(".2s")(
+                    value2={format(".3s")(
                       data.disbursement[0].transactionCount.total
                     )}
                     units2={"TXs"}
@@ -192,7 +192,7 @@ export default class TradeSummary extends React.Component {
                 <Col lg={3} className="tile tile-3">
                   <Tile
                     title={"Agent Out"}
-                    value1={format(".2s")(data.agent_out[0].tradeVolumes.total)}
+                    value1={format(".3s")(data.agent_out[0].tradeVolumes.total)}
                     units1={"(KES)"}
                     trend1={{
                       symbol: this.trend(
@@ -204,7 +204,7 @@ export default class TradeSummary extends React.Component {
                         data.agent_out[0].tradeVolumes.end
                       )
                     }}
-                    value2={format(".2s")(
+                    value2={format(".3s")(
                       data.agent_out[0].transactionCount.total
                     )}
                     units2={"TXs"}
@@ -226,7 +226,7 @@ export default class TradeSummary extends React.Component {
                 <Col lg={3} className="tile tile-3">
                   <Tile
                     title={"Reclamation"}
-                    value1={format(".2s")(
+                    value1={format(".3s")(
                       data.reclamation[0].tradeVolumes.total
                     )}
                     units1={"(KES)"}
@@ -240,7 +240,7 @@ export default class TradeSummary extends React.Component {
                         data.reclamation[0].tradeVolumes.end
                       )
                     }}
-                    value2={format(".2s")(
+                    value2={format(".3s")(
                       data.reclamation[0].transactionCount.total
                     )}
                     units2={"TXs"}
