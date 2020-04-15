@@ -79,22 +79,24 @@
     }
   }
 
-  /* X-Small devices (landscape phones, 576px and below) */
-  @media (max-width: 576px) {
-    .header {
-      .mobileOnly {
-        display: block;
-      }
-      .nonMobile {
-        display: none;
-      }
-      p {
-        font-size: 1.2rem;
+  @media (min-width: 1500px) {
+    .filters {
+      .primary:nth-child(10) {
+        color: red;
       }
     }
-    .filters {
-      &.nonMobile {
-        visibility: hidden;
+  }
+
+  /* Small devices (tablets, 768px and below) The navbar toggle appears at this breakpoint */
+  @media (max-width: 768px) {
+    .header {
+      p {
+        margin-top: 10px;
+        font-size: large;
+        img {
+          height: 15px;
+          margin-top: 6px;
+        }
       }
     }
   }
@@ -116,24 +118,30 @@
     }
   }
 
-  /* Small devices (tablets, 768px and below) The navbar toggle appears at this breakpoint */
-  @media (max-width: 768px) {
+  /* X-Small devices (landscape phones, 576px and below) */
+  @media (max-width: 576px) {
     .header {
       p {
-        margin-top: 10px;
-        font-size: large;
-        img {
-          height: 15px;
-          margin-top: 6px;
-        }
+        font-size: 1.2rem;
       }
     }
   }
 
-  @media (min-width: 1500px) {
-    .filters {
-      .primary:nth-child(10) {
-        color: red;
+  @media (max-width: 450px) {
+    .header {
+      p {
+        font-size: 1rem;
+        img {
+          height: 12px;
+        }
+      }
+      #sidebarToggle {
+        font-size: small;
+        margin-top: 4px;
+      }
+      a {
+        font-size: small;
+        margin-top: 10px;
       }
     }
   }

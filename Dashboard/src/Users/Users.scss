@@ -5,5 +5,9 @@
     font-size: small;
     font-weight: 600;
     margin: 0.5rem 0;
+
+    @media (max-width: 375px) {
+      font-size: x-small;
+    }
   }
 }

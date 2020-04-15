@@ -18,7 +18,7 @@
       .toggle {
         position: absolute;
         right: 15px;
-        top: 0.5rem;
+        top: 0.05rem;
         label.checkbox {
           font-size: small;
           input {
@@ -81,6 +81,18 @@
     margin-top: 45px;
   }
 
+  @media (max-width: 400px) {
+    #dataSection {
+      .users {
+        .toggle {
+          right: 5px;
+          label.checkbox {
+            font-size: x-small;
+          }
+        }
+      }
+    }
+  }
   /* Large devices (desktops, 992px and up) */
   @media (min-width: 992px) {
     .row {
