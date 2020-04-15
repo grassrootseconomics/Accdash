@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Header.scss";
 import { faFilter, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { timeFormat } from "d3";
+import logo from "../../resources/CIC-Logo-white-100x50-1.png";
 export default class Header extends React.Component {
   render() {
     let dateRange;
@@ -53,6 +54,7 @@ export default class Header extends React.Component {
             <FontAwesomeIcon icon={faFilter} size="2x" />
           </button>
           <p>
+            <img src={logo} alt="CIC" />
             <span className="nonMobile">
               COMMUNITY INCLUSION CURRENCIES DASHBOARD
             </span>
