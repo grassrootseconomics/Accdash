@@ -123,11 +123,13 @@ export default class Layout extends React.Component {
         />
         <div
           id="body"
-          className={`${1 +
+          className={`${
+            1 +
             this.state.selectedGender.length +
             this.state.selectedTransactionType.length +
             this.state.selectedSpendTypes.length +
-            this.state.selectedTokens.length}`}
+            this.state.selectedTokens.length
+          }`}
         >
           <Row id="summarySection">
             <Col className="col" lg={6}>
@@ -166,7 +168,7 @@ export default class Layout extends React.Component {
               <div className="toggle">
                 <label className="checkbox">
                   <input type="checkbox" onChange={this.toggleUsers} />
-                  vs Registered
+                  vs REGISTERED
                 </label>
               </div>
             </Col>

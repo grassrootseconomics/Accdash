@@ -49,7 +49,7 @@ export default class Sidebar extends React.Component {
           className="btn"
           onClick={this.props.close}
         >
-          <FontAwesomeIcon icon={faTimes} size="x" />
+          <FontAwesomeIcon icon={faTimes} />
         </button>
         <Query query={filters}>
           {({ loading, error, data }) => {

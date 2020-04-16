@@ -32,7 +32,7 @@ export default class HBarChart extends React.Component {
     ];
 
     let mappedData = data.map((d, i) => ({ ...d, color: colors[i] }));
-    mappedData = mappedData.sort(function (a, b) {
+    mappedData = mappedData.sort(function(a, b) {
       return a.value - b.value;
     });
 
@@ -41,7 +41,7 @@ export default class HBarChart extends React.Component {
       .range([0, width - 60])
       .domain([
         0,
-        d3.max(mappedData, function (d) {
+        d3.max(mappedData, function(d) {
           return d.value;
         })
       ]);
@@ -51,7 +51,7 @@ export default class HBarChart extends React.Component {
       .range([height + margin.bottom, 0])
       .padding(0.3)
       .domain(
-        mappedData.map(function (d) {
+        mappedData.map(function(d) {
           return d.label;
         })
       );
@@ -60,9 +60,9 @@ export default class HBarChart extends React.Component {
       .select(`svg.${graphClass}`)
       .attr(
         "viewBox",
-        `0 0 ${width + margin.left + margin.right} ${
-          height + margin.top + margin.bottom
-        }`
+        `0 0 ${width + margin.left + margin.right} ${height +
+          margin.top +
+          margin.bottom}`
       );
     // .attr("height", `${height + margin.top + margin.bottom}`)
     // .attr("width", `${width + margin.left + margin.right}`);
@@ -77,7 +77,11 @@ export default class HBarChart extends React.Component {
       .selectAll("text")
       .attr("font-size", 12);
 
-    const bars = graph.selectAll(".bar").data(mappedData).enter().append("g");
+    const bars = graph
+      .selectAll(".bar")
+      .data(mappedData)
+      .enter()
+      .append("g");
 
     //append rects
     bars
@@ -85,26 +89,30 @@ export default class HBarChart extends React.Component {
       .attr("class", "bar")
 
       .style("fill", d => d.color)
-      .attr("y", function (d) {
+      .attr("y", function(d) {
         return yScale(d.label);
       })
       .attr("height", yScale.bandwidth())
       .attr("x", 0)
-      .attr("width", function (d) {
+      .attr("width", function(d) {
         return xScale(d.value);
       });
 
     bars
       .append("text")
       .attr("class", "label")
-      .attr("y", function (d) {
+      .attr("y", function(d) {
         return yScale(d.label);
       })
-      .attr("x", function (d) {
+      .attr("x", function(d) {
         return xScale(d.value) + 1;
       })
-      .text(function (d) {
-        return d3.format(".3s")(d.value);
+      .text(function(d) {
+        return d.value >= 1 && d.value < 100
+          ? d.value
+          : d.value < 1
+          ? d3.format(".3n")(d.value)
+          : d3.format(".3s")(d.value);
       })
       .attr("font-size", 12)
       .attr("transform", `translate(2, ${yScale.bandwidth() / 2 + 5})`);

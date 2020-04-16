@@ -18,12 +18,13 @@
       .toggle {
         position: absolute;
         right: 15px;
-        top: 0.05rem;
+        top: 0;
+        margin: 0.25rem 0;
         label.checkbox {
           font-size: small;
           input {
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             margin-right: 2px;
             vertical-align: bottom;
           }

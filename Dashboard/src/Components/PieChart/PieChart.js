@@ -51,7 +51,10 @@ export default class PieChart extends React.Component {
       .attr("class", "slice")
       .attr("fill", (d, i) => colors[i]);
 
-    slice.append("path").attr("d", arc).attr("stroke", "white");
+    slice
+      .append("path")
+      .attr("d", arc)
+      .attr("stroke", "white");
 
     slice
       .transition()
@@ -60,7 +63,7 @@ export default class PieChart extends React.Component {
         this._current = this._current || d;
         const interpolate = d3.interpolate(this._current, d);
         this._current = interpolate(0);
-        return function (t) {
+        return function(t) {
           return arc(interpolate(t));
         };
       });
@@ -76,9 +79,17 @@ export default class PieChart extends React.Component {
     tooltip.append("span").attr("class", "value");
     tooltip.append("span").attr("class", "percent");
 
-    slice.on("mouseover", function (d) {
+    slice.on("mouseover", function(d) {
       tooltip.select(".label").html(d.data.label + ": ");
-      tooltip.select(".value").html(d3.format(".3s")(d.value));
+      tooltip
+        .select(".value")
+        .html(
+          d.value >= 1 && d.value < 100
+            ? d.value
+            : d.value < 1
+            ? d3.format(".3n")(d.value)
+            : d3.format(".3s")(d.value)
+        );
       tooltip
         .select(".percent")
         .html(" (" + d3.format(".3s")((d.value / total) * 100) + "%)");
@@ -86,13 +97,13 @@ export default class PieChart extends React.Component {
       tooltip.style("opacity", 2);
     });
 
-    slice.on("mousemove", function (d) {
+    slice.on("mousemove", function(d) {
       tooltip
         .style("left", d3.event.pageX + "px")
         .style("top", d3.event.pageY - 28 + "px");
     });
 
-    slice.on("mouseout", function () {
+    slice.on("mouseout", function() {
       tooltip.style("display", "none");
       tooltip.style("opacity", 0);
     });

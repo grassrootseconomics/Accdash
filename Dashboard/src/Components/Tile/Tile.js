@@ -10,7 +10,11 @@ export default class Tiles extends React.Component {
       return (
         <div className="details">
           <p className="label">
-            {this.props.value2}
+            {this.props.value2 >= 1 && this.props.value2 < 100
+              ? this.props.value2
+              : this.props.value2 < 1
+              ? format(".3n")(this.props.value2)
+              : format(".3s")(this.props.value2)}
 
             {this.renderSecondValueUnits()}
           </p>
@@ -41,7 +45,12 @@ export default class Tiles extends React.Component {
             <FontAwesomeIcon icon={this.props.trend1.symbol} />
             <span className="trendLabel">{`${
               this.props.trend1.percent !== "NA"
-                ? format(".3s")(this.props.trend1.percent) + "%"
+                ? (this.props.trend1.percent >= 1 &&
+                  this.props.trend1.percent < 100
+                    ? this.props.trend1.percent
+                    : this.props.trend1.percent < 1
+                    ? format(".3n")(this.props.trend1.percent)
+                    : format(".3s")(this.props.trend1.percent)) + "%"
                 : this.props.trend1.percent
             }`}</span>
           </p>
@@ -65,7 +74,12 @@ export default class Tiles extends React.Component {
             <FontAwesomeIcon icon={this.props.trend2.symbol} />
             <span className="trendLabel">{`${
               this.props.trend1.percent !== "NA"
-                ? format(".3s")(this.props.trend2.percent) + "%"
+                ? (this.props.trend2.percent >= 1 &&
+                  this.props.trend2.percent < 100
+                    ? this.props.trend2.percent
+                    : this.props.trend2.percent < 1
+                    ? format(".3n")(this.props.trend2.percent)
+                    : format(".3s")(this.props.trend2.percent)) + "%"
                 : this.props.trend2.percent
             }`}</span>
           </p>
@@ -93,7 +107,11 @@ export default class Tiles extends React.Component {
             {/* <FontAwesomeIcon icon={this.props.icon} /> */}
             <div className="details">
               <p className="label">
-                {this.props.value1}
+                {this.props.value1 >= 1 && this.props.value1 < 100
+                  ? this.props.value1
+                  : this.props.value1 < 1
+                  ? format(".3n")(this.props.value1)
+                  : format(".3s")(this.props.value1)}
                 {this.renderFirstValueUnits()}
               </p>
               {this.renderFirstValueTrend()}
