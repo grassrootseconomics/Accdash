@@ -41,8 +41,9 @@
   }
   .filters {
     color: #1f2833;
-    background: #ffffff;
+
     padding-right: 5px;
+    display: flex;
     button.primary {
       margin: 0.5rem 0;
       font-size: small;
@@ -66,29 +67,20 @@
       &.gender {
         background: #f4f7fa;
       }
-    }
-    button:nth-child(2) {
-      color: red;
+      &.threeDots {
+        display: none;
+        margin-top: 1rem;
+        margin-left: 10px;
+      }
     }
 
     #sidebarToggle {
       color: #1f2833;
     }
-    .threeDots {
-      display: none;
-    }
-  }
-
-  @media (min-width: 1500px) {
-    .filters {
-      .primary:nth-child(10) {
-        color: red;
-      }
-    }
   }
 
   /* Small devices (tablets, 768px and below) The navbar toggle appears at this breakpoint */
-  @media (max-width: 768px) {
+  @media (max-width: 800px) {
     .header {
       p {
         margin-top: 10px;
@@ -142,6 +134,94 @@
       a {
         font-size: small;
         margin-top: 10px;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .filters {
+      .primary:nth-child(n + 7):nth-last-child(n) {
+        display: none;
+        &.threeDots {
+          display: inline;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 992px) {
+    .filters {
+      .primary:nth-child(n + 10):nth-last-child(n) {
+        display: none;
+        &.threeDots {
+          display: inline;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 1100px) {
+    .filters {
+      .primary:nth-child(n + 12):nth-last-child(n) {
+        display: none;
+        &.threeDots {
+          display: inline;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 1300px) {
+    .filters {
+      .primary:nth-child(n + 14):nth-last-child(n) {
+        display: none;
+        &.threeDots {
+          display: inline;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 1600px) {
+    .filters {
+      .primary:nth-child(n + 16):nth-last-child(n) {
+        display: none;
+        &.threeDots {
+          display: inline;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 1700px) {
+    .filters {
+      .primary:nth-child(n + 18):nth-last-child(n) {
+        display: none;
+        &.threeDots {
+          display: inline;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 1800px) {
+    .filters {
+      .primary:nth-child(n + 20):nth-last-child(n) {
+        display: none;
+        &.threeDots {
+          display: inline;
+        }
+      }
+    }
+  }
+
+  @media (min-width: 1800px) {
+    .filters {
+      .primary:nth-child(n + 22):nth-last-child(n) {
+        display: none;
+        &.threeDots {
+          display: inline;
+        }
       }
     }
   }

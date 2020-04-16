@@ -7,6 +7,16 @@
     #usersSummary {
       margin-top: 0.5rem;
     }
+    @media (max-width: 992px) {
+      .col {
+        &:first-child {
+          padding-right: 7.5px;
+        }
+        &:last-child {
+          padding-left: 7.5px;
+        }
+      }
+    }
   }
 
   #dataSection {

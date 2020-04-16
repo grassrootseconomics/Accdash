@@ -95,7 +95,7 @@ export default class Header extends React.Component {
             {spendTypes}
             {genders}
             {tokens}
-            <span className="threeDots">...</span>
+            <button className="primary threeDots">...</button>
           </Col>
         </Row>
       </div>
