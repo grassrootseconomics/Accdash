@@ -62,12 +62,15 @@
 
   /* Large devices (desktops, 992px and upto 1200px) */
   @media (min-width: 992px) and (max-width: 1200px) {
-    max-height: 85px;
-    min-height: 85px;
+    max-height: 65px;
+    min-height: 65px;
+    .title {
+      font-size: x-small;
+    }
     .body {
       .details {
         p.label {
-          font-size: 0.85rem;
+          font-size: 0.75rem;
           span {
             font-size: 0.5rem;
           }
@@ -97,7 +100,7 @@
     .body {
       .details {
         p.label {
-          font-size: 1.25rem;
+          font-size: 1.05rem;
           span {
             font-size: 0.5rem;
           }

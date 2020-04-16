@@ -69,11 +69,6 @@ export default class stackedBarChart extends React.Component {
     );
 
     yScale.domain([0, d3.max(data, d => d3.sum(keys, k => +d[k]))]).nice();
-    // let total;
-    // data.forEach(function(d) {
-    //   total = d3.sum(keys, k => +d[k]);
-    //   return d;
-    // });
     d3.select(`div.${graphClass}`).remove();
 
     const tooltip = d3
