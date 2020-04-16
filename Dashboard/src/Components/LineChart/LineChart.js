@@ -37,7 +37,7 @@ export default class lineBarChart extends React.Component {
 
     const yAxis = d3
       .axisLeft(yScale)
-      .tickFormat(d3.format(".1s"))
+      .tickFormat(d3.format(".2s"))
       .ticks(6)
       .tickSize(0);
 
@@ -112,7 +112,7 @@ export default class lineBarChart extends React.Component {
         .on("mouseover", function(d) {
           tooltip.html(
             `<p>${
-              d[key] >= 1 && d[key] < 100
+              (d[key] >= 1 && d[key] < 100) || d[key] === 0
                 ? d[key]
                 : d[key] < 1
                 ? d3.format(".3n")(d[key])

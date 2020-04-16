@@ -84,7 +84,7 @@ export default class PieChart extends React.Component {
       tooltip
         .select(".value")
         .html(
-          d.value >= 1 && d.value < 100
+          (d.value >= 1 && d.value < 100) || d.value === 0
             ? d.value
             : d.value < 1
             ? d3.format(".3n")(d.value)

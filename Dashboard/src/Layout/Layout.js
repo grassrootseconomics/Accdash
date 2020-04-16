@@ -10,6 +10,7 @@ import Traders from "../Trades/Traders/Traders";
 import TradeVolumesGender from "../Trades/TradeVolumesGender/TradeVolumesGender";
 import Transactions from "../Trades/Transactions/Transactions";
 import TradeVolumesSpendType from "../Trades/TradeVolumesSpendType/TradeVolumesSpendType";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { Row, Col, Container } from "react-bootstrap";
 import "./Layout.scss";
 
@@ -123,13 +124,11 @@ export default class Layout extends React.Component {
         />
         <div
           id="body"
-          className={`${
-            1 +
+          className={`${1 +
             this.state.selectedGender.length +
             this.state.selectedTransactionType.length +
             this.state.selectedSpendTypes.length +
-            this.state.selectedTokens.length
-          }`}
+            this.state.selectedTokens.length}`}
         >
           <Row id="summarySection">
             <Col className="col" lg={6}>
@@ -195,14 +194,24 @@ export default class Layout extends React.Component {
                   />
                 </Col>
                 <Col className="column traders" lg={4}>
-                  <Traders
-                    from={this.state.from}
-                    to={this.state.to}
-                    tokens={this.state.selectedTokens}
-                    spendTypes={this.state.selectedSpendTypes}
-                    gender={this.state.selectedGender}
-                    txType={this.state.selectedTransactionType}
-                  />
+                  <OverlayTrigger
+                    key={"bottom"}
+                    placement={"bottom"}
+                    overlay={
+                      <Tooltip id={`tooltip-bottom`}>
+                        {"Traders by Spend"}
+                      </Tooltip>
+                    }
+                  >
+                    <Traders
+                      from={this.state.from}
+                      to={this.state.to}
+                      tokens={this.state.selectedTokens}
+                      spendTypes={this.state.selectedSpendTypes}
+                      gender={this.state.selectedGender}
+                      txType={this.state.selectedTransactionType}
+                    />
+                  </OverlayTrigger>
                 </Col>
               </Row>
             </Col>

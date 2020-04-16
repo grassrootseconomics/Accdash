@@ -41,13 +41,13 @@ export default class Traders extends React.Component {
                   (d, i) => ({
                     ...d,
                     Volume:
-                      d.volume >= 1 && d.volume < 100
+                      (d.volume >= 1 && d.volume < 100) || d.volume === 0
                         ? d.volume
                         : d.volume < 1
                         ? format(".3n")(d.volume)
                         : format(".3s")(d.volume),
                     TXs:
-                      d.count >= 1 && d.count < 100
+                      (d.count >= 1 && d.count < 100) || d.count === 0
                         ? d.count
                         : d.count < 1
                         ? format(".3n")(d.count)

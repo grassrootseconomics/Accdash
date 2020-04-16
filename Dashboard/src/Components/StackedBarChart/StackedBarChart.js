@@ -34,7 +34,7 @@ export default class stackedBarChart extends React.Component {
 
     const yAxis = d3
       .axisLeft(yScale)
-      .tickFormat(d3.format(".1s"))
+      .tickFormat(d3.format(".2s"))
       .ticks(6)
       .tickSize(0);
 
@@ -125,7 +125,7 @@ export default class stackedBarChart extends React.Component {
         tooltip
           .select(".value")
           .html(
-            d[1] - d[0] >= 1 && d[1] - d[0] < 100
+            (d[1] - d[0] >= 1 && d[1] - d[0] < 100) || d[1] - d[0] === 0
               ? d[1] - d[0]
               : d[1] - d[0] < 1
               ? d3.format(".3n")(d[1] - d[0])

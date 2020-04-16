@@ -108,7 +108,7 @@ export default class HBarChart extends React.Component {
         return xScale(d.value) + 1;
       })
       .text(function(d) {
-        return d.value >= 1 && d.value < 100
+        return (d.value >= 1 && d.value < 100) || d.value === 0
           ? d.value
           : d.value < 1
           ? d3.format(".3n")(d.value)
