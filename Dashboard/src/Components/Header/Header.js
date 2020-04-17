@@ -17,6 +17,7 @@ export default class Header extends React.Component {
     const transactions = this.props.selectedTXType.map(transaction => (
       <button
         className="primary transaction"
+        key={transaction}
         onClick={this.props.toggleFilters}
       >
         {transaction.charAt(0).toUpperCase() +
@@ -25,19 +26,31 @@ export default class Header extends React.Component {
     ));
 
     const spendTypes = this.props.selectedSpendType.map(spendType => (
-      <button className="primary spendType" onClick={this.props.toggleFilters}>
+      <button
+        className="primary spendType"
+        key={spendType}
+        onClick={this.props.toggleFilters}
+      >
         {spendType.charAt(0).toUpperCase() + spendType.slice(1).toLowerCase()}
       </button>
     ));
 
     const genders = this.props.selectedGender.map(gender => (
-      <button className="primary gender" onClick={this.props.toggleFilters}>
+      <button
+        className="primary gender"
+        key={gender}
+        onClick={this.props.toggleFilters}
+      >
         {gender.charAt(0).toUpperCase() + gender.slice(1).toLowerCase()}
       </button>
     ));
 
     const tokens = this.props.selectedTokens.map(token => (
-      <button className="primary token" onClick={this.props.toggleFilters}>
+      <button
+        className="primary token"
+        key={token}
+        onClick={this.props.toggleFilters}
+      >
         {token.charAt(0).toUpperCase() + token.slice(1).toLowerCase()}
       </button>
     ));
