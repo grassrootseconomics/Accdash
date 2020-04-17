@@ -9,7 +9,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Tile from "../Components/Tile/Tile";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
-import { format } from "d3";
 import "./Summary.scss";
 
 const summary = gql(`
@@ -89,7 +88,7 @@ export default class UsersSummary extends React.Component {
                 <Col lg={3} className="tile tile-1">
                   <Tile
                     title={"Registered Users"}
-                    value1={format(".2s")(data.registeredUsers[0].total)}
+                    value1={data.registeredUsers[0].total}
                     trend1={{
                       symbol: this.trend(
                         data.registeredUsers[0].start,
@@ -101,7 +100,7 @@ export default class UsersSummary extends React.Component {
                       )
                     }}
                     units1={"(total)"}
-                    value2={format(".2s")(data.newRegisteredUsers[0].total)}
+                    value2={data.newRegisteredUsers[0].total}
                     units2={"(new)"}
                     trend2={{
                       symbol: this.trend(
@@ -121,7 +120,7 @@ export default class UsersSummary extends React.Component {
                 <Col lg={3} className="tile tile-2 ">
                   <Tile
                     title={"Traders"}
-                    value1={format(".2s")(data.traders[0].total)}
+                    value1={data.traders[0].total}
                     units1={"(total)"}
                     trend1={{
                       symbol: this.trend(
@@ -133,7 +132,7 @@ export default class UsersSummary extends React.Component {
                         data.traders[0].end
                       )
                     }}
-                    value2={format(".2s")(data.frequentTraders[0].total)}
+                    value2={data.frequentTraders[0].total}
                     units2={"(frequent)"}
                     trend2={{
                       symbol: this.trend(
@@ -148,37 +147,32 @@ export default class UsersSummary extends React.Component {
                           )
                     }}
                     toolTip={
-                      "Total number of users who have traded at least once in the time frame &  Frequent - Total number of users who have traded 4 times or more on average per month"
+                      "Total number of traders who have traded at least once in the time frame and number of those traders who are defined as frequent traders (traded 4 times or more on average per month)"
                     }
                   />
                 </Col>
                 <Col lg={3} className="tile tile-3 ">
                   <Tile
                     title={"Supply & Reserve"}
-                    value1={format(".2s")(data.frequentTraders[0].total)}
-                    trend1={{
-                      symbol: this.trend(
-                        data.frequentTraders[0].start,
-                        data.frequentTraders[0].end
-                      ),
-                      percent: sameMonth
-                        ? "NA"
-                        : this.percent(
-                            data.frequentTraders[0].start,
-                            data.frequentTraders[0].end
-                          )
-                    }}
-                    // toolTip={}
+                    value1={data.summaryDataBalance[0].value[0].supply}
+                    units1={"(supply)"}
+                    value2={data.summaryDataBalance[0].value[0].reserve}
+                    units2={"(reserve)"}
+                    toolTip={
+                      "Total supply of CIC tokens and the reserve in assets backing the supply"
+                    }
                   />
                 </Col>
                 <Col lg={3} className="tile tile-3 ">
                   <Tile
-                    title={"Balances"}
-                    value1={format(".2s")(
-                      data.summaryDataBalance[0].value[0].circulation
-                    )}
+                    title={"Balances & Price"}
+                    value1={data.summaryDataBalance[0].value[0].circulation}
                     units1={"(in circulation)"}
-                    toolTip={"Total balance in circulation"}
+                    value2={data.summaryDataBalance[0].value[0].price}
+                    units2={"(KES)"}
+                    toolTip={
+                      "Total balance of CICs in circulation and their current market price"
+                    }
                   />
                 </Col>
               </Row>

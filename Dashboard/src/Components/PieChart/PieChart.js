@@ -81,10 +81,18 @@ export default class PieChart extends React.Component {
 
     slice.on("mouseover", function(d) {
       tooltip.select(".label").html(d.data.label + ": ");
-      tooltip.select(".value").html(d3.format(".2s")(d.value));
+      tooltip
+        .select(".value")
+        .html(
+          (d.value >= 1 && d.value < 100) || d.value === 0
+            ? d.value
+            : d.value < 1
+            ? d3.format(".3n")(d.value)
+            : d3.format(".3s")(d.value)
+        );
       tooltip
         .select(".percent")
-        .html(" (" + d3.format(".2s")((d.value / total) * 100) + "%)");
+        .html(" (" + d3.format(".3s")((d.value / total) * 100) + "%)");
       tooltip.style("display", "block");
       tooltip.style("opacity", 2);
     });

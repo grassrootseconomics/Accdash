@@ -6,9 +6,11 @@
   .header {
     height: 45px;
     background: #1f2833;
+    justify-content: center;
     #sidebarToggle {
       position: absolute;
       color: #ffffff;
+      left: 0;
     }
 
     .mobileOnly {
@@ -18,11 +20,16 @@
     p {
       text-align: center;
       margin-bottom: 0;
-      flex-grow: 1;
+      display: flex;
       margin-top: 5px;
       font-weight: bold;
       font-size: x-large;
       color: #ffffff;
+      img {
+        height: 20px;
+        margin-right: 10px;
+        margin-top: 8px;
+      }
     }
 
     a {
@@ -35,6 +42,8 @@
   .filters {
     color: #1f2833;
     background: #ffffff;
+    padding-right: 5px;
+    display: flex;
     button.primary {
       margin: 0.5rem 0;
       font-size: small;
@@ -58,6 +67,11 @@
       &.gender {
         background: #f4f7fa;
       }
+      &.threeDots {
+        display: none;
+        margin-top: 1rem;
+        margin-left: 10px;
+      }
     }
 
     #sidebarToggle {
@@ -65,8 +79,22 @@
     }
   }
 
+  /* Small devices (tablets, 768px and below) The navbar toggle appears at this breakpoint */
+  @media (max-width: 800px) {
+    .header {
+      p {
+        margin-top: 10px;
+        font-size: large;
+        img {
+          height: 15px;
+          margin-top: 6px;
+        }
+      }
+    }
+  }
+
   /* X-Small devices (landscape phones, 576px and below) */
-  @media (max-width: 576px) {
+  @media (max-width: 650px) {
     .header {
       .mobileOnly {
         display: block;
@@ -74,24 +102,126 @@
       .nonMobile {
         display: none;
       }
-      p {
-        font-size: 1.35em;
-      }
     }
     .filters {
       &.nonMobile {
         visibility: hidden;
-        background: #f4f7fa;
       }
     }
   }
 
-  /* Small devices (tablets, 768px and below) The navbar toggle appears at this breakpoint */
-  @media (max-width: 768px) {
+  /* X-Small devices (landscape phones, 576px and below) */
+  @media (max-width: 576px) {
     .header {
       p {
+        font-size: 1.2rem;
+      }
+    }
+  }
+
+  @media (max-width: 450px) {
+    .header {
+      p {
+        font-size: 1rem;
+        img {
+          height: 12px;
+        }
+      }
+      #sidebarToggle {
+        font-size: small;
+        margin-top: 4px;
+      }
+      a {
+        font-size: small;
         margin-top: 10px;
-        font-size: large;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .filters {
+      .primary:nth-child(n + 7):nth-last-child(n) {
+        display: none;
+        &.threeDots {
+          display: inline;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 992px) {
+    .filters {
+      .primary:nth-child(n + 10):nth-last-child(n) {
+        display: none;
+        &.threeDots {
+          display: inline;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 1100px) {
+    .filters {
+      .primary:nth-child(n + 12):nth-last-child(n) {
+        display: none;
+        &.threeDots {
+          display: inline;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 1300px) {
+    .filters {
+      .primary:nth-child(n + 14):nth-last-child(n) {
+        display: none;
+        &.threeDots {
+          display: inline;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 1600px) {
+    .filters {
+      .primary:nth-child(n + 16):nth-last-child(n) {
+        display: none;
+        &.threeDots {
+          display: inline;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 1700px) {
+    .filters {
+      .primary:nth-child(n + 18):nth-last-child(n) {
+        display: none;
+        &.threeDots {
+          display: inline;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 1800px) {
+    .filters {
+      .primary:nth-child(n + 20):nth-last-child(n) {
+        display: none;
+        &.threeDots {
+          display: inline;
+        }
+      }
+    }
+  }
+
+  @media (min-width: 1800px) {
+    .filters {
+      .primary:nth-child(n + 22):nth-last-child(n) {
+        display: none;
+        &.threeDots {
+          display: inline;
+        }
       }
     }
   }

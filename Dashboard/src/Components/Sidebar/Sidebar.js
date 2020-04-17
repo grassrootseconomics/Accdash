@@ -4,6 +4,8 @@ import MultiselectDropdown from "../MultiselectDropdown/MultiselectDropdown";
 import MonthDropdown from "../MonthDropdown/MonthDropdown";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 const filters = gql(`
   query{
@@ -41,6 +43,14 @@ export default class Sidebar extends React.Component {
   render() {
     return (
       <section id="sidebar" className={this.props.open ? "open" : "close"}>
+        <button
+          type="button"
+          id="close"
+          className="btn"
+          onClick={this.props.close}
+        >
+          <FontAwesomeIcon icon={faTimes} />
+        </button>
         <Query query={filters}>
           {({ loading, error, data }) => {
             if (loading) {

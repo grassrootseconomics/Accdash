@@ -6,9 +6,6 @@ export default class stackedBarChart extends React.Component {
   componentDidMount() {
     this.createTable();
   }
-  // componentDidUpdate() {
-  //   this.createTable();
-  // }
 
   createTable() {
     const tableClass = this.props.title.replace(/\s+/g, "-").toLowerCase();
@@ -23,20 +20,20 @@ export default class stackedBarChart extends React.Component {
       .data(keys)
       .enter()
       .append("th")
-      .text(function(d) {
+      .text(function (d) {
         return d;
       })
-      .on("click", function(d) {
+      .on("click", function (d) {
         headers.attr("class", "header");
 
         if (sort) {
-          rows.sort(function(a, b) {
+          rows.sort(function (a, b) {
             return b[d] < a[d];
           });
           sort = false;
           this.className = "aes";
         } else {
-          rows.sort(function(a, b) {
+          rows.sort(function (a, b) {
             return b[d] > a[d];
           });
           sort = true;
@@ -46,27 +43,23 @@ export default class stackedBarChart extends React.Component {
 
     const tbody = table.append("tbody");
 
-    var rows = tbody
-      .selectAll("tr")
-      .data(data)
-      .enter()
-      .append("tr");
+    var rows = tbody.selectAll("tr").data(data).enter().append("tr");
 
     rows
       .selectAll("td")
-      .data(function(d) {
-        return keys.map(function(k) {
+      .data(function (d) {
+        return keys.map(function (k) {
           return { value: d[k], name: k, url: d.url };
         });
       })
       .enter()
       .append("td")
       .append("a")
-      .attr("href", function(d) {
+      .attr("href", function (d) {
         return d.url;
       })
       .attr("target", "_blank")
-      .text(function(d) {
+      .text(function (d) {
         return d.value;
       });
   }

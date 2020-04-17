@@ -44,10 +44,6 @@ export default class MonthDropdown extends React.Component {
           this.setState({
             endDate: date,
             dateRange: `${timeFormat("%b %Y")(date)}`
-            // selectedOptions: {
-            //   from: `${timeFormat("%Y-%m")(this.state.startDate)}`,
-            //   to: `${timeFormat("%Y-%m")(date)}`
-            // }
           });
           this.props.callback({
             from: `${timeFormat("%Y-%m")(this.state.startDate)}`,
@@ -63,25 +59,6 @@ export default class MonthDropdown extends React.Component {
           this.message = "Please select end date";
         }
       }
-
-      //     this.props.callback({
-      //       from: `${timeFormat("%Y-%m")(this.state.startDate)}`,
-      //       to: `${timeFormat("%Y-%m")(date)}`
-      //     });
-      //   }
-      //     this.props.callback({
-      //       from: `${timeFormat("%Y-%m")(this.state.startDate)}`,
-      //       to: `${timeFormat("%Y-%m")(date)}`
-      //     });
-      //   } else {
-      //     this.setState({
-      //       startDate: date,
-      //       endDate: undefined,
-      //       dateRange: `${timeFormat("%b %Y")(date)}`
-      //     });
-      //     this.show = true;
-      //     this.message = "Please select end date";
-      //   }
     }
   };
 
@@ -94,27 +71,28 @@ export default class MonthDropdown extends React.Component {
     ) : (
       ""
     );
-    return (
-      <div>
-        <DatePicker
-          minDate={new Date(this.options[0].value)}
-          maxDate={new Date(this.options[this.options.length - 1].value)}
-          // selected={this.state.startDate}
-          showMonthYearPicker
-          dateFormat="MM/yyyy"
-          onChange={this.handleChange}
-          startDate={this.state.startDate}
-          endDate={this.state.endDate}
-          // selectsEnd={Boolean(this.state.endDate)}
-          shouldCloseOnSelect={false}
-          customInput={
-            <div className="yearMonthPicker">
-              <span ref={this.target}>{this.state.dateRange}</span>
-              {tooltip}
-            </div>
-          }
-        />
-      </div>
-    );
+    if (this.props.options.length > 0) {
+      return (
+        <div>
+          <DatePicker
+            minDate={new Date(this.options[0].value)}
+            maxDate={new Date(this.options[this.options.length - 1].value)}
+            showMonthYearPicker
+            dateFormat="MM/yyyy"
+            onChange={this.handleChange}
+            startDate={this.state.startDate}
+            endDate={this.state.endDate}
+            shouldCloseOnSelect={false}
+            customInput={
+              <div className="yearMonthPicker">
+                <span ref={this.target}>{this.state.dateRange}</span>
+                {tooltip}
+              </div>
+            }
+          />
+        </div>
+      );
+    }
+    return <p>API returned no data Please try again ...</p>;
   }
 }

@@ -10,6 +10,9 @@
     font-size: small;
     margin: 0 0.5rem;
     text-align: left;
+    @media (max-width: 375px) {
+      font-size: x-small;
+    }
   }
   .body {
     align-items: left;
@@ -59,19 +62,22 @@
 
   /* Large devices (desktops, 992px and upto 1200px) */
   @media (min-width: 992px) and (max-width: 1200px) {
-    max-height: 90px;
-    min-height: 90px;
+    max-height: 65px;
+    min-height: 65px;
+    .title {
+      font-size: x-small;
+    }
     .body {
       .details {
         p.label {
-          font-size: 1.05rem;
+          font-size: 0.75rem;
           span {
             font-size: 0.5rem;
           }
         }
       }
       .trend {
-        margin-top: 0.15rem;
+        margin-top: -0.2rem;
         p {
           padding-left: 4px;
           margin-bottom: 0;
@@ -94,7 +100,7 @@
     .body {
       .details {
         p.label {
-          font-size: 1.25rem;
+          font-size: 1.05rem;
           span {
             font-size: 0.5rem;
           }
@@ -113,6 +119,65 @@
             margin-right: 2px;
           }
         }
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    max-height: 80px;
+    min-height: 80px;
+    .body {
+      .details {
+        p.label {
+          font-size: 1.05rem;
+          span {
+            font-size: 0.5rem;
+          }
+        }
+      }
+      .trend {
+        margin-top: 0.2rem;
+        p {
+          padding-left: 4px;
+          margin-bottom: 0;
+          .trendLabel {
+            font-size: 0.5em;
+          }
+          svg {
+            font-size: 0.5em;
+            margin-right: 2px;
+          }
+        }
+      }
+    }
+  }
+
+  @media (max-width: 400px) {
+    max-height: 60px;
+    min-height: 60px;
+    .body {
+      .details {
+        p.label {
+          font-size: 0.75rem;
+        }
+      }
+      .trend {
+        margin-top: -0.2rem;
+      }
+    }
+  }
+
+  @media (max-width: 300px) {
+    max-height: 50px;
+    min-height: 50px;
+    .body {
+      .details {
+        p.label {
+          font-size: 0.65rem;
+        }
+      }
+      .trend {
+        margin-top: -0.4rem;
       }
     }
   }

@@ -69,11 +69,6 @@ export default class stackedBarChart extends React.Component {
     );
 
     yScale.domain([0, d3.max(data, d => d3.sum(keys, k => +d[k]))]).nice();
-    // let total;
-    // data.forEach(function(d) {
-    //   total = d3.sum(keys, k => +d[k]);
-    //   return d;
-    // });
     d3.select(`div.${graphClass}`).remove();
 
     const tooltip = d3
@@ -127,7 +122,15 @@ export default class stackedBarChart extends React.Component {
       .attr("width", xScale.bandwidth())
       .on("mouseover", function(d) {
         tooltip.select(".label").html(d[2].key + ": ");
-        tooltip.select(".value").html(d3.format(".2s")(d[1] - d[0]));
+        tooltip
+          .select(".value")
+          .html(
+            (d[1] - d[0] >= 1 && d[1] - d[0] < 100) || d[1] - d[0] === 0
+              ? d[1] - d[0]
+              : d[1] - d[0] < 1
+              ? d3.format(".3n")(d[1] - d[0])
+              : d3.format(".3s")(d[1] - d[0])
+          );
         tooltip.style("display", "block");
         tooltip.style("opacity", 2);
       })

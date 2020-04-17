@@ -11,13 +11,17 @@
   z-index: 9999;
   transition: transform 0.3s ease-out;
 
-  .filters { 
-    margin-top:1rem;   
+  #close {
+    position: absolute;
+    right: 0;
+  }
+  .filters {
+    margin-top: 1rem;
     .title {
-      font-size:small;
-      font-weight:600;
+      font-size: small;
+      font-weight: 600;
       margin-left: 0.5rem;
-      margin-bottom:0;
+      margin-bottom: 0;
     }
   }
 }

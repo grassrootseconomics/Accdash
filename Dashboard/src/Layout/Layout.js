@@ -10,19 +10,22 @@ import Traders from "../Trades/Traders/Traders";
 import TradeVolumesGender from "../Trades/TradeVolumesGender/TradeVolumesGender";
 import Transactions from "../Trades/Transactions/Transactions";
 import TradeVolumesSpendType from "../Trades/TradeVolumesSpendType/TradeVolumesSpendType";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { Row, Col, Container } from "react-bootstrap";
+import { timeFormat } from "d3";
 import "./Layout.scss";
 
 export default class Layout extends React.Component {
   state = {
     showSidebar: false,
-    from: "2019-04",
-    to: "2020-03",
+    from: timeFormat("%Y-%m")(new Date().setMonth(new Date().getMonth() - 12)),
+    to: timeFormat("%Y-%m")(new Date().setMonth(new Date().getMonth() - 1)),
     selectedTokens: [],
     selectedSpendTypes: [],
     selectedGender: ["Male", "Female"],
     selectedTransactionType: ["STANDARD"],
-    toggleGraphs: "spendtype"
+    toggleGraphs: "spendtype",
+    toggleRegisteredUsers: false
   };
 
   getGender = selectedOptions => {
@@ -85,6 +88,12 @@ export default class Layout extends React.Component {
       this.setState({ toggleGraphs: e.currentTarget.value });
     }
   };
+
+  toggleUsers = e => {
+    if (e.currentTarget) {
+      this.setState({ toggleRegisteredUsers: e.currentTarget.checked });
+    }
+  };
   render() {
     return (
       <Container fluid>
@@ -114,7 +123,14 @@ export default class Layout extends React.Component {
           selectedGender={this.state.selectedGender}
           selectedTXType={this.state.selectedTransactionType}
         />
-        <div id="body">
+        <div
+          id="body"
+          className={`${1 +
+            this.state.selectedGender.length +
+            this.state.selectedTransactionType.length +
+            this.state.selectedSpendTypes.length +
+            this.state.selectedTokens.length}`}
+        >
           <Row id="summarySection">
             <Col className="col" lg={6}>
               <UsersSummary
@@ -147,7 +163,14 @@ export default class Layout extends React.Component {
                 spendTypes={this.state.selectedSpendTypes}
                 gender={this.state.selectedGender}
                 txType={this.state.selectedTransactionType}
+                registeredUsers={this.state.toggleRegisteredUsers}
               />
+              <div className="toggle">
+                <label className="checkbox">
+                  <input type="checkbox" onChange={this.toggleUsers} />
+                  vs REGISTERED
+                </label>
+              </div>
             </Col>
             <Col className="column trades" lg={6}>
               <Row>
@@ -172,14 +195,24 @@ export default class Layout extends React.Component {
                   />
                 </Col>
                 <Col className="column traders" lg={4}>
-                  <Traders
-                    from={this.state.from}
-                    to={this.state.to}
-                    tokens={this.state.selectedTokens}
-                    spendTypes={this.state.selectedSpendTypes}
-                    gender={this.state.selectedGender}
-                    txType={this.state.selectedTransactionType}
-                  />
+                  <OverlayTrigger
+                    key={"bottom"}
+                    placement={"bottom"}
+                    overlay={
+                      <Tooltip id={`tooltip-bottom`}>
+                        {"Traders by Spend"}
+                      </Tooltip>
+                    }
+                  >
+                    <Traders
+                      from={this.state.from}
+                      to={this.state.to}
+                      tokens={this.state.selectedTokens}
+                      spendTypes={this.state.selectedSpendTypes}
+                      gender={this.state.selectedGender}
+                      txType={this.state.selectedTransactionType}
+                    />
+                  </OverlayTrigger>
                 </Col>
               </Row>
             </Col>

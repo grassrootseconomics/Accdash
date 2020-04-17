@@ -9,7 +9,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Tile from "../Components/Tile/Tile";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
-import { format } from "d3";
 import "./Summary.scss";
 
 const summary = gql(`
@@ -122,7 +121,7 @@ export default class TradeSummary extends React.Component {
                 <Col lg={3} className="tile tile-1">
                   <Tile
                     title={"Standard"}
-                    value1={format(".2s")(data.standard[0].tradeVolumes.total)}
+                    value1={data.standard[0].tradeVolumes.total}
                     units1={"(KES)"}
                     trend1={{
                       symbol: this.trend(
@@ -134,9 +133,7 @@ export default class TradeSummary extends React.Component {
                         data.standard[0].tradeVolumes.end
                       )
                     }}
-                    value2={format(".2s")(
-                      data.standard[0].transactionCount.total
-                    )}
+                    value2={data.standard[0].transactionCount.total}
                     units2={"TXs"}
                     trend2={{
                       symbol: this.trend(
@@ -156,9 +153,7 @@ export default class TradeSummary extends React.Component {
                 <Col lg={3} className="tile tile-2">
                   <Tile
                     title={"Disbursement"}
-                    value1={format(".2s")(
-                      data.disbursement[0].tradeVolumes.total
-                    )}
+                    value1={data.disbursement[0].tradeVolumes.total}
                     units1={"(KES)"}
                     trend1={{
                       symbol: this.trend(
@@ -170,9 +165,7 @@ export default class TradeSummary extends React.Component {
                         data.disbursement[0].tradeVolumes.end
                       )
                     }}
-                    value2={format(".2s")(
-                      data.disbursement[0].transactionCount.total
-                    )}
+                    value2={data.disbursement[0].transactionCount.total}
                     units2={"TXs"}
                     trend2={{
                       symbol: this.trend(
@@ -192,7 +185,7 @@ export default class TradeSummary extends React.Component {
                 <Col lg={3} className="tile tile-3">
                   <Tile
                     title={"Agent Out"}
-                    value1={format(".2s")(data.agent_out[0].tradeVolumes.total)}
+                    value1={data.agent_out[0].tradeVolumes.total}
                     units1={"(KES)"}
                     trend1={{
                       symbol: this.trend(
@@ -204,9 +197,7 @@ export default class TradeSummary extends React.Component {
                         data.agent_out[0].tradeVolumes.end
                       )
                     }}
-                    value2={format(".2s")(
-                      data.agent_out[0].transactionCount.total
-                    )}
+                    value2={data.agent_out[0].transactionCount.total}
                     units2={"TXs"}
                     trend2={{
                       symbol: this.trend(
@@ -226,9 +217,7 @@ export default class TradeSummary extends React.Component {
                 <Col lg={3} className="tile tile-3">
                   <Tile
                     title={"Reclamation"}
-                    value1={format(".2s")(
-                      data.reclamation[0].tradeVolumes.total
-                    )}
+                    value1={data.reclamation[0].tradeVolumes.total}
                     units1={"(KES)"}
                     trend1={{
                       symbol: this.trend(
@@ -240,9 +229,7 @@ export default class TradeSummary extends React.Component {
                         data.reclamation[0].tradeVolumes.end
                       )
                     }}
-                    value2={format(".2s")(
-                      data.reclamation[0].transactionCount.total
-                    )}
+                    value2={data.reclamation[0].transactionCount.total}
                     units2={"TXs"}
                     trend2={{
                       symbol: this.trend(

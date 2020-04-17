@@ -110,7 +110,15 @@ export default class lineBarChart extends React.Component {
           return yScale(d[key]);
         })
         .on("mouseover", function(d) {
-          tooltip.html(`<p>${d3.format(".2s")(d[key])}</p>`);
+          tooltip.html(
+            `<p>${
+              (d[key] >= 1 && d[key] < 100) || d[key] === 0
+                ? d[key]
+                : d[key] < 1
+                ? d3.format(".3n")(d[key])
+                : d3.format(".3s")(d[key])
+            }</p>`
+          );
           tooltip.style("display", "block");
           tooltip.style("opacity", 2);
         })

@@ -5,14 +5,17 @@
     font-size: small;
     font-weight: 600;
     margin: 0.5rem 0;
+    @media (max-width: 375px) {
+      font-size: x-small;
+    }
   }
 
   table {
     th,
     td {
       text-align: left;
-      font-size: 10px;
-      padding: 4px;
+      font-size: 9px;
+      padding: 3px;
       border: none;
       a {
         color: #1f2833;
@@ -30,12 +33,23 @@
     }
   }
 
+  @media (min-width: 768px) {
+    table {
+      th,
+      td {
+        font-size: 10px;
+        padding: 3px;
+      }
+    }
+  }
+
   /* Large devices (desktops, 992px and up) */
   @media (min-width: 992px) {
     table {
       th,
       td {
-        font-size: 4.5px;
+        font-size: 5px;
+        padding: 3px;
       }
     }
   }
@@ -46,6 +60,7 @@
       th,
       td {
         font-size: 7px;
+        padding: 3px;
       }
     }
   }
@@ -54,6 +69,7 @@
       th,
       td {
         font-size: 10px;
+        padding: 2.5px;
       }
     }
   }
@@ -62,6 +78,7 @@
       th,
       td {
         font-size: 12px;
+        padding: 2.5px;
       }
     }
   }

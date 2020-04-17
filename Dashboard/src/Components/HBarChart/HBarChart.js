@@ -14,7 +14,6 @@ export default class HBarChart extends React.Component {
     const graphTitle = this.props.title;
     const graphClass = graphTitle.replace(/\s+/g, "-").toLowerCase();
     const margin = { top: 20, right: 20, bottom: 40, left: 60 };
-    // const parseMonth = d3.timeParse("%Y-%m");
     const width = this.props.width - margin.left - margin.right;
     const height = this.props.height - margin.top - margin.bottom;
     const colors = [
@@ -102,16 +101,18 @@ export default class HBarChart extends React.Component {
     bars
       .append("text")
       .attr("class", "label")
-      //y position of the label is halfway down the bar
       .attr("y", function(d) {
         return yScale(d.label);
       })
-      //x position is 3 pixels to the right of the bar
       .attr("x", function(d) {
         return xScale(d.value) + 1;
       })
       .text(function(d) {
-        return d3.format(".2s")(d.value);
+        return (d.value >= 1 && d.value < 100) || d.value === 0
+          ? d.value
+          : d.value < 1
+          ? d3.format(".3n")(d.value)
+          : d3.format(".3s")(d.value);
       })
       .attr("font-size", 12)
       .attr("transform", `translate(2, ${yScale.bandwidth() / 2 + 5})`);
