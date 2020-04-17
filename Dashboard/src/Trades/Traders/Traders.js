@@ -3,6 +3,7 @@ import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import Table from "../../Components/Table/Table";
 import { format } from "d3";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import "./Traders.scss";
 
 const summary = gql(`
@@ -18,7 +19,19 @@ export default class Traders extends React.Component {
   render() {
     return (
       <section id="topTraders">
-        <p className="title">TOP TRADERS</p>
+        <OverlayTrigger
+          key={"bottom"}
+          placement={"bottom"}
+          overlay={
+            <Tooltip id={`tooltip-bottom`}>
+              {
+                "Top 10 spenders for the given selection - Click on any row to go to Blockscout.com and see their transactions on the blockchain"
+              }
+            </Tooltip>
+          }
+        >
+          <p className="title">TOP TRADERS</p>
+        </OverlayTrigger>
         <Query
           query={summary}
           variables={{
