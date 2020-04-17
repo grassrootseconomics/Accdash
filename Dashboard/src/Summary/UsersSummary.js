@@ -147,7 +147,7 @@ export default class UsersSummary extends React.Component {
                           )
                     }}
                     toolTip={
-                      "Total number of traders who have traded at least once in the time frame and number of those traders who are defined as frequent traders (traded 4 time or more on average per month)"
+                      "Total number of traders who have traded at least once in the time frame and number of those traders who are defined as frequent traders (traded 4 times or more on average per month)"
                     }
                   />
                 </Col>
