@@ -12,13 +12,14 @@ import Transactions from "../Trades/Transactions/Transactions";
 import TradeVolumesSpendType from "../Trades/TradeVolumesSpendType/TradeVolumesSpendType";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { Row, Col, Container } from "react-bootstrap";
+import { timeFormat } from "d3";
 import "./Layout.scss";
 
 export default class Layout extends React.Component {
   state = {
     showSidebar: false,
-    from: "2019-04",
-    to: "2020-03",
+    from: timeFormat("%Y-%m")(new Date().setMonth(new Date().getMonth() - 12)),
+    to: timeFormat("%Y-%m")(new Date().setMonth(new Date().getMonth() - 1)),
     selectedTokens: [],
     selectedSpendTypes: [],
     selectedGender: ["Male", "Female"],
