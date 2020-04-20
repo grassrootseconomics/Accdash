@@ -11,7 +11,7 @@ import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import "./Summary.scss";
 
-const summary = gql(`
+export const tradeSummary = gql(`
 query Summary($from:String!, $to:String!, $tokens:[String]!, $spendTypes:[String]!, $gender:[String]!, $txType:[String]! ){
   standard:summaryDataSubtype(fromDate:$from, toDate:$to, tokenName:$tokens, spendType:$spendTypes, gender:$gender, txType:$txType, request:"standard"){     
     
@@ -100,7 +100,7 @@ export default class TradeSummary extends React.Component {
           <p>TRADES</p>
         </div>
         <Query
-          query={summary}
+          query={tradeSummary}
           variables={{
             from: this.props.from,
             to: this.props.to,
@@ -112,9 +112,15 @@ export default class TradeSummary extends React.Component {
         >
           {({ loading, error, data }) => {
             if (loading) {
-              return <p>Loading data...</p>;
+              debugger;
+              return <p data-testid="loading">Loading data...</p>;
             } else if (error) {
-              return <p>Section will be loaded shortly</p>;
+              debugger;
+              return (
+                <p data-testid="apiError">
+                  API returned an error Please try again
+                </p>
+              );
             }
             return (
               <Row id="tiles">

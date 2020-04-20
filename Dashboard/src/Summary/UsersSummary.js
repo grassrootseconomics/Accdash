@@ -11,7 +11,7 @@ import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import "./Summary.scss";
 
-const summary = gql(`
+export const usersSummary = gql(`
 query Summary($from:String!, $to:String!, $tokens:[String]!, $spendTypes:[String]!, $gender:[String]!, $txType:[String]! ){
     registeredUsers:summaryData  (fromDate:$from, toDate:$to, tokenName:$tokens, spendType:$spendTypes, gender:$gender, txType:$txType, request:"registeredusers"){         
       total
@@ -65,7 +65,7 @@ export default class UsersSummary extends React.Component {
           <p>USERS</p>
         </div>
         <Query
-          query={summary}
+          query={usersSummary}
           variables={{
             from: this.props.from,
             to: this.props.to,
@@ -79,9 +79,13 @@ export default class UsersSummary extends React.Component {
             const sameMonth = this.props.from === this.props.to ? true : false;
 
             if (loading) {
-              return <p>Loading data...</p>;
+              return <p data-testid="loading">Loading data...</p>;
             } else if (error) {
-              return <p>Section will be loaded shortly</p>;
+              return (
+                <p data-testid="apiError">
+                  API returned an error Please try again
+                </p>
+              );
             }
             return (
               <Row id="tiles">

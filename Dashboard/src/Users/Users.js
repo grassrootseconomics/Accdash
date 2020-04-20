@@ -5,7 +5,7 @@ import LineChart from "../Components/LineChart/LineChart";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 
-const summaryQuery = gql(`
+export const summaryQuery = gql(`
 query MonthlySummary($from:String!, $to:String!, $tokens:[String]!, $spendTypes:[String]!, $gender:[String]!, $txType:[String]!, $graphType:String!){
   monthlySummaryData  (fromDate:$from, toDate:$to,  tokenName:$tokens, spendType:$spendTypes, gender:$gender, txType:$txType, request:$graphType){ 
     value
@@ -39,9 +39,13 @@ export default class users extends React.Component {
         >
           {({ loading, error, data }) => {
             if (loading) {
-              return <p>Loading data...</p>;
+              return <p data-testid="loading">Loading data...</p>;
             } else if (error) {
-              return <p>API returned an error Please try again</p>;
+              return (
+                <p data-testid="apiError">
+                  API returned an error Please try again
+                </p>
+              );
             } else {
               const chartData = data.monthlySummaryData[0].value;
               if (chartData.length > 0) {

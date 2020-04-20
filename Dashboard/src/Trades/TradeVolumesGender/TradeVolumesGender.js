@@ -5,7 +5,7 @@ import gql from "graphql-tag";
 
 import "./TradeVolumesGender.scss";
 
-const summary = gql(`
+export const summaryQuery = gql(`
 query Summary($from:String!, $to:String!, $tokens:[String]!, $spendTypes:[String]!, $gender:[String]!, $txType:[String]!){  
   categorySummary (
     fromDate:$from, toDate:$to,  tokenName:$tokens, spendType:$spendTypes, gender:$gender, txType:$txType, request:"tradevolumes-category-gender"
@@ -22,7 +22,7 @@ export default class TradeVolumesGender extends React.Component {
       <section id="tradeVolumesGender">
         <p className="title">TRADE VOLUMES BY GENDER</p>
         <Query
-          query={summary}
+          query={summaryQuery}
           variables={{
             from: this.props.from,
             to: this.props.to,
@@ -34,9 +34,13 @@ export default class TradeVolumesGender extends React.Component {
         >
           {({ loading, error, data }) => {
             if (loading) {
-              return <p>Loading data...</p>;
+              return <p data-testid="loading">Loading data...</p>;
             } else if (error) {
-              return <p>API returned an error Please try again</p>;
+              return (
+                <p data-testid="apiError">
+                  API returned an error Please try again
+                </p>
+              );
             } else {
               const chartData = data.categorySummary;
               if (chartData.length > 0) {
