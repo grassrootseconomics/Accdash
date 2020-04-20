@@ -67,7 +67,7 @@ export default class Tiles extends React.Component {
         <div
           className={`trend ${
             this.props.trend2.percent === 0 ||
-            this.props.trend1.percent === "NA"
+            this.props.trend2.percent === "NA"
               ? "grey"
               : this.props.trend2.symbol.iconName
           }`}
@@ -75,7 +75,7 @@ export default class Tiles extends React.Component {
           <p>
             <FontAwesomeIcon icon={this.props.trend2.symbol} />
             <span className="trendLabel">{`${
-              this.props.trend1.percent !== "NA"
+              this.props.trend2.percent !== "NA"
                 ? ((this.props.trend2.percent >= 1 &&
                     this.props.trend2.percent < 100) ||
                   this.props.trend2.percent === 0
