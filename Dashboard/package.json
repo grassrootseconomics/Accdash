@@ -26,7 +26,7 @@
     "react-select": "^3.0.8"
   },
   "scripts": {
-    "start": "env-cmd -f .env.development react-scripts start",
+    "start": "env-cmd -f .env.local react-scripts start",
     "build:development": "env-cmd -f .env.development react-scripts build",
     "build:production": "env-cmd -f .env.production react-scripts build",
     "test": "react-scripts test",

@@ -15,7 +15,6 @@ export default class MonthDropdown extends React.Component {
   };
 
   options = this.props.options.map(o => ({ value: o.Item, label: o.Item }));
-  debugger;
   handleChange = date => {
     if (date) {
       if (this.state.startDate && this.state.endDate) {

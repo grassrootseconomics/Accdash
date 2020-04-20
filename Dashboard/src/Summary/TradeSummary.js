@@ -112,10 +112,8 @@ export default class TradeSummary extends React.Component {
         >
           {({ loading, error, data }) => {
             if (loading) {
-              debugger;
               return <p data-testid="loading">Loading data...</p>;
             } else if (error) {
-              debugger;
               return (
                 <p data-testid="apiError">
                   API returned an error Please try again
