@@ -45,14 +45,7 @@ export default class users extends React.Component {
             } else {
               const chartData = data.monthlySummaryData[0].value;
               if (chartData.length > 0) {
-                // condition if same month is selected
-                if (this.props.from === this.props.to) {
-                  chartData.forEach(element => {
-                    delete element.Frequent;
-                  });
-                }
-
-                // colors based on selction
+                // colors based on selection (registed users)
                 const colors = this.props.registeredUsers
                   ? ["#32AF93"]
                   : ["#4472C4", "#1B2A37"];
