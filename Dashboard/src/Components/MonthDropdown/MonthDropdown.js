@@ -6,12 +6,21 @@ import "./MonthDropDown.scss";
 export default class MonthDropdown extends React.Component {
   show = false;
   message = "";
+  startDate = new Date(
+    new Date(this.props.start).getUTCFullYear(),
+    new Date(this.props.start).getUTCMonth()
+  );
+  endDate = new Date(
+    new Date(this.props.end).getUTCFullYear(),
+    new Date(this.props.end).getUTCMonth()
+  );
   state = {
     selectedOptions: null,
-    startDate: new Date(this.props.start),
-    endDate: new Date(this.props.end),
-    dateRange: `${timeFormat("%b %Y")(new Date(this.props.start))} -
-    ${timeFormat("%b %Y")(new Date(this.props.end))}`
+    startDate: this.startDate,
+    endDate: this.endDate,
+    dateRange: `${timeFormat("%b %Y")(this.startDate)} - ${timeFormat("%b %Y")(
+      this.endDate
+    )}`
   };
 
   options = this.props.options.map(o => ({ value: o.Item, label: o.Item }));
@@ -74,10 +83,23 @@ export default class MonthDropdown extends React.Component {
       return (
         <div>
           <DatePicker
-            minDate={new Date(this.options[0].value)}
-            maxDate={new Date(this.options[this.options.length - 1].value)}
+            minDate={
+              new Date(
+                new Date(this.options[0].value).getUTCFullYear(),
+                new Date(this.options[0].value).getUTCMonth()
+              )
+            }
+            maxDate={
+              new Date(
+                new Date(
+                  this.options[this.options.length - 1].value
+                ).getUTCFullYear(),
+                new Date(
+                  this.options[this.options.length - 1].value
+                ).getUTCMonth()
+              )
+            }
             showMonthYearPicker
-            dateFormat="MM/yyyy"
             onChange={this.handleChange}
             startDate={this.state.startDate}
             endDate={this.state.endDate}

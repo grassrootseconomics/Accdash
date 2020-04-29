@@ -16,18 +16,20 @@ import { timeFormat } from "d3";
 import "./Layout.scss";
 
 export default class Layout extends React.Component {
+  // Default filters on initial load
   state = {
     showSidebar: false,
-    from: timeFormat("%Y-%m")(new Date().setMonth(new Date().getMonth() - 12)),
-    to: timeFormat("%Y-%m")(new Date().setMonth(new Date().getMonth() - 1)),
+    from: timeFormat("%Y-%m")( new Date().setUTCMonth( new Date().getUTCMonth() - 1)),
+    to: timeFormat("%Y-%m")( new Date().setUTCMonth( new Date().getUTCMonth())),
     selectedTokens: [],
     selectedSpendTypes: [],
-    selectedGender: ["Male", "Female"],
+    selectedGender: [],
     selectedTransactionType: ["STANDARD"],
     toggleGraphs: "spendtype",
     toggleRegisteredUsers: false
   };
 
+  // Methods to update state of the different components based on the values returned from filters
   getGender = selectedOptions => {
     selectedOptions !== null
       ? this.setState({
@@ -75,6 +77,7 @@ export default class Layout extends React.Component {
         });
   };
 
+  //Close filters menu
   sidebarCloseHandler = () => {
     this.setState({ showSidebar: false });
   };
@@ -131,6 +134,7 @@ export default class Layout extends React.Component {
             this.state.selectedSpendTypes.length +
             this.state.selectedTokens.length}`}
         >
+          {/* KPI Tiles */}
           <Row id="summarySection">
             <Col className="col" lg={6}>
               <UsersSummary
@@ -156,6 +160,7 @@ export default class Layout extends React.Component {
 
           <Row id="dataSection">
             <Col className="column users" lg={6}>
+              {/* Traders & Registered users viz */}
               <Users
                 from={this.state.from}
                 to={this.state.to}
@@ -168,7 +173,7 @@ export default class Layout extends React.Component {
               <div className="toggle">
                 <label className="checkbox">
                   <input type="checkbox" onChange={this.toggleUsers} />
-                  vs REGISTERED
+                  REGISTERED
                 </label>
               </div>
             </Col>
@@ -219,6 +224,7 @@ export default class Layout extends React.Component {
           </Row>
 
           <div className="togglableSection">
+            {/* button bar to toggle between spend transation type & gender */}
             <Row id="toggleGroup">
               <div className="btn-group btn-group-toggle" data-toggle="buttons">
                 <label

@@ -20,7 +20,11 @@ export default class lineBarChart extends React.Component {
 
     const parseMonth = d3.timeParse("%Y-%m");
     const parseDate = d3.timeParse("%Y-%m-%d");
-    const monthView = startMonth === endMonth;
+    const sMonth = new Date(startMonth).getUTCMonth();
+    const eDate = new Date(endMonth);
+    eDate.setDate(0);
+    const eMonth = eDate.getUTCMonth();
+    const monthView = startMonth === endMonth || sMonth === eMonth;
 
     const xScale = d3
       .scaleBand()
@@ -28,12 +32,16 @@ export default class lineBarChart extends React.Component {
       .padding(1);
     const yScale = d3.scaleLinear().range([height, 20]);
 
-    const xAxis = d3
-      .axisBottom(xScale)
-      .tickFormat(
-        !monthView ? d3.timeFormat("%b %Y") : d3.timeFormat("%d %b %Y")
-      )
-      .tickSize(0);
+    const xAxis = monthView
+      ? d3
+          .axisBottom(xScale)
+          .tickFormat(d3.timeFormat("%d %b"))
+
+          .tickSize(0)
+      : d3
+          .axisBottom(xScale)
+          .tickFormat(d3.timeFormat("%b %Y"))
+          .tickSize(0);
 
     const yAxis = d3
       .axisLeft(yScale)
@@ -143,7 +151,7 @@ export default class lineBarChart extends React.Component {
       .style("text-anchor", "end")
       .attr("dx", "-.8em")
       .attr("dy", ".15em")
-      .attr("transform", "rotate(-40)");
+      .attr("transform", "rotate(-70)");
 
     // Add the Y Axis
     graph

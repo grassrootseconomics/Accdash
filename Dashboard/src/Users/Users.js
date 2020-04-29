@@ -16,13 +16,9 @@ query MonthlySummary($from:String!, $to:String!, $tokens:[String]!, $spendTypes:
 
 export default class users extends React.Component {
   render() {
-    let title =
-      this.props.from === this.props.to
-        ? "TOTAL TRADERS"
-        : "TOTAL TRADERS vs FREQUENT TRADERS";
     return (
       <section id="users">
-        <p className="title">{title}</p>
+        <p className="title">TRADERS</p>
         <Query
           query={summaryQuery}
           variables={{
@@ -49,13 +45,16 @@ export default class users extends React.Component {
             } else {
               const chartData = data.monthlySummaryData[0].value;
               if (chartData.length > 0) {
+                // condition if same month is selected
                 if (this.props.from === this.props.to) {
                   chartData.forEach(element => {
                     delete element.Frequent;
                   });
                 }
+
+                // colors based on selction
                 const colors = this.props.registeredUsers
-                  ? ["#32AF93", "#4472C4", "#1B2A37"]
+                  ? ["#32AF93"]
                   : ["#4472C4", "#1B2A37"];
                 return (
                   <LineChart

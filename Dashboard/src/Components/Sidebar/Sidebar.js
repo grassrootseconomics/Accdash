@@ -20,6 +20,7 @@ const filters = gql(`
 `);
 
 export default class Sidebar extends React.Component {
+  // Methods to pass the selected values in the filters to the parents to update the stae of visualisations
   getGender = selectedOptions => {
     this.props.gender(selectedOptions);
   };
@@ -64,6 +65,7 @@ export default class Sidebar extends React.Component {
                     <label className="title">
                       Months <span>(Select Date Range)</span>
                     </label>
+                    {/* Month filter */}
                     <MonthDropdown
                       options={data.filters[0].yearMonthList}
                       callback={this.getMonths}
@@ -71,6 +73,7 @@ export default class Sidebar extends React.Component {
                       end={this.props.endDate}
                     />
                     <label className="title">Spend Types</label>
+                    {/* Multi select list filter */}
                     <MultiselectDropdown
                       options={data.filters[0].spendTypeList}
                       callback={this.getSpendTypes}

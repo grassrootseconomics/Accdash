@@ -8,6 +8,7 @@ import { ApolloClient } from "apollo-client";
 import { createHttpLink } from "apollo-link-http";
 import { InMemoryCache } from "apollo-cache-inmemory";
 
+// The api URl gets added at build from the respective .env files
 const httpLink = createHttpLink({
   uri: process.env.REACT_APP_API_ENDPOINT
 });

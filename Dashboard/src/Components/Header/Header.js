@@ -9,10 +9,25 @@ export default class Header extends React.Component {
   render() {
     let dateRange;
     if (this.props.dateRangeFrom !== this.props.dateRangeTo)
-      dateRange = `${timeFormat("%b %Y")(new Date(this.props.dateRangeFrom))} -
-        ${timeFormat("%b %Y")(new Date(this.props.dateRangeTo))}`;
+      dateRange = `${timeFormat("%b %Y")(
+        new Date(
+          new Date(this.props.dateRangeFrom).getUTCFullYear(),
+          new Date(this.props.dateRangeFrom).getUTCMonth()
+        )
+      )} -
+        ${timeFormat("%b %Y")(
+          new Date(
+            new Date(this.props.dateRangeTo).getUTCFullYear(),
+            new Date(this.props.dateRangeTo).getUTCMonth()
+          )
+        )}`;
     else
-      dateRange = `${timeFormat("%b %Y")(new Date(this.props.dateRangeFrom))}`;
+      dateRange = `${timeFormat("%b %Y")(
+        new Date(
+          new Date(this.props.dateRangeFrom).getUTCFullYear(),
+          new Date(this.props.dateRangeFrom).getUTCMonth()
+        )
+      )}`;
 
     const transactions = this.props.selectedTXType.map(transaction => (
       <button
