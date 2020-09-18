@@ -159,7 +159,7 @@ export default class UsersSummary extends React.Component {
                   <Tile
                     title={"Supply & Reserve"}
                     value1={data.summaryDataBalance[0].value[0].supply}
-                    units1={"(supply)"}
+                    units1={"(supply in circualtion)"}
                     value2={data.summaryDataBalance[0].value[0].reserve}
                     units2={"(reserve)"}
                     toolTip={
@@ -169,13 +169,13 @@ export default class UsersSummary extends React.Component {
                 </Col>
                 <Col lg={3} className="tile tile-3 ">
                   <Tile
-                    title={"Balances & Price"}
-                    value1={data.summaryDataBalance[0].value[0].circulation}
-                    units1={"(in circulation)"}
-                    value2={data.summaryDataBalance[0].value[0].price}
-                    units2={"(KES)"}
+                    title={"Excahnge & Price"}
+                    //value1={data.summaryDataBalance[0].value[0].circulation}
+                    //units1={"(in circulation)"}
+                    value1={data.summaryDataBalance[0].value[0].price}
+                    units1={"(KES)"}
                     toolTip={
-                      "Total balance of CICs in circulation and their current market price"
+                      "Current market price of supply"
                     }
                   />
                 </Col>
